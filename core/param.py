@@ -23,10 +23,10 @@ class param:
 
 	# should be always 1 - 2 hours
 	# to run every hour change it to 2 and 1 both are negatives
-	start_date = datetime.datetime.now() - datetime.timedelta(hours =112)
+	start_date = datetime.datetime.now() - datetime.timedelta(hours =113)
 	start_date = start_date.strftime('%Y-%m-%d %H:00:00')
 
-	end_date = datetime.datetime.now() - datetime.timedelta(hours = 1)
+	end_date = datetime.datetime.now() - datetime.timedelta(hours = 2)
 	end_date = end_date.strftime('%Y-%m-%d %H:00:00')
 
 	# database connections for source and destination
