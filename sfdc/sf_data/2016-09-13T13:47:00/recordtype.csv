@@ -1,0 +1,2 @@
+BusinessProcessId,CreatedById,CreatedDate,Description,DeveloperName,Id,IsActive,LastModifiedById,LastModifiedDate,Name,NamespacePrefix,SobjectType,SystemModstamp,object_type
+019b0000000L3MRAA0,005b0000002hG1yAAE,2015-12-22 16:13:56,sfdcSupport,sfdcSupport,012b0000000QNHCAA4,True,005b0000003bcEmAAI,2016-09-13 14:11:58,sfdcSupport,,Case,2016-09-13 14:11:58,RecordType

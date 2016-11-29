@@ -1,0 +1,4 @@
+table_name,column_name
+newsletter_customers,customer_uuid
+newsletter_customers,newsletter_id
+newsletter_customers,state
