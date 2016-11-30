@@ -31,6 +31,8 @@ from sf_param import param
 # ,'leadhistory': "drop table if exists leadhistory_id; create temp table leadhistory_id as select distinct id from sfdc.leadhistory where createddate >='" +str(param.start_date) +"' and createddate < '" +str(param.end_date)+"' ; delete from stage.s_leadhistory where id in (select id from leadhistory_id); insert into stage.s_leadhistory select * from sfdc.leadhistory where createddate >= '" +str(param.start_date) +"' and createddate < '" +str(param.end_date)+"'; "
 # }
 
+
+
 delta_query = { 
 
 'order': "drop table if exists order_id; create temp table order_id as select distinct id from sfdc.order where systemmodstamp>='" +str(param.start_date) +"' and  systemmodstamp<'" +str(param.end_date) +"';delete from stage.s_order where id in (select id from order_id); insert into stage.s_order select * from (select *,row_number() over (partition by id order by systemmodstamp desc) as rnk from sfdc.order where systemmodstamp>='" +str(param.start_date) +"' and  systemmodstamp<'" +str(param.end_date) +"') as t where rnk=1;"
