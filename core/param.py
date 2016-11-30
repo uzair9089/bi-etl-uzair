@@ -1,6 +1,6 @@
 
 """
-Author: Sanjiv Upadhyaya
+Author: Sanjiv Upadhayaya
 Date: 2016-10-03
 Function: hold the parameters of ETL process including database connection, ETL run dates and directory
 """
