@@ -21,9 +21,13 @@ import os
 class Importer(Thread):
     __lock = Lock()
 
+    
+
     def __init__(self, file_name):
         Thread.__init__(self)
         self.file_name = file_name
+
+
 
     def run(self):
 
@@ -57,8 +61,8 @@ class Importer(Thread):
 
         except Exception as e:
             print("Unable to access database, import error %s" % str(e))
-            #curs.execute("insert into public.etl_status (start_date, end_date, schema_name, table_name, error_phase, error_message) values({0},{1},{2},{3},{4})".format(param.start_date, param.end_date, 'sfdc', str(self.file_name[:-4]), 'import', str(e)))
             param.counter-1
+
 
         finally:  
             curs.close()

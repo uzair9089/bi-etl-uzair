@@ -17,6 +17,7 @@ import psycopg2
 class Exporter(Thread):
     __lock = Lock()
 
+
     
     def __init__(self, query, file_name):
         Thread.__init__(self)
@@ -41,10 +42,7 @@ class Exporter(Thread):
 
 
         except Exception as e:
-            conn.rollback()
             print("Unable to access database, export error %s %s" % (str(e), self.file_name))
-            #curs.execute("insert into public.etl_status (start_date, end_date, table_name, error_phase, error_message) values({0},{1},{2},{3},{4})".format("'"+str(param.start_date)+"'", "'"+str(param.end_date)+"'", self.file_name, 'export',str(e)))
-            #curs.execute("insert into public.etl_status (start_date, end_date) values('2016-01-02','2016-01-02')")
 
 
         finally:

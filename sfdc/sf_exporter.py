@@ -22,10 +22,13 @@ import beatbox
 class Exporter(Thread):
     __lock = Lock()
     
+
+
     def __init__(self, query, table_name,col):
         Thread.__init__(self)
         self.table_name = table_name
         self.query = query
+
 
 
     def run(self):
@@ -55,6 +58,7 @@ class Exporter(Thread):
             param.exported_table.append(self.table_name)
 
             param.exported_file[self.table_name] = 1
+
 
         except Exception as e:
             print("Unable to access sales force, export error: %s" % str(e))
