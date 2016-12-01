@@ -40,10 +40,13 @@ class Exporter(Thread):
 
             param.exported_file[self.file_name] = 1
 
-
         except Exception as e:
             print("Unable to access database, export error %s %s" % (str(e), self.file_name))
 
+            conn.rollback()
+            curs.execute("""INSERT INTO etl_status (start_date, end_date, schema_name, table_name, error_phase, error_message) 
+            VALUES(%s, %s, %s, %s, %s, %s)""",[param.start_date, param.end_date, param.schema, self.file_name, 'export', str(e)])
+            conn.commit()
 
         finally:
             curs.close()

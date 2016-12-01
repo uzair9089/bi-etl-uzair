@@ -27,8 +27,6 @@ class Importer(Thread):
 
     def run(self):
         
-        error = 0
-
         try:
             conn_string = param.conn_bi
             conn = psycopg2.connect(conn_string)
@@ -60,16 +58,15 @@ class Importer(Thread):
             else:
                 print("Empty file for: " +self.file_name[:-4])
 
-
         except Exception as e:
             print("Unable to access database, import error %s %s" % (str(e), self.file_name[:-4]))
             param.counter-1
+
             conn.rollback()
-            #curs.execute("insert into etl_status (start_date, end_date, schema_name, table_name, error_phase, error_message) values({0},{1},{2},{3},{4})".format("'"+str(param.start_date)+"'", "'"+str(param.end_date)+"'", str(param.schema), str(self.file_name), 'import',str(e)))
             curs.execute("""INSERT INTO etl_status (start_date, end_date, schema_name, table_name, error_phase, error_message) 
             VALUES(%s, %s, %s, %s, %s, %s)""",[param.start_date, param.end_date, param.schema, self.file_name, 'import', str(e)])
             conn.commit()
-
+            
         finally:
             curs.close()
             conn.close()

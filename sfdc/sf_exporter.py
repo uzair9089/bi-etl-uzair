@@ -59,7 +59,6 @@ class Exporter(Thread):
 
             param.exported_file[self.table_name] = 1
 
-
         except Exception as e:
             print("Unable to access sales force, export error: %s" % str(e))
 

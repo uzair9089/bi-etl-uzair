@@ -21,7 +21,7 @@ import os
 class Importer(Thread):
     __lock = Lock()
 
-    
+
 
     def __init__(self, file_name):
         Thread.__init__(self)
@@ -57,12 +57,14 @@ class Importer(Thread):
             else:
                 print("Empty file for: " +self.file_name[:-4])
 
-
-
         except Exception as e:
             print("Unable to access database, import error %s" % str(e))
             param.counter-1
 
+            conn.rollback()
+            curs.execute("""INSERT INTO etl_status (start_date, end_date, schema_name, table_name, error_phase, error_message) 
+            VALUES(%s, %s, %s, %s, %s, %s)""",[param.start_date, param.end_date, 'sfdc', self.file_name, 'import', str(e)])
+            conn.commit()
 
         finally:  
             curs.close()
