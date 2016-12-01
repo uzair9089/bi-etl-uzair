@@ -27,9 +27,9 @@ class Importer(Thread):
 
     def run(self):
 
-            conn_string = param.conn_bi
-            conn = psycopg2.connect(conn_string)
-            curs = conn.cursor()
+        conn_string = param.conn_bi
+        conn = psycopg2.connect(conn_string)
+        curs = conn.cursor()
 
         try:
 
