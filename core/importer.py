@@ -63,8 +63,6 @@ class Importer(Thread):
             #curs.execute("insert into public.etl_status (start_date, end_date, schema_name, table_name, error_phase, error_message) values({0},{1},{2},{3},{4})".format("'"+str(param.start_date)+"'", "'"+str(param.end_date)+"'", param.schema, self.file_name, 'import',str(e)))
             curs.execute("insert into public.etl_status (start_date, end_date) values('2016-01-02','2016-01-02')")
             param.counter-1
-            curs.close()
-            conn.close()
 
 
           
