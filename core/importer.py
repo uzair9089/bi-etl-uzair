@@ -31,7 +31,8 @@ class Importer(Thread):
             conn_string = param.conn_bi
             conn = psycopg2.connect(conn_string)
             curs = conn.cursor()
-            print(type(curs)
+            print(type(curs))
+
             if(self.file_name[:-4] in param.truncate_tbl):
 
                 print("truncating table " +self.file_name[:-4])
