@@ -32,7 +32,7 @@ class Exporter(Thread):
             conn_string = param.connection
             conn = psycopg2.connect(conn_string)
             curs = conn.cursor()
-            print(type(curs))
+
             outputquery = "COPY ({0}) TO STDOUT WITH CSV HEADER".format(self.query)
 
             with open(param.newpath+self.file_name +".csv", 'w+') as f:
@@ -43,7 +43,7 @@ class Exporter(Thread):
 
         except Exception as e:
             print("Unable to access database, export error %s %s" % (str(e), self.file_name))
-            print(type(curs))
+
 
         finally:
             curs.close()
