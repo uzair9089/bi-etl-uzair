@@ -52,14 +52,17 @@ class Importer(Thread):
 
                 print("delta load for: " +self.file_name[:-4] +" completed ***")
 
-                conn.close()
-                curs.close
             else:
                 print("Empty file for: " +self.file_name[:-4])
 
         except Exception as e:
             print("Unable to access database, import error %s %s" % (str(e), self.file_name[:-4]))
+            curs.execute("insert into public.etl_status (start_date, end_date, schema_name, table_name, error_phase, error_message) values({0},{1},{2},{3},{4})".format(param.start_date, param.end_date, param.schema, self.file_name, 'import',str(e)))
             param.counter-1
+
+        finally:
+            curs.close()
+            conn.close()
 
           
 # import_data function is called every minute by the runner program until ETL for all the tables are completed  

@@ -34,13 +34,12 @@ class Exporter(Thread):
             with open(param.newpath+self.file_name +".csv", 'w+') as f:
                 curs.copy_expert(outputquery, f)
 
-            curs.close()
-            conn.close()
             param.exported_file[self.file_name] = 1
 
         except Exception as e:
             print("Unable to access database, export error %s %s" % (str(e), self.file_name))
+            curs.execute("insert into public.etl_status (start_date, end_date, table_name, error_phase, error_message) values({0},{1},{2},{3},{4})".format(param.start_date, param.end_date, self.file_name, 'export',str(e)))
 
-
-
-
+        finally:
+            curs.close()
+            conn.close()
