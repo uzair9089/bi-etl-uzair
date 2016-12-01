@@ -17,6 +17,7 @@ import psycopg2
 class Exporter(Thread):
     __lock = Lock()
     
+    
     def __init__(self, query, file_name):
         Thread.__init__(self)
         self.file_name = file_name
@@ -25,10 +26,11 @@ class Exporter(Thread):
 
     def run(self):
     
+        conn_string = param.connection
+        conn = psycopg2.connect(conn_string)
+        curs = conn.cursor()
+
         try:
-            conn_string = param.connection
-            conn = psycopg2.connect(conn_string)
-            curs = conn.cursor()
             outputquery = "COPY ({0}) TO STDOUT WITH CSV HEADER".format(self.query)
 
             with open(param.newpath+self.file_name +".csv", 'w+') as f:
@@ -36,11 +38,12 @@ class Exporter(Thread):
 
             param.exported_file[self.file_name] = 1
 
-            curs.close()
-            conn.close()
 
         except Exception as e:
             print("Unable to access database, export error %s %s" % (str(e), self.file_name))
             #curs.execute("insert into public.etl_status (start_date, end_date, table_name, error_phase, error_message) values({0},{1},{2},{3},{4})".format("'"+str(param.start_date)+"'", "'"+str(param.end_date)+"'", self.file_name, 'export',str(e)))
-            #curs.execute("insert into public.etl_status (start_date, end_date) values('2016-01-02','2016-01-02')")
+            curs.execute("insert into public.etl_status (start_date, end_date) values('2016-01-02','2016-01-02')")
 
+        finally:
+            curs.close()
+            conn.close()

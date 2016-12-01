@@ -18,17 +18,20 @@ import os
 class Importer(Thread):
     __lock = Lock()
 
+
     def __init__(self, file_name):
         Thread.__init__(self)
         self.file_name = file_name
 
-    def run(self):
 
-        try:
+
+    def run(self):
 
             conn_string = param.conn_bi
             conn = psycopg2.connect(conn_string)
             curs = conn.cursor()
+
+        try:
 
             if(self.file_name[:-4] in param.truncate_tbl):
 
@@ -55,8 +58,6 @@ class Importer(Thread):
             else:
                 print("Empty file for: " +self.file_name[:-4])
 
-            curs.close()
-            conn.close()
 
         except Exception as e:
             print("Unable to access database, import error %s %s" % (str(e), self.file_name[:-4]))
@@ -64,6 +65,10 @@ class Importer(Thread):
             #curs.execute("insert into public.etl_status (start_date, end_date) values('2016-01-02','2016-01-02')")
             param.counter-1
 
+        finally:
+            curs.execute("insert into public.etl_status (start_date, end_date) values('2016-01-02','2016-01-02')")
+            curs.close()
+            conn.close()
 
           
 # import_data function is called every minute by the runner program until ETL for all the tables are completed  
