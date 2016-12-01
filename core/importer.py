@@ -58,17 +58,19 @@ class Importer(Thread):
                 print("Empty file for: " +self.file_name[:-4])
 
 
-        finally:
-            #curs.execute("insert into public.etl_status (start_date, end_date) values('2016-01-02','2016-01-02')")
-            curs.close()
-            conn.close()
-
 
         except Exception as e:
             print("Unable to access database, import error %s %s" % (str(e), self.file_name[:-4]))
             #curs.execute("insert into public.etl_status (start_date, end_date, schema_name, table_name, error_phase, error_message) values({0},{1},{2},{3},{4})".format("'"+str(param.start_date)+"'", "'"+str(param.end_date)+"'", param.schema, self.file_name, 'import',str(e)))
             #curs.execute("insert into public.etl_status (start_date, end_date) values('2016-01-02','2016-01-02')")
             param.counter-1
+
+
+        finally:
+            #curs.execute("insert into public.etl_status (start_date, end_date) values('2016-01-02','2016-01-02')")
+            curs.close()
+            conn.close()
+
 
 
           
