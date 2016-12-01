@@ -11,7 +11,7 @@ from param import param
 delta_query = { 
 
 # newsletters
-'newsletters_nwsl': "drop table if exists newsletters_nwsl_id; create temp table newsletters_nwsl_id as select distinct id from nwsl.newsletters_nwsl where updated_at>='" +str(param.start_date) +" and  updated_at<'" +str(param.end_date) +"';delete from stage.s_newsletters_nwsl where id in (select id from newsletters_nwsl_id); insert into stage.s_newsletters_nwsl select * from (select *,row_number() over (partition by id order by updated_at desc) as rnk from nwsl.newsletters_nwsl where updated_at>='" +str(param.start_date) +"' and  updated_at<'" +str(param.end_date) +"') as t where rnk=1;"
+'newsletters_nwsl': "drop table if exists newsletters_nwsl_id; create temp table newsletters_nwsl_id as select distinct id from nwsl.newsletters_nwsl where updated_at>='" +str(param.start_date) +"' and  updated_at<'" +str(param.end_date) +"';delete from stage.s_newsletters_nwsl where id in (select id from newsletters_nwsl_id); insert into stage.s_newsletters_nwsl select * from (select *,row_number() over (partition by id order by updated_at desc) as rnk from nwsl.newsletters_nwsl where updated_at>='" +str(param.start_date) +"' and  updated_at<'" +str(param.end_date) +"') as t where rnk=1;"
 ,'newsletter_customers': "truncate table stage.s_newsletter_customers; insert into stage.s_newsletter_customers select * from nwsl.newsletter_customers;"
 
 # messages
