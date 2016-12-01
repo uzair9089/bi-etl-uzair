@@ -46,8 +46,7 @@ class Importer(Thread):
                 #curs.execute("select stage.create_index_sf('%s')" % self.file_name[:-4])
                 #curs.execute(etl_delta_load.indexer[self.file_name[:-4]])
                 conn.commit()
-                curs.close()
-                conn.close()
+
                 
                 print("Delta load for: " +self.file_name[:-4] +" completed")
 
@@ -56,7 +55,12 @@ class Importer(Thread):
 
         except Exception as e:
             print("Unable to access database, import error %s" % str(e))
+            curs.execute("insert into public.etl_status (start_date, end_date, schema_name, table_name, error_phase, error_message) values({0},{1},{2},{3},{4})".format(param.start_date, param.end_date, 'sfdc', str(self.file_name[:-4]), 'import', str(e)))
             param.counter-1
+
+        finally:
+            curs.close()
+            conn.close()
      
 # import_data function is called by the runner program until all the objects are taken care by the ETL process       
 def import_data():
