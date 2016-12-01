@@ -26,6 +26,7 @@ class Importer(Thread):
 
 
     def run(self):
+        
         error = 0
 
         try:
@@ -65,11 +66,11 @@ class Importer(Thread):
             print(type(curs))
             #curs.execute("insert into etl_status (start_date, end_date, schema_name, table_name, error_phase, error_message) values({0},{1},{2},{3},{4})".format("'"+str(param.start_date)+"'", "'"+str(param.end_date)+"'", param.schema, self.file_name, 'import',str(e)))
             param.counter-1
-            error = 1
+            self.error = 1
 
 
         finally:
-            if error = 1:
+            if self.error == 1:
                 curs.execute("insert into etl_status (start_date, end_date, schema_name, table_name, error_phase, error_message) values({0},{1},{2},{3},{4})".format("'"+str(param.start_date)+"'", "'"+str(param.end_date)+"'", param.schema, self.file_name, 'import',str(e)))
             curs.close()
             conn.close()
