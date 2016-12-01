@@ -65,7 +65,7 @@ class Importer(Thread):
             print("Unable to access database, import error %s %s" % (str(e), self.file_name[:-4]))
             #curs.execute("insert into etl_status (start_date, end_date, schema_name, table_name, error_phase, error_message) values({0},{1},{2},{3},{4})".format("'"+str(param.start_date)+"'", "'"+str(param.end_date)+"'", param.schema, self.file_name, 'import',str(e)))
             param.counter-1
-
+            curs.execute("INSERT INTO etl_status (start_date, end_date) VALUES (%s, %s)", (param.start_date, param.end_date))
 
 
         finally:
