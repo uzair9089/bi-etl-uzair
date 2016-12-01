@@ -53,14 +53,16 @@ class Importer(Thread):
             else:
                 print("Empty file for: " +self.file_name[:-4])
 
+            curs.close()
+            conn.close()
+            
         except Exception as e:
             print("Unable to access database, import error %s" % str(e))
-            curs.execute("insert into public.etl_status (start_date, end_date, schema_name, table_name, error_phase, error_message) values({0},{1},{2},{3},{4})".format(param.start_date, param.end_date, 'sfdc', str(self.file_name[:-4]), 'import', str(e)))
+            #curs.execute("insert into public.etl_status (start_date, end_date, schema_name, table_name, error_phase, error_message) values({0},{1},{2},{3},{4})".format(param.start_date, param.end_date, 'sfdc', str(self.file_name[:-4]), 'import', str(e)))
             param.counter-1
 
         finally:
-            curs.close()
-            conn.close()
+
      
 # import_data function is called by the runner program until all the objects are taken care by the ETL process       
 def import_data():
