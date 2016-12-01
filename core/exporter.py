@@ -16,7 +16,7 @@ import psycopg2
 # class implementing threads so CSV can be dumped in parallel
 class Exporter(Thread):
     __lock = Lock()
-    
+
     
     def __init__(self, query, file_name):
         Thread.__init__(self)
