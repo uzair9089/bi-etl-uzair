@@ -28,7 +28,7 @@ class Rerun():
 					curs.execute(param.truncate_queries[table_name])
 					conn.commit()
 
-			for file_path in tbl['file_path'].unique:
+			for file_path in tbl['file_path'].unique():
 				x = re.search(':00/(.+?).csv', file_path)
 				y = re.search ('data/(.+?)/20', file_path)
 				if x:
