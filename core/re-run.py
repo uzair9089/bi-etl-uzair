@@ -23,11 +23,12 @@ class Rerun():
 			tbl = pd.read_sql("select distinct file_path, table_name from public.etl_status where schema_name not in ('sfdc') and status='fail'", conn)
 
 			for table_name in tbl['table_name'].unique():
-				print("truncating table " +table_name)
-				curs.execute(param.truncate_queries[table_name])
-				conn.commit()
+				if table_name in param.truncate_tbl:
+					print("truncating table " +table_name)
+					curs.execute(param.truncate_queries[table_name])
+					conn.commit()
 
-			for file_path in tbl['file_path']:
+			for file_path in tbl['file_path'].unique:
 				x = re.search(':00/(.+?).csv', file_path)
 				y = re.search ('data/(.+?)/20', file_path)
 				if x:
