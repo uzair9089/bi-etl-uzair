@@ -12,20 +12,11 @@ error_count = curs.fetchall()
 sender = 'sanjivupadhyaya@shore.com'
 receivers = ['su@shore.com']
 
-try:
-	if len(error_count)>1:
-		message = """ ETL Process Status - Failure. Please check the etl status !
-		"""
-		try:
-			smtpObj = smtplib.SMTP('localhost')
-			smtpObj.sendmail(sender, receivers, message)         
-			print "Successfully sent email"
-			
-		except SMTPException:
-			print "Error: unable to send email"
-
-
-except:
-	message = """ ETL Process if just fine
+if len(error_count)>0:
+	message = """ ETL Process Status - Failure. Please check the etl status !
 	"""
+	smtpObj = smtplib.SMTP('localhost')
+	smtpObj.sendmail(sender, receivers, message)  
+else:
+	print("no error in the ETL process")
 
