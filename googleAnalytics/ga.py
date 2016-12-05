@@ -16,7 +16,7 @@ import sys
 import os
 
 
-credentials = ServiceAccountCredentials.from_json_keyfile_name('shorebin.json', ['https://www.googleapis.com/auth/analytics.readonly'])
+credentials = ServiceAccountCredentials.from_json_keyfile_name('shorebin.txt', ['https://www.googleapis.com/auth/analytics.readonly'])
 http_auth = credentials.authorize(Http())
 service = build('analytics', 'v3', http=http_auth)
 
