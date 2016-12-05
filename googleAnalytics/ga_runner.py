@@ -17,6 +17,8 @@ try:
 except Exception as e:
   print("Unable to establish a connection %s", str(e))
 
+print("Importing google analytics data for "+ param.start_date)
+
 
 try:
   for merchant in param.merchant_list:
@@ -38,3 +40,4 @@ finally:
   cursor.close()
   conn.close()
 
+print("Import of google analytics data for traffic completed !!!")
