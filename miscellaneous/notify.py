@@ -7,7 +7,7 @@ import os
 conn_string = os.environ['conn_bi']
 conn = psycopg2.connect(conn_string)
 curs = conn.cursor()
-curs.execute(("select count(*) from public.etl_status where status = {0}").format("'"+'fail'+"'"))
+curs.execute(("select * from public.etl_status where status = {0}").format("'"+'fail'+"'"))
 error_count = curs.fetchall()
 sender = 'sanjivupadhyaya@shore.com'
 receivers = ['su@shore.com']
