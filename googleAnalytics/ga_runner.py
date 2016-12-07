@@ -31,7 +31,8 @@ try:
         except Exception as e:
             print("Unable to access database, import error %s ", str(e) )      
     else:
-      print('No Rows Found')
+      pass
+      #print('No Rows Found for :'+str(merchant))
 except Exception as e:
   print("Error in GA data import")
 
