@@ -35,8 +35,15 @@ class Exporter(Thread):
 
             outputquery = "COPY ({0}) TO STDOUT WITH CSV HEADER".format(self.query)
 
-            with open(param.newpath+self.file_name +".csv", 'w+') as f:
-                curs.copy_expert(outputquery, f)
+            try:
+                with open(param.newpath+self.file_name +".csv", 'w+') as f:
+                    curs.copy_expert(outputquery, f)
+                    
+            except Exception as e:
+                conn.rollback()
+                curs.execute("""INSERT INTO etl_status (start_date, end_date, schema_name, table_name, file_path, error_phase, error_message, status) 
+                VALUES(%s, %s, %s, %s, %s, %s, %s, %s)""",[param.start_date, param.end_date, param.schema, self.file_name[:-4], param.newpath+self.file_name, 'export', str(e), 'fail'])
+                conn.commit()
 
             param.exported_file[self.file_name] = 1
 
