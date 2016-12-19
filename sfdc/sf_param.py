@@ -34,19 +34,14 @@ class param:
 	#rows_lead_history=" "
 	newpath = '/opt/etl/sfdc/sf_data/' +str(st_dt) +'/'
 
-	# user_name= "sanjiv.upadhyaya@shore.com" 
-	# password= "Verisk@123SolSaWkPCHHLTk2YWOqAFR9I"
-	# token= "SolSaWkPCHHLTk2YWOqAFR9I"
-	# passport= "Verisk@123" 
-
 	user_name = os.environ['sf_username']
 	password = os.environ['sf_password']
 	token = os.environ['sf_token']
-	passport = os.environ['sf_passport']	
+	passport = os.environ['sf_passport']
+
 	# BI database
 	conn_bi = os.environ['conn_bi']
-	#conn_bi= "postgres://segment:Aa123456_@segment-warehouse.c9sl8obym0ce.eu-central-1.rds.amazonaws.com/business-intelligence"
-	#tbl_bi =['leadhistory']
+	
 	# files ready to be extracted
 	tbl_bi = ['account','onb2__invoice__c', 'onb2__item__c', 'onb2__subscription__c', 'onb2__dunning__c'
 	,'onb2__dunningdetail__c', 'lead', 'users', 'contract'
