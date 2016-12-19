@@ -42,7 +42,9 @@ class param:
 	tbl_core = ['appointment_services', 'appointment_resources', 'customers', 'merchant_accounts', 'events', 'feedbacks', 
 				'merchant_customers', 'shift_plan_templates', 'newsletters', 'resources', 'services', 
 				'merchant_profiles', 'event_participants', 'appointment_series', 'shifts',
-				'pdf_forms', 'merchant_customer_tags', 'customer_custom_attributes', 'notification_channels', 'newsletter_blacklists',
+				'pdf_forms', 'merchant_customer_tags', 'customer_custom_attributes', 
+				#'notification_channels', 
+				'newsletter_blacklists',
 				'service_categories', 'closing_times', 'merchant_customer_custom_attributes', 'uberall_accounts']
 
 	tbl_nwsl = ['newsletters']

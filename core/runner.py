@@ -67,7 +67,7 @@ if (host == "nwsl") :
 	runner_employee.start()
 
 elif (host == "core"):
-	param.counter = 27
+	param.counter = 26
 	for i in param.tbl_core:
 		print('extraction of ' +i +' started')
 		runner = Exporter("select * from " +i +filter_row, i)
