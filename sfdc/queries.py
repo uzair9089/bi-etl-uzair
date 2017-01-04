@@ -671,7 +671,7 @@ dateTrialStart__c	,
 dateWidgetIn__c	,
 dCRMScore__c	,
 dCustomerScore__c	,
-dGoogleAnalyticsID__c,
+
 dInventoryScore__c	,
 dKeyAccountId__c	,
 dShopId__c	,
@@ -704,7 +704,8 @@ strMerchantUUID__c	,
 Type	,
 urlLinkToSuccessStory__c	,
 Website,
-SystemModstamp	from Account 
+SystemModstamp,
+dGoogleAnalyticsID__c	from Account 
 """
 
 opportunity = """ 
