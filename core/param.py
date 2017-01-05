@@ -55,10 +55,9 @@ class param:
 
 	tbl_pymt = ['disputes', 'bank_accounts', 'request_logs', 'stripe_events', 'charges']
 
-	#tbl_intercom = ['companies', 'segments', 'contacts',
-	#				'users', 'conversations', 'conversation_parts']
+	tbl_intercom = ['companies', 'segments', 'contacts',
+					'users', 'conversations', 'conversation_parts']
 
-	tbl_intercom = ['companies']
 
 	# tables which are truncated and has no date attributes.
 	tbl_except= ['newsletter_customers', 'employees', 'merchant_permissions', 'conversation_senders', 'newsletters_nwsl', 'merchants', 'merchant_key_accounts',
