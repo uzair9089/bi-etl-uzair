@@ -61,10 +61,10 @@ class Importer(Thread):
             print("Unable to access database, import error %s" % str(e))
             param.counter-1
 
-            conn.rollback()
-            curs.execute("""INSERT INTO etl_status (start_date, end_date, schema_name, table_name, file_path, error_phase, error_message, status) 
-            VALUES(%s, %s, %s, %s, %s, %s, %s, %s)""",[param.start_date, param.end_date, 'sfdc', self.file_name[:-4], param.newpath+self.file_name, 'import', str(e), 'fail'])
-            conn.commit()
+            #conn.rollback()
+            #curs.execute("""INSERT INTO etl_status (start_date, end_date, schema_name, table_name, file_path, error_phase, error_message, status) 
+            #VALUES(%s, %s, %s, %s, %s, %s, %s, %s)""",[param.start_date, param.end_date, 'sfdc', self.file_name[:-4], param.newpath+self.file_name, 'import', str(e), 'fail'])
+            #conn.commit()
 
         finally:  
             curs.close()
