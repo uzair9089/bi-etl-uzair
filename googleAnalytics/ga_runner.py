@@ -5,6 +5,7 @@ from googleapiclient import sample_tools
 from apiclient.discovery import build  
 from ga_param import param
 from httplib2 import Http 
+import pandas as pd
 import psycopg2  
 import sys
 import os
@@ -14,6 +15,14 @@ import ga
 try:
   conn = psycopg2.connect(param.conn_string)
   cursor = conn.cursor()
+  
+  id_frm_accounts = pd.read_sql("select distinct dgoogleanalyticsid__c from stage.s_account",conn)
+  
+  for i in id_frm_accounts['dgoogleanalyticsid__c'].dropna():
+    param.merchant_list.append(int(i))
+
+  tpl_merchant_list = tuple(param.merchant_list)
+
 except Exception as e:
   print("Unable to establish a connection %s", str(e))
 
@@ -21,7 +30,8 @@ print("Importing google analytics data for "+ param.start_date)
 
 
 try:
-  for merchant in param.merchant_list:
+  for merchant in tpl_merchant_list:
+  #for merchant in param.merchant_list:
     traffic_results = ga.get_api_traffic_query(ga.service, merchant).execute()
     if traffic_results.get('rows', []):
       for row in traffic_results.get('rows'):
