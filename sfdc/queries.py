@@ -960,3 +960,36 @@ from LeadHistory
 """
 
 
+specs__c= """
+select
+bChurnRelevant__c,
+CreatedById,
+CreatedDate,
+curAfflictedMRR__c,
+CurrencyIsoCode,
+Id,
+IsDeleted,
+LastActivityDate,
+LastModifiedById,
+LastModifiedDate,
+LastReferencedDate,
+LastViewedDate,
+Name,
+OwnerId,
+plDepartments__c,
+plFeatureScope__c,
+plPriority__c,
+plProduct__c,
+plSquad__c,
+plStatus__c,
+RecordTypeId,
+strDescription__c,
+strDueDate__c,
+strExpectedBehaviour__c,
+strITComment__c,
+strSeenBehaviour__c,
+SystemModstamp,
+Vorraussichtlich_abgeschlossen_am__c 
+from Specs__c
+"""
+
