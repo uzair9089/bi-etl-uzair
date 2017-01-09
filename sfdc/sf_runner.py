@@ -31,10 +31,14 @@ if not os.path.exists(param.newpath):
     os.makedirs(param.newpath)
 
 #18
-param.counter = 18
+param.counter = 19
 
 
 print("Running ETL for  " +str(param.start_date) +" - " +str(param.end_date))
+
+
+runner19 = Exporter(queries.specs__c +param.rows,'specs__c', col = queries.specs__c.split(','))
+runner19.start()
 
 runner12 = Exporter(queries.account +param.rows,'account', col = queries.account.split(','))
 runner12.start()

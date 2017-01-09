@@ -47,7 +47,7 @@ class param:
 	tbl_bi = ['account','onb2__invoice__c', 'onb2__item__c', 'onb2__subscription__c', 'onb2__dunning__c'
 	,'onb2__dunningdetail__c', 'lead', 'users', 'contract'
 	,'recordtype', 'onb2__balance__c', 'contact', 'opportunity'
-	,'onb2__dunningrun__c', 'asset', 'onb2__invoicelineitem__c', 'onb2__invoicerun__c','leadhistory']
+	,'onb2__dunningrun__c', 'asset', 'onb2__invoicelineitem__c', 'onb2__invoicerun__c', 'leadhistory', 'specs__c']
 	
 
 	exported_file = dict((el,0) for el in tbl_bi)
