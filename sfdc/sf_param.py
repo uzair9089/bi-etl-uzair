@@ -44,11 +44,12 @@ class param:
 	conn_bi = os.environ['conn_bi']
 	
 	# files ready to be extracted
-	tbl_bi = ['account','onb2__invoice__c', 'onb2__item__c', 'onb2__subscription__c', 'onb2__dunning__c'
-	,'onb2__dunningdetail__c', 'lead', 'users', 'contract'
-	,'recordtype', 'onb2__balance__c', 'contact', 'opportunity'
-	,'onb2__dunningrun__c', 'asset', 'onb2__invoicelineitem__c', 'onb2__invoicerun__c', 'leadhistory', 'specs__c']
+	# tbl_bi = ['account','onb2__invoice__c', 'onb2__item__c', 'onb2__subscription__c', 'onb2__dunning__c'
+	# ,'onb2__dunningdetail__c', 'lead', 'users', 'contract'
+	# ,'recordtype', 'onb2__balance__c', 'contact', 'opportunity'
+	# ,'onb2__dunningrun__c', 'asset', 'onb2__invoicelineitem__c', 'onb2__invoicerun__c', 'leadhistory', 'specs__c']
 	
+	tbl_bi =['specs__c']
 
 	exported_file = dict((el,0) for el in tbl_bi)
 
