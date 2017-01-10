@@ -1,6 +1,6 @@
 """
 Author: Sanjiv Upadhyaya
-Date: 2016-010-03
+Date: 2016-10-03
 Function: connect to the prod server and export tables into the csv.
 """
 

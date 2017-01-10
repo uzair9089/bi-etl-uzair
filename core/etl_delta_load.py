@@ -1,7 +1,7 @@
 
 """
 Author: Sanjiv Upadhyaya
-Date: 2016-010-03
+Date: 2016-10-03
 Function 1: remove the records existing in the stage database so that it is in sync with the applicatin prod database.
 Function 2: load data into staging in incremental way i.e, load data every 3 hours from the ETL
 """

@@ -14,7 +14,7 @@ alter table partition.s_'||tablename||'_'||substring(replace(replace(bdt,'-','')
 ' on partition.s_'||tablename||'_'||substring(replace(replace(bdt,'-',''),'''',''),1,6)||'(created_at);'
 from pg_tables where schemaname in ('core','msg','pymt','comm','nwsl')
 and tablename not in (
-'newsletter_customers', 'employees', 'conversation_senders', 'merchants', 'disputes', 
+'newsletter_customers', 'employees', 'conversation_senders', 'merchants', 'disputes', 'merchant_key_accounts',
                     'bank_accounts', 'request_logs', 'stripe_events', 'charges','merchants_pymt','admins_intercom','tags_intercom','merchant_permissions'
 );
 
@@ -41,6 +41,62 @@ returns trigger as $$
         ELSIF(NEW.created_at >= DATE ' || '''2017-01-01''' ||' AND
         NEW.created_at < DATE '||'''2017-02-01'''||' ) THEN
         INSERT INTO partition.s_'||tablename||'_201701'||' values (NEW.*);
+
+
+        ELSIF(NEW.created_at >= DATE ' || '''2017-02-01''' ||' AND
+        NEW.created_at < DATE '||'''2017-03-01'''||' ) THEN
+        INSERT INTO partition.s_'||tablename||'_201702'||' values (NEW.*);
+
+
+        ELSIF(NEW.created_at >= DATE ' || '''2017-03-01''' ||' AND
+        NEW.created_at < DATE '||'''2017-04-01'''||' ) THEN
+        INSERT INTO partition.s_'||tablename||'_201703'||' values (NEW.*);
+
+        ELSIF(NEW.created_at >= DATE ' || '''2017-04-01''' ||' AND
+        NEW.created_at < DATE '||'''2017-05-01'''||' ) THEN
+        INSERT INTO partition.s_'||tablename||'_201704'||' values (NEW.*);
+
+
+        ELSIF(NEW.created_at >= DATE ' || '''2017-05-01''' ||' AND
+        NEW.created_at < DATE '||'''2017-06-01'''||' ) THEN
+        INSERT INTO partition.s_'||tablename||'_201705'||' values (NEW.*);
+
+        ELSIF(NEW.created_at >= DATE ' || '''2017-06-01''' ||' AND
+        NEW.created_at < DATE '||'''2017-07-01'''||' ) THEN
+        INSERT INTO partition.s_'||tablename||'_201706'||' values (NEW.*);
+
+
+        ELSIF(NEW.created_at >= DATE ' || '''2017-07-01''' ||' AND
+        NEW.created_at < DATE '||'''2017-08-01'''||' ) THEN
+        INSERT INTO partition.s_'||tablename||'_201707'||' values (NEW.*);
+
+        ELSIF(NEW.created_at >= DATE ' || '''2017-08-01''' ||' AND
+        NEW.created_at < DATE '||'''2017-09-01'''||' ) THEN
+        INSERT INTO partition.s_'||tablename||'_201708'||' values (NEW.*);
+
+
+        ELSIF(NEW.created_at >= DATE ' || '''2017-09-01''' ||' AND
+        NEW.created_at < DATE '||'''2017-10-01'''||' ) THEN
+        INSERT INTO partition.s_'||tablename||'_201709'||' values (NEW.*);
+
+
+        ELSIF(NEW.created_at >= DATE ' || '''2017-10-01''' ||' AND
+        NEW.created_at < DATE '||'''2017-11-01'''||' ) THEN
+        INSERT INTO partition.s_'||tablename||'_201710'||' values (NEW.*);
+
+
+        ELSIF(NEW.created_at >= DATE ' || '''2017-11-01''' ||' AND
+        NEW.created_at < DATE '||'''2017-12-01'''||' ) THEN
+        INSERT INTO partition.s_'||tablename||'_201711'||' values (NEW.*);
+
+        ELSIF(NEW.created_at >= DATE ' || '''2017-12-01''' ||' AND
+        NEW.created_at < DATE '||'''2018-01-01'''||' ) THEN
+        INSERT INTO partition.s_'||tablename||'_201712'||' values (NEW.*);
+
+
+        ELSIF(NEW.created_at >= DATE ' || '''2018-01-01''' ||' AND
+        NEW.created_at < DATE '||'''2018-02-01'''||' ) THEN
+        INSERT INTO partition.s_'||tablename||'_201801'||' values (NEW.*);
 
 
         ELSIF(NEW.created_at >= DATE ' || '''2016-10-01''' ||' AND
@@ -400,7 +456,7 @@ BEFORE INSERT ON stage.s_'||tablename||'
 FOR EACH ROW EXECUTE PROCEDURE stage_'||tablename||'_insert_trigger();'
 from pg_tables where schemaname in ( 'nwsl' ,'core' ,'msg' ,'pymt' ,'comm')
 and tablename not in (
-'newsletter_customers', 'employees', 'conversation_senders', 'merchants', 'disputes', 
+'newsletter_customers', 'employees', 'conversation_senders', 'merchants', 'disputes', 'merchant_key_accounts',
                     'bank_accounts', 'request_logs', 'stripe_events', 'charges','merchants_pymt','admins_intercom','tags_intercom','merchant_permissions'
 )
 

@@ -1,7 +1,7 @@
 
 """
 Author: Sanjiv Upadhyaya
-Date: 2016-010-03
+Date: 2016-10-03
 Function 1: Prepare the dimension and fact tables for cube
 """
 

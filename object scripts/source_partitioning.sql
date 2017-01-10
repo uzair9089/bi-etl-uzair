@@ -6,8 +6,8 @@ alter table partition.'||tablename||'_y2016m10'||' add constraint pk_'||tablenam
 ' on partition.'||tablename||'_y2016m10'||'(created_at);' 
 from pg_tables where schemaname in ('core','msg','nwsl','comm','pymt')
 and tablename not in (
-'newsletter_customers', 'employees', 'conversation_senders', 'merchants', 'disputes', 
-                    'bank_accounts', 'request_logs', 'stripe_events', 'charges','merchants_pymt','admins_intercom','tags_intercom'
+'newsletter_customers', 'employees', 'conversation_senders', 'merchants', 'disputes', 'merchant_key_accounts',
+                    'bank_accounts', 'request_logs', 'stripe_events', 'charges','merchants_pymt','admins_intercom','tags_intercom', 'merchant_permissions'
 );
 
 
@@ -39,8 +39,8 @@ LANGUAGE plpgsql;' ||
     FOR EACH ROW EXECUTE PROCEDURE '||tablename||'_insert_trigger();'
 from pg_tables where schemaname in ('core','msg','nwsl','comm','pymt')
 and tablename not in (
-'newsletter_customers', 'employees', 'conversation_senders', 'merchants', 'disputes', 
-                    'bank_accounts', 'request_logs', 'stripe_events', 'charges','merchants_pymt','admins_intercom','tags_intercom'
+'newsletter_customers', 'employees', 'conversation_senders', 'merchants', 'disputes', 'merchant_key_accounts',
+                    'bank_accounts', 'request_logs', 'stripe_events', 'charges','merchants_pymt','admins_intercom','tags_intercom', 'merchant_permissions'
 )
 
 

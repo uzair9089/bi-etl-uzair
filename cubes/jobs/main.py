@@ -1,10 +1,10 @@
 """
 Author: Sanjiv Upadhyaya
-Date: 2016-010-03
+Date: 2016-10-03
 Function: main program to populate facts and dimensions.
 """
 
-from Loader import Loader
+from loader import Loader
 from config import config
 import transformer as trans
 import psycopg2.extras
