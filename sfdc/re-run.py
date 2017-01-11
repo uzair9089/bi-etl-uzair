@@ -35,6 +35,9 @@ class Rerunsf():
 					print("delta load starts for:" +table_name)
 					param.start_date = tbl['start_date']
 					param.end_date = tbl['end_date']
+					print(param.start_date)
+					print(param.end_date)
+					print(param.delta_query['specs__c'])
 					curs.execute(etl_delta_load.delta_query[table_name])
 					curs.execute("update public.etl_status set status = %s where file_path = %s", ('pass', file_path))
 					conn.commit()
