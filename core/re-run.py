@@ -39,7 +39,11 @@ class Rerun():
 					file = open(file_path)
 					curs.copy_expert(sql = """ COPY %s FROM STDIN WITH CSV HEADER DELIMITER AS ',' """ %(schema_name +'.' +table_name), file = file)
 					print("delta load starts for:" +table_name)
-					curs.execute(etl_delta_load.delta_query[table_name])
+					start_date = str(tbl['start_date'])
+					new_start_date = (start_date.split()[1] + ' ' + start_date.split()[2]).replace(' Name:',' 00:00:00')
+					end_date = str(tbl['end_date'])
+					new_end_date = (end_date.split()[1] + ' ' + end_date.split()[2]).replace(' Name:',' 00:00:00')
+					curs.execute(etl_delta_load.delta_query[table_name].replace(param.start_date, new_start_date).replace(param.end_date,new_end_date))
 					curs.execute("update public.etl_status set status = %s where file_path = %s", ('pass', file_path))
 					conn.commit()
 
