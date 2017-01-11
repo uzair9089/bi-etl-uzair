@@ -31,7 +31,7 @@ print("Importing google analytics data for "+ param.start_date)
 
 try:
   for merchant in tpl_merchant_list:
-    if merchant >= 10000000 and merchant !=87763239:
+    if merchant >= 10000000 and merchant !=89847910 and merchant!=8776323914 and merchant !=8776323940 and merchant!=890850626 and merchant !=89085062 and merchant!=890850624:
     #for merchant in param.merchant_list:
       traffic_results = ga.get_api_traffic_query(ga.service, merchant).execute()
       if traffic_results.get('rows', []):
