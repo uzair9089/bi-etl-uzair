@@ -20,7 +20,7 @@ class Rerunsf():
 			conn = psycopg2.connect(conn_string)
 			curs = conn.cursor()
 
-			tbl = pd.read_sql("select distinct file_path, table_name from public.etl_status where schema_name in ('sfdc') and status='fail'", conn)
+			tbl = pd.read_sql("select distinct file_path, table_name, start_date, end_date from public.etl_status where schema_name in ('sfdc') and status='fail'", conn)
 
 			for file_path in tbl['file_path'].unique():
 				x = re.search(':00/(.+?).csv', file_path)
@@ -33,6 +33,8 @@ class Rerunsf():
 					file = open(file_path)
 					curs.copy_expert(sql = """ COPY %s FROM STDIN WITH CSV HEADER DELIMITER AS ',' """ %(schema_name +'.' +table_name), file = file)
 					print("delta load starts for:" +table_name)
+					param.start_date = tbl['start_date']
+					param.end_date = tbl['end_date']
 					curs.execute(etl_delta_load.delta_query[table_name])
 					curs.execute("update public.etl_status set status = %s where file_path = %s", ('pass', file_path))
 					conn.commit()
