@@ -19,8 +19,7 @@ try:
   id_frm_accounts = pd.read_sql("select distinct dgoogleanalyticsid__c from stage.s_account",conn)
   
   for i in id_frm_accounts['dgoogleanalyticsid__c'].dropna():
-    if len(i) >= 9:
-      param.merchant_list.append(int(i))
+    param.merchant_list.append(int(i))
 
   tpl_merchant_list = tuple(param.merchant_list)
 
@@ -32,17 +31,18 @@ print("Importing google analytics data for "+ param.start_date)
 
 try:
   for merchant in tpl_merchant_list:
-  #for merchant in param.merchant_list:
-    traffic_results = ga.get_api_traffic_query(ga.service, merchant).execute()
-    if traffic_results.get('rows', []):
-      for row in traffic_results.get('rows'):
-        try:
-          cursor.execute("""INSERT INTO ga.traffic (year_month, source, page_path, host, session_count, device_category, user_count, sessions, visit_count, newuser_count, start_date) 
-              VALUES(%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)""", [row[0], row[1], row[2], row[3], row[4], row[5], row[6], row[7], row[8], row[9],param.start_date])
-        except Exception as e:
-            print("Unable to access database, import error %s ", str(e) )      
-    else:
-      pass
+    if merchant >= 10000000:
+    #for merchant in param.merchant_list:
+      traffic_results = ga.get_api_traffic_query(ga.service, merchant).execute()
+      if traffic_results.get('rows', []):
+        for row in traffic_results.get('rows'):
+          try:
+            cursor.execute("""INSERT INTO ga.traffic (year_month, source, page_path, host, session_count, device_category, user_count, sessions, visit_count, newuser_count, start_date) 
+                VALUES(%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)""", [row[0], row[1], row[2], row[3], row[4], row[5], row[6], row[7], row[8], row[9],param.start_date])
+          except Exception as e:
+              print("Unable to access database, import error %s ", str(e) )      
+      else:
+        pass
       #print('No Rows Found for :'+str(merchant))
 except Exception as e:
   print("Error in GA data import %s", str(e))
