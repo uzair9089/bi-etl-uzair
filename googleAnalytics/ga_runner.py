@@ -19,7 +19,8 @@ try:
   id_frm_accounts = pd.read_sql("select distinct dgoogleanalyticsid__c from stage.s_account",conn)
   
   for i in id_frm_accounts['dgoogleanalyticsid__c'].dropna():
-    param.merchant_list.append(int(i))
+    if len(i) >= 9:
+      param.merchant_list.append(int(i))
 
   tpl_merchant_list = tuple(param.merchant_list)
 
