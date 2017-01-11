@@ -44,7 +44,7 @@ try:
       pass
       #print('No Rows Found for :'+str(merchant))
 except Exception as e:
-  print("Error in GA data import")
+  print("Error in GA data import %s" str(e))
 
 finally:
   conn.commit()
