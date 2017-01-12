@@ -20,7 +20,7 @@ class Rerun():
 			conn = psycopg2.connect(conn_string)
 			curs = conn.cursor()
 
-			tbl = pd.read_sql("select distinct file_path, table_name from public.etl_status where schema_name not in ('sfdc') and status='fail'", conn)
+			tbl = pd.read_sql("select distinct file_path, table_name, start_date, end_date from public.etl_status where schema_name not in ('sfdc') and status='fail'", conn)
 
 			for table_name in tbl['table_name'].unique():
 				if table_name in param.truncate_tbl:
