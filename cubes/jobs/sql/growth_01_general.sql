@@ -39,6 +39,8 @@ CREATE TABLE dmart.list_city AS (
 );
 ALTER TABLE dmart.list_city ADD COLUMN id SERIAL PRIMARY KEY;
 
+INSERT INTO dmart.list_city (id, City, Country) VALUES (-1, 'N/A', 'N/A');
+
 CREATE INDEX list_city_idx
   ON dmart.list_city
   USING btree
@@ -56,6 +58,8 @@ CREATE TABLE dmart.list_industry AS (
 );
 ALTER TABLE dmart.list_industry ADD COLUMN id SERIAL PRIMARY KEY;
 
+INSERT INTO dmart.list_industry (id, Industry) VALUES (-1, 'N/A');
+
 CREATE INDEX list_industry_idx
   ON dmart.list_industry
   USING btree
@@ -71,6 +75,8 @@ CREATE TABLE dmart.list_subscription_status AS (
 	WHERE ONB2__Status__c NOTNULL
 );
 ALTER TABLE dmart.list_subscription_status ADD COLUMN id SERIAL PRIMARY KEY;
+
+INSERT INTO dmart.list_subscription_status (id, subscription_status) VALUES (-1, 'N/A');
 
 CREATE INDEX list_subscription_status_idx
   ON dmart.list_subscription_status
@@ -188,6 +194,8 @@ CREATE TABLE dmart.list_subscription_channel AS (
 );
 ALTER TABLE dmart.list_subscription_channel ADD COLUMN id SERIAL PRIMARY KEY;
 
+INSERT INTO dmart.list_subscription_channel (id, channel) VALUES (-1, 'N/A');
+
 CREATE INDEX list_subscription_channel_idx
   ON dmart.list_subscription_channel
   USING btree
@@ -229,7 +237,6 @@ CREATE TABLE dmart.list_sfdc_accounts AS (
 	AND refActiveSubscription__c NOTNULL
 );
 
-
 /**
 The following part is used to get rid of duplicate merchant profile ids which lead to a cross join in creating the fact table
 1. The duplicate accounts with the latest last modified date are chosen
@@ -266,6 +273,8 @@ from (
 where rnk > 1
 ;
 delete from dmart.list_sfdc_accounts where list_sfdc_accounts.merchant_profile_id in (select dup_records.id from dup_records) and list_sfdc_accounts.ONB2__startdate__c in(select dup_records.ONB2__startdate__c from dup_records);
+
+INSERT INTO dmart.list_sfdc_accounts (merchant_profile_id, id, Name) VALUES (-1, 'N/A', 'N/A');
 
 -- Index is created
 CREATE INDEX list_sfdc_accounts_idx
@@ -486,30 +495,30 @@ Use the above created list and temp tables to create fact table and indices
 */
 DROP TABLE IF EXISTS dmart.fact_growth_general; 
 CREATE TABLE dmart.fact_growth_general AS (
-SELECT temp_fact_growth01_basis.date_id, 
-temp_fact_growth01_basis.merchant_profile_id,
-list_sfdc_accounts.city_id,
-list_sfdc_accounts.industry_id,
-list_sfdc_accounts.subscription_status_id,
-list_sfdc_accounts.subscription_channel_id,
-list_sfdc_accounts.subscription_start_id,
-list_sfdc_accounts.subscription_end_id,
-agg_resources.resource_count as number_resources,
-agg_services.service_count as number_services,
-temp_bookings.bookings,
-temp_sma.sma,
-temp_feedbacks.feedbacks,
-temp_messages.messages,
-temp_messages.conversations, 
-temp_shifts.shifts,
-temp_newsletters.newsletters,
-temp_newsletters.recipients as newsletter_recipients,
-temp_stripe_charges.online_payments as booking_widget_payments,
-temp_stripe_charges.amount as booking_widget_payment_amount,
-temp_gastrofix_charges.gastrofix_payments,
-temp_gastrofix_charges.amount as gastrofix_payment_amount,
-temp_email.emails as emails_sent,
-temp_sms.sms as sms_sent
+SELECT COALESCE(temp_fact_growth01_basis.date_id, -1) as date_id, 
+COALESCE(temp_fact_growth01_basis.merchant_profile_id, -1) as merchant_profile_id,
+COALESCE(list_sfdc_accounts.city_id, -1) as city_id,
+COALESCE(list_sfdc_accounts.industry_id, -1) as industry_id,
+COALESCE(list_sfdc_accounts.subscription_status_id, -1) as subscription_status_id,
+COALESCE(list_sfdc_accounts.subscription_channel_id, -1) as subscription_channel_id,
+COALESCE(list_sfdc_accounts.subscription_start_id, -1) as subscription_start_id,
+COALESCE(list_sfdc_accounts.subscription_end_id, -1) as subscription_end_id,
+COALESCE(agg_resources.resource_count, 0) as number_resources,
+COALESCE(agg_services.service_count, 0) as number_services,
+COALESCE(temp_bookings.bookings, 0) as bookings,
+COALESCE(temp_sma.sma, 0) as sma,
+COALESCE(temp_feedbacks.feedbacks, 0) as feedbacks,
+COALESCE(temp_messages.messages, 0) as messages,
+COALESCE(temp_messages.conversations, 0) as conversations, 
+COALESCE(temp_shifts.shifts, 0) as shifts,
+COALESCE(temp_newsletters.newsletters, 0) as newsletters,
+COALESCE(temp_newsletters.recipients, 0) as newsletter_recipients,
+COALESCE(temp_stripe_charges.online_payments, 0) as booking_widget_payments,
+COALESCE(temp_stripe_charges.amount, 0) as booking_widget_payment_amount,
+COALESCE(temp_gastrofix_charges.gastrofix_payments, 0) as gastrofix_payments,
+COALESCE(temp_gastrofix_charges.amount, 0) as gastrofix_payment_amount,
+COALESCE(temp_email.emails, 0) as emails_sent,
+COALESCE(temp_sms.sms, 0) as sms_sent
 FROM temp_fact_growth01_basis
 LEFT JOIN dmart.list_sfdc_accounts
 ON list_sfdc_accounts.merchant_profile_id = temp_fact_growth01_basis.merchant_profile_id
@@ -579,17 +588,24 @@ CREATE INDEX fact_growth_general_subscription_channel_id_idx
   USING btree
   (subscription_channel_id);
 
-DELETE FROM dmart.fact_growth_general WHERE bookings IS NULL 
-AND sma IS NULL 
-AND feedbacks IS NULL
-and messages is null
-and conversations  is null
-and shifts is null
-and newsletters is null
-and newsletter_recipients is null
-and booking_widget_payments is null
-and booking_widget_payment_amount is null
-and gastrofix_payments is null
-and gastrofix_payment_amount is null
-and emails_sent is null
-and sms_sent is null;
+DELETE FROM dmart.fact_growth_general WHERE bookings = 0 
+AND sma = 0 
+AND feedbacks = 0
+and messages = 0
+and conversations  = 0
+and shifts = 0
+and newsletters = 0
+and newsletter_recipients = 0
+and booking_widget_payments = 0
+and booking_widget_payment_amount = 0
+and gastrofix_payments = 0
+and gastrofix_payment_amount = 0
+and emails_sent = 0
+and sms_sent = 0;
+
+
+insert into dmart.list_subscription_start_date (created_at_id, date, full_day_description, day_of_week, calendar_month, calendar_year, fiscal_year_month, holiday, weekend,month_id, order_day_of_week)
+values(-1, '2009-01-01','N/A','N/A','N/A',9999,'N/A','N/A','N/A', 0, 9999)
+
+insert into dmart.list_subscription_end_date (created_at_id, date, full_day_description, day_of_week, calendar_month, calendar_year, fiscal_year_month, holiday, weekend,month_id, order_day_of_week)
+values(-1, '2009-01-01','N/A','N/A','N/A',9999,'N/A','N/A','N/A', 0, 9999)
