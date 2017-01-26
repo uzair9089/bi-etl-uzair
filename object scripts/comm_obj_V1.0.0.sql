@@ -1,3 +1,4 @@
+-- testing the git
 CREATE TABLE IF NOT EXISTS comm.merchants
 (
   id uuid NOT NULL DEFAULT uuid_generate_v4(),
