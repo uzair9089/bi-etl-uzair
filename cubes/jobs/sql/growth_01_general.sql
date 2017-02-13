@@ -440,13 +440,15 @@ CREATE TEMP TABLE temp_email AS (
 	count(distinct emails.id) as emails
 	FROM prod.emails
 	INNER JOIN dmart.list_date_02
-	ON list_date_02.date = date_trunc('day', LEFT(emails.sent_at, 19)::timestamp)::date
+	ON list_date_02.date = emails.sent_at::date
 	INNER JOIN prod.merchant_profiles
 	ON merchant_profiles.uuid = emails.merchant_id
 	WHERE emails.sent_at NOTNULL
 	AND emails.merchant_id NOTNULL
 	GROUP BY date_id, merchant_uuid, merchant_profile_id
 );
+
+
 
 DROP TABLE IF EXISTS temp_stripe_charges;
 CREATE TEMP TABLE temp_stripe_charges AS (
@@ -609,3 +611,5 @@ values(-1, '2009-01-01','N/A','N/A','N/A',9999,'N/A','N/A','N/A', 0, 9999);
 
 insert into dmart.list_subscription_end_date (created_at_id, date, full_day_description, day_of_week, calendar_month, calendar_year, fiscal_year_month, holiday, weekend,month_id, order_day_of_week)
 values(-1, '2009-01-01','N/A','N/A','N/A',9999,'N/A','N/A','N/A', 0, 9999);
+
+
