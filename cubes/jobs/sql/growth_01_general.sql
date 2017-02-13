@@ -605,7 +605,7 @@ and sms_sent = 0;
 
 
 insert into dmart.list_subscription_start_date (created_at_id, date, full_day_description, day_of_week, calendar_month, calendar_year, fiscal_year_month, holiday, weekend,month_id, order_day_of_week)
-values(-1, '2009-01-01','N/A','N/A','N/A',9999,'N/A','N/A','N/A', 0, 9999)
+values(-1, '2009-01-01','N/A','N/A','N/A',9999,'N/A','N/A','N/A', 0, 9999);
 
 insert into dmart.list_subscription_end_date (created_at_id, date, full_day_description, day_of_week, calendar_month, calendar_year, fiscal_year_month, holiday, weekend,month_id, order_day_of_week)
-values(-1, '2009-01-01','N/A','N/A','N/A',9999,'N/A','N/A','N/A', 0, 9999)
+values(-1, '2009-01-01','N/A','N/A','N/A',9999,'N/A','N/A','N/A', 0, 9999);
