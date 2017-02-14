@@ -26,7 +26,7 @@ class param:
 	start_date = datetime.datetime.now() - datetime.timedelta(hours = 106)
 	start_date = start_date.strftime('%Y-%m-%d %H:00:00')
 
-	end_date = datetime.datetime.now() - datetime.timedelta(hours = 1)
+	end_date = datetime.datetime.now() - datetime.timedelta(hours = 2)
 	end_date = end_date.strftime('%Y-%m-%d %H:00:00')
 
 	# database connections for source and destination
