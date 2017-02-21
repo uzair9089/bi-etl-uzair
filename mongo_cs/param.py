@@ -50,7 +50,9 @@ class param:
 	exported_file = dict((el,0) for el in tbl_bi)
 
 	conn_cs = os.environ['conn_cs']
-	print(conn_cs)
+
+	conn_bi = os.environ['conn_bi']
+	
 	# allocation of db connection when runner program is executed. 
 	@classmethod
 	def dbconn(self,host):
