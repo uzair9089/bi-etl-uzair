@@ -85,7 +85,7 @@ class CustomerParser:
 
       curs.execute(etl_delta_load.delta_query[collection_name])
       conn.commit()
-      
+      print(collection_name)
       conn.close()
       curs.close()
 
