@@ -2,7 +2,7 @@
 """
 Author: Sanjiv Upadhayaya
 Date: 2016-10-03
-Function: hold the parameters of ETL process including database connection, ETL run dates and directory
+tFunction: hold the parameters of ETL process including database connection, ETL run dates and directory
 """
 
 from datetime import date, timedelta
