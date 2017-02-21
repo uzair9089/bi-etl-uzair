@@ -17,6 +17,8 @@ class param:
 	schema = "cs"
 	root = '/opt/etl/cs/data/'
 	counter = 0 
+	newpath = ""
+	connection = ""
 	st_dt = datetime.datetime.utcnow() - datetime.timedelta(hours = 999999)
 	st_dt = st_dt.strftime('%Y-%m-%d %H:00:00')
 	gmt_dt = time.strftime("%Y-%m-%d %H:%M:%S", time.gmtime(time.mktime(time.strptime(st_dt, "%Y-%m-%d %H:%M:%S"))))
