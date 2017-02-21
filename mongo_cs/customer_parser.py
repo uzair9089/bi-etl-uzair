@@ -1,10 +1,13 @@
+from sqlalchemy import create_engine
+from threading import Thread, Lock
+from param import param
+import etl_delta_load
+import psycopg2
 import os
 import json
 import sys
-from sqlalchemy import create_engine
-from threading import Thread, Lock
-import psycopg2
-from param import param
+
+
 reload(sys)
 
 class CustomerParser:
@@ -76,8 +79,9 @@ class CustomerParser:
             if 'last' in x["identity"]:
               last_name = x["identity"]["last"]
 
-          curs.execute ("insert into cs.customers(_id, name, value, email, city, country, phones, tags, oid, deleted_at, uid, id_oid, vip, updated_at, created_at, gender, first_name, last_name) values ('{0}','{1}','{2}','{3}','{4}','{5}','{6}','{7}','{8}','{9}','{10}','{11}','{12}','{13}','{14}','{15}','{16}','{17}')"
+          curs.execute ("insert into cs.customers(id, name, value, email, city, country, phones, tags, oid, deleted_at, uid, id_oid, vip, updated_at, created_at, gender, first_name, last_name) values ('{0}','{1}','{2}','{3}','{4}','{5}','{6}','{7}','{8}','{9}','{10}','{11}','{12}','{13}','{14}','{15}','{16}','{17}')"
           .format(_id, name, value, email, city, country, phones, tags, oid, deleted_at, uid, id_oid, vip, updated_at, created_at, gender, first_name, last_name))
+          curs.execute(etl_delta_load.delta_query[collection_name])
           conn.commit()
 
       conn.close()
