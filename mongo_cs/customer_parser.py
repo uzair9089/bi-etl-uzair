@@ -81,11 +81,11 @@ class CustomerParser:
 
           curs.execute ("insert into cs.customers(id, name, value, email, city, country, phones, tags, oid, deleted_at, uid, id_oid, vip, updated_at, created_at, gender, first_name, last_name) values ('{0}','{1}','{2}','{3}','{4}','{5}','{6}','{7}','{8}','{9}','{10}','{11}','{12}','{13}','{14}','{15}','{16}','{17}')"
           .format(_id, name, value, email, city, country, phones, tags, oid, deleted_at, uid, id_oid, vip, updated_at, created_at, gender, first_name, last_name))
-          
-          conn.commit()
-          curs.execute(etl_delta_load.delta_query[collection_name])
           conn.commit()
 
+      curs.execute(etl_delta_load.delta_query[collection_name])
+      conn.commit()
+      
       conn.close()
       curs.close()
 
