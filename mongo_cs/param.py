@@ -47,6 +47,7 @@ class param:
 	# files ready to be parsed: checked by the import_data module.
 	exported_file = dict((el,0) for el in tbl_bi)
 
+	conn_cs = os.environ['conn_cs']
 
 	# allocation of db connection when runner program is executed. 
 	@classmethod
