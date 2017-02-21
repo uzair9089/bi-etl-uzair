@@ -62,5 +62,5 @@ class param:
 		else:
 			print("Invalid Host given : Please enter the details of the host mongoDB in param.py file ")
 
-
+	print(param.connection)
 
