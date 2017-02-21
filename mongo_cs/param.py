@@ -31,14 +31,7 @@ class param:
 	# filters
 	filters = ["'{updated_at:{$gte:new Date(\"", "\"),$lt:new Date(\"", "\")}}'"]
 
-	#conn_bi = os.environ['conn_bi']
-	#conn_bi = "host='segment-warehouse.c9sl8obym0ce.eu-central-1.rds.amazonaws.com' dbname='business-intelligence' user='segment' password='Aa123456_'";
-	#conn_cs = "rs-ds031063/ds031063-a1.mongolab.com:31063,ds031063-a0.mongolab.com:31063 --db heroku_xr0kzr2k -u heroku_xr0kzr2k -p 41s99r0563dhrl7h2r0k2tgsgt"
-	conn_cs = os.environ['conn_cs']
-
-
 	tbl_cs= ['customers', 'custom_customer_attributes']
-
 
 	# dictionary for storing truncate queries for tables without the date attributes.
 	truncate_queries = {
