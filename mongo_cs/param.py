@@ -49,11 +49,10 @@ class param:
 	# files ready to be parsed: checked by the import_data module.
 	exported_file = dict((el,0) for el in tbl_bi)
 	
-	conn_cs = "rs-ds031063/ds031063-a1.mongolab.com:31063,ds031063-a0.mongolab.com:31063 --db heroku_xr0kzr2k -u heroku_xr0kzr2k -p 41s99r0563dhrl7h2r0k2tgsgt"
-	#conn_cs = os.environ['conn_cs']
+	conn_cs = os.environ['conn_cs']
 
-	#conn_bi = os.environ['conn_bi']
-	conn_bi = "host='segment-warehouse.c9sl8obym0ce.eu-central-1.rds.amazonaws.com' dbname='business-intelligence' user='segment' password='Aa123456_'"
+	conn_bi = os.environ['conn_bi']
+
 	# allocation of db connection when runner program is executed. 
 	@classmethod
 	def dbconn(self,host):
