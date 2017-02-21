@@ -83,7 +83,7 @@ class CustomerParser:
           .format(_id, name, value, email, city, country, phones, tags, oid, deleted_at, uid, id_oid, vip, updated_at, created_at, gender, first_name, last_name))
           conn.commit()
 
-      curs.execute(etl_delta_load.delta_query[collection_name])
+      curs.execute(etl_delta_load.delta_query[collection_name[:-5]])
       conn.commit()
       print(collection_name)
       conn.close()
