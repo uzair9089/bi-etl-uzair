@@ -15,7 +15,7 @@ import os
 class param:		
 
 	schema = "cs"
-	root = '/opt/etl/cs/data/'
+	root = '/opt/etl/mongo_cs/data/'
 	counter = 0 
 	newpath = ""
 	connection = ""
