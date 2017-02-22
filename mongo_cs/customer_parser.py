@@ -75,9 +75,9 @@ class CustomerParser:
             if 'gender' in x["identity"]:
               gender = x["identity"]["gender"]
             if 'first' in x["identity"]:
-              first_name = x["identity"]["first"]
+              first_name = x["identity"]["first"].replace("u'","").replace("'","")
             if 'last' in x["identity"]:
-              last_name = x["identity"]["last"]
+              last_name = x["identity"]["last"].replace("u'","").replace("'","")
 
           curs.execute ("insert into cs.customers(id, name, value, email, city, country, phones, tags, oid, deleted_at, uid, id_oid, vip, updated_at, created_at, gender, first_name, last_name) values ('{0}','{1}','{2}','{3}','{4}','{5}','{6}','{7}','{8}','{9}','{10}','{11}','{12}','{13}','{14}','{15}','{16}','{17}')"
           .format(_id, name, value, email, city, country, phones, tags, oid, deleted_at, uid, id_oid, vip, updated_at, created_at, gender, first_name, last_name))
