@@ -100,7 +100,7 @@ class CustomerParser:
             first_name = x["identity"]["first"].replace("u'","").replace("'","")
           if 'last' in x["identity"]  and x["identity"]["last"] is not None:
             last_name = x["identity"]["last"].replace("u'","").replace("'","")
-        curs.execute ("insert into cs.customers(uuid, name, birthday, email, city, country, phones, tag_ids, merchant_profile_uuid, deleted_at, vip, updated_at, created_at, gender, first_name, last_name) values ('{0}','{1}','{2}','{3}','{4}','{5}','{6}','{7}','{8}','{9}','{10}','{11}','{12}','{13}','{14}','{15}','{16}','{17}')"
+        curs.execute ("insert into cs.customers(uuid, name, birthday, email, city, country, phones, tag_ids, merchant_profile_uuid, deleted_at, vip, updated_at, created_at, gender, first_name, last_name) values ('{0}','{1}','{2}','{3}','{4}','{5}','{6}','{7}','{8}','{9}','{10}','{11}','{12}','{13}','{14}','{15}')"
         .format(uid, name, value, email, city, country, phones, tags, oid, deleted_at, vip, updated_at, created_at, gender, first_name, last_name))
         conn.commit()
 
