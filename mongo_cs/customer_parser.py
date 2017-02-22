@@ -56,7 +56,7 @@ class CustomerParser:
             pass
         if 'phones' in keys_in_record:
           if len(x['phones']) >0 and 'value' in x["phones"][0]:
-              phones = str(x["phones"][0]["value"]).replace("u'","").replace("'","")
+              phones = str(x["phones"][0]["value"])
               #print phones
           else:
             pass
@@ -93,7 +93,7 @@ class CustomerParser:
             pass
         if 'identity' in keys_in_record:
           if  'gender' in x["identity"]:
-            gender = x["identity"]["gender"].replace("u'","").replace("'","")
+            gender = x["identity"]["gender"]
           else:
             pass
           if 'first' in x["identity"]  and x["identity"]["first"] is not None:
@@ -111,7 +111,7 @@ class CustomerParser:
       curs.close()
 
       print("finished parsing data for: "+collection_name)
-      
+
     except Exception as e:
 
       #print(str(e))

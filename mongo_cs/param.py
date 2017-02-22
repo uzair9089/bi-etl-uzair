@@ -15,6 +15,7 @@ import os
 class param:		
 
 	schema = "cs"
+	#root = '/Users/sanjivupadhyaya/Desktop/BI/'
 	root = '/opt/etl/mongo_cs/data/'
 	counter = 0 
 	newpath = ""
