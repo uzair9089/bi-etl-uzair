@@ -19,7 +19,7 @@ class param:
 	counter = 0 
 	newpath = ""
 	connection = ""
-	st_dt = datetime.datetime.utcnow() - datetime.timedelta(hours = 176)
+	st_dt = datetime.datetime.utcnow() - datetime.timedelta(hours = 350)
 	st_dt = st_dt.strftime('%Y-%m-%d %H:00:00')
 	gmt_dt = time.strftime("%Y-%m-%d %H:%M:%S", time.gmtime(time.mktime(time.strptime(st_dt, "%Y-%m-%d %H:%M:%S"))))
 	st_dt = gmt_dt.replace(' ','T')
@@ -34,6 +34,8 @@ class param:
 	filters = ["'{updated_at:{$gte:new Date(\"", "\"),$lt:new Date(\"", "\")}}'"]
 
 	tbl_cs= ['customers', 'custom_attribute_definitions']
+	#tbl_cs= ['customers']
+
 
 	# dictionary for storing truncate queries for tables without the date attributes.
 	truncate_queries = {
