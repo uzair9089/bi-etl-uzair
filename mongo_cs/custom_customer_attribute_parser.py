@@ -7,6 +7,8 @@ import psycopg2
 from param import param
 reload(sys)
 
+sys.setdefaultencoding('utf8')
+
 class CustomCustomerAttributes:
 
     def parser(self, collection_name):

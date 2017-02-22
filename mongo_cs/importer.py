@@ -31,7 +31,7 @@ class Importer(Thread):
 
     def run(self):
 
-        if self.collection_name == 'custom_customer_attributes.json':
+        if self.collection_name == 'custom_attribute_definitions.json':
             do = ccap()
             do.parser(self.collection_name)
 

@@ -33,7 +33,7 @@ class param:
 	# filters
 	filters = ["'{updated_at:{$gte:new Date(\"", "\"),$lt:new Date(\"", "\")}}'"]
 
-	tbl_cs= ['customers', 'custom_customer_attributes']
+	tbl_cs= ['customers', 'custom_attribute_definitions']
 
 	# dictionary for storing truncate queries for tables without the date attributes.
 	truncate_queries = {
