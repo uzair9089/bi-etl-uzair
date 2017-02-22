@@ -39,9 +39,7 @@ class Importer(Thread):
             do = cp()
             do.parser(self.collection_name)
 
-        else:
-            print("No other collections are imported yet")
-         
+
 # import_data function is called every minute by the runner program until ETL for all the tables are completed  
 def import_data():
     for key, values in param.exported_file.iteritems():

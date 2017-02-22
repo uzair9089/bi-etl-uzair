@@ -77,6 +77,8 @@ class CustomCustomerAttributes:
           conn.close()
           curs.close()
 
+          print("finished parsing data for: "+collection_name)
+
 
         except Exception as e:
 
