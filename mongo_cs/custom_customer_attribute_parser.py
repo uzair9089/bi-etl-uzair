@@ -20,16 +20,16 @@ class CustomCustomerAttributes:
           conn = psycopg2.connect(conn_string)
           curs = conn.cursor()
 
-          file = open(param.root+collection_name,'r')
+          file = open(param.newpath+collection_name,'r')
           for line in file:
             x = json.loads(line,strict=False) 
             keys_in_record = x.keys()
              
-            _id_oid = required = created_at = updated_at = valid_values = multivalue = uid = value_type = events_id = _id = slugs = booking = name = ''
+            oid = required = created_at = updated_at = valid_values = multivalue = uuid = value_type = event_ids = _id = slugs = booking = name = ''
 
-            if '_id' in keys_in_record:
-                if '$oid' in x["_id"]:
-                    _id_oid = str(x["_id"]["$oid"])
+        #if '_id' in keys_in_record:
+            if 'oid' in keys_in_record:
+                oid = str(x["oid"])
                     #print _id_oid
             if 'required' in keys_in_record:
                 required = str(x["required"])
@@ -48,17 +48,17 @@ class CustomCustomerAttributes:
             if 'multivalue' in keys_in_record:
                 multivalue = str(x["multivalue"])
                 #print multivalue
-            if 'uid' in keys_in_record:
-                uid = str(x["uid"])
+            if 'uuid' in keys_in_record:
+                uuid = str(x["uuid"])
                 #print uid
             if 'value_type' in keys_in_record:
                 value_type = str(x["value_type"])
                 #print value_type
-            if 'events_id' in keys_in_record:
-                events_id = str(x["events_id"]).replace("u'","").replace("'","")
+            if 'event_ids' in keys_in_record:
+                event_ids = str(x["event_ids"]).replace("u'","").replace("'","")
                 #print events_id
-            if 'slugs' in keys_in_record:
-                slugs = str(x["slugs"][0])
+            if '_slugs' in keys_in_record:
+                slugs = str(x["_slugs"][0])
                 #print slugs
             if 'booking' in keys_in_record:
                 booking = str(x["booking"])
@@ -67,29 +67,29 @@ class CustomCustomerAttributes:
                 name = str(x["name"]).replace("u'","").replace("'","")
                 #print name
 
-            curs.execute("insert into cs.custom_attribute_definitions (_id_oid, required, created_at, updated_at, valid_values, multivalue, uid, value_type, events_id,  slugs, booking, name) values ('{0}','{1}','{2}','{3}','{4}','{5}','{6}','{7}','{8}','{9}','{10}','{11}')"
-                .format(_id_oid, required, created_at, updated_at, valid_values, multivalue, uid, value_type, events_id, slugs, booking, name))
+            curs.execute("insert into cs.custom_attribute_definitions(oid, required, created_at, updated_at, valid_values, multivalue, uuid, value_type, event_ids,  slugs, booking, name) values ('{0}','{1}','{2}','{3}','{4}','{5}','{6}','{7}','{8}','{9}','{10}','{11}')"
+                .format( oid, required, created_at, updated_at, valid_values, multivalue, uuid, value_type, event_ids, slugs, booking, name))
             conn.commit()
 
-          curs.execute(etl_delta_load.delta_query[collection_name[:-5]])
-          conn.commit()
-          #print(collection_name)
-          conn.close()
-          curs.close()
+            curs.execute(etl_delta_load.delta_query[collection_name[:-5]])
+            conn.commit()
+            #print(collection_name)
+            #conn.close()
+            #curs.close()
 
-          print("finished parsing data for: "+collection_name)
+            print("finished parsing data for: "+collection_name)
 
 
         except Exception as e:
 
-          #print(str(e))
-          param.counter-1
-          conn.rollback()
-          curs.execute("insert into etl_status(start_date, end_date, schema_name, table_name, file_path, error_phase, error_message, status) values ('{0}','{1}','{2}','{3}','{4}','{5}','{6}','{7}')"
+            print(str(e))
+            param.counter-1
+            conn.rollback()
+            curs.execute("insert into etl_status(start_date, end_date, schema_name, table_name, file_path, error_phase, error_message, status) values ('{0}','{1}','{2}','{3}','{4}','{5}','{6}','{7}')"
               .format(param.start_date, param.end_date, param.schema, collection_name, param.root+collection_name, 'parsing', str(e), 'fail'))
-          conn.commit()
-          conn.close()
-          curs.close()
+            conn.commit()
+            conn.close()
+            curs.close()
 
         finally:
 
@@ -97,4 +97,6 @@ class CustomCustomerAttributes:
           curs.close()
 
 
+#do = CustomCustomerAttributes()
+#do.parser('custom_attribute_definitions.json')
 

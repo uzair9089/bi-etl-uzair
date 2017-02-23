@@ -19,11 +19,11 @@ import os
 
 # argument passed to runner program is stored in host variable
 host = sys.argv[1]
-
+#host = "cs"
 param.dbconn(host)
 
-if not os.path.exists(param.root):
-    os.makedirs(param.root)
+if not os.path.exists(param.newpath):
+    os.makedirs(param.newpath)
 
 
 

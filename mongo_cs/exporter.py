@@ -27,28 +27,29 @@ class Exporter(Thread):
             conn_string = param.conn_bi
             conn = psycopg2.connect(conn_string)
             curs = conn.cursor()
-            var = "sudo mongoexport -h {5} --collection {7} --out {6}{7}.json  -q {0}{1}{2}{3}{4}".format(param.filters[0], param.start_date, param.filters[1], param.end_date, param.filters[2], param.conn_cs, param.root, self.collection_name)
+            var = "mongoexport -h {5} --collection {7} --out {6}{7}.json  -q {0}{1}{2}{3}{4}".format(param.filters[0], param.start_date, param.filters[1], param.end_date, param.filters[2], param.conn_cs, param.newpath, self.collection_name)
             err =  commands.getstatusoutput(var)
-
+            err
+            #print str(param.exported_file[self.collection_name])+" : " + self.collection_name
             # for checking if there was a connection reset by the peer from the mongo replica set
             while self.counter_run != 0:
                 if err:
                     param.exported_file[self.collection_name] = 1
                     self.counter_run = 0
-                    print self.counter_run
-                else:
-                    err =  commands.getstatusoutput(var)
-                    print self.counter_run
+                    #print self.counter_run
+                    #print str(param.exported_file[self.collection_name])+" : " + self.collection_name
+
 
     	except Exception as e:
 
-    		curs.execute("""INSERT INTO etl_status (start_date, end_date, schema_name, table_name, file_path, error_phase, error_message, status) 
-            VALUES(%s, %s, %s, %s, %s, %s, %s, %s)""",[param.start_date, param.end_date, param.schema, self.collection_name, param.root+self.collection_name+str(".json"), 'import', str(e),'fail'])
-        
-        finally:
+            curs.execute("""INSERT INTO etl_status (start_date, end_date, schema_name, table_name, file_path, error_phase, error_message, status) VALUES(%s, %s, %s, %s, %s, %s, %s, %s)""",[param.start_date, param.end_date, param.schema, self.collection_name, param.root+self.collection_name+str(".json"), 'import', str(e),'fail'])
+            conn.commit()
+            conn.close()
+            curs.close()
 
-        	conn.close()
-        	curs.close()
+        finally:
+            conn.close()
+            curs.close()
 
 
 

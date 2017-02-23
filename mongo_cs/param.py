@@ -14,8 +14,8 @@ import os
 
 class param:		
 
-	schema = "cs"
-	#root = '/Users/sanjivupadhyaya/Desktop/BI/'
+	schema = ""
+	#root = '/Users/sanjivupadhyaya/Desktop/bi_22/etl/mongo_cs/data/'
 	root = '/opt/etl/mongo_cs/data/'
 	counter = 0 
 	newpath = ""
@@ -30,6 +30,7 @@ class param:
 	gmt_dt = time.strftime("%Y-%m-%d %H:%M:%S", time.gmtime(time.mktime(time.strptime(end_date, "%Y-%m-%d %H:%M:%S"))))
 	end_date = gmt_dt.replace(' ','T')
 	end_date = end_date+'Z'
+
 
 	# filters
 	filters = ["'{updated_at:{$gte:new Date(\"", "\"),$lt:new Date(\"", "\")}}'"]

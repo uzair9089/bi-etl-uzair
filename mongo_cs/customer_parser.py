@@ -22,13 +22,13 @@ class CustomerParser:
       conn = psycopg2.connect(conn_string)
       curs = conn.cursor()
 
-      file = open(param.root+collection_name,'r')
+      file = open(param.newpath+collection_name,'r')
 
       for line in file:
         x = json.loads(line,strict=False) 
         keys_in_record = x.keys() 
         ##print keys_in_record
-        _id  = name = value = email = first_name = last_name =  gender = city = country  = phones = tags = oid = deleted_at = uid = id_oid = vip = updated_at  = created_at = ''
+        _id  = name = value = email = first_name = last_name =  gender = city = country  = phones = tags = oid = deleted_at = uid = id_oid = vip = updated_at  = created_at = locale =''
         #for i in keys_in_record:
         #  #print x[i]
         if 'dates' in keys_in_record:
@@ -91,6 +91,8 @@ class CustomerParser:
               #print created_at
           else:
             pass
+        if 'locale' in keys_in_record:
+          locale = x["locale"]
         if 'identity' in keys_in_record:
           if  'gender' in x["identity"]:
             gender = x["identity"]["gender"]
@@ -100,15 +102,15 @@ class CustomerParser:
             first_name = x["identity"]["first"].replace("u'","").replace("'","")
           if 'last' in x["identity"]  and x["identity"]["last"] is not None:
             last_name = x["identity"]["last"].replace("u'","").replace("'","")
-        curs.execute ("insert into cs.customers(uuid, name, birthday, email, city, country, phones, tag_ids, merchant_profile_uuid, deleted_at, vip, updated_at, created_at, gender, first_name, last_name) values ('{0}','{1}','{2}','{3}','{4}','{5}','{6}','{7}','{8}','{9}','{10}','{11}','{12}','{13}','{14}','{15}')"
-        .format(uid, name, value, email, city, country, phones, tags, oid, deleted_at, vip, updated_at, created_at, gender, first_name, last_name))
+        curs.execute ("insert into cs.customers(uuid, name, birthday, email, city, country, phones, tag_ids, merchant_profile_uuid, deleted_at, vip, updated_at, created_at, gender, first_name, last_name, locale) values ('{0}','{1}','{2}','{3}','{4}','{5}','{6}','{7}','{8}','{9}','{10}','{11}','{12}','{13}','{14}','{15}','{16}')"
+        .format(uid, name, value, email, city, country, phones, tags, oid, deleted_at, vip, updated_at, created_at, gender, first_name, last_name, locale))
         conn.commit()
 
       curs.execute(etl_delta_load.delta_query[collection_name[:-5]])
       conn.commit()
       #print(collection_name)
-      conn.close()
-      curs.close()
+      #conn.close()
+      #curs.close()
 
       print("finished parsing data for: "+collection_name)
 
@@ -118,7 +120,7 @@ class CustomerParser:
       param.counter-1
       conn.rollback()
       curs.execute("insert into etl_status(start_date, end_date, schema_name, table_name, file_path, error_phase, error_message, status) values ('{0}','{1}','{2}','{3}','{4}','{5}','{6}','{7}')"
-          .format(param.start_date, param.end_date, param.schema, collection_name, param.root+collection_name, 'parsing', str(e), 'fail'))
+         .format(param.start_date, param.end_date, param.schema, collection_name, param.root+collection_name, 'parsing', str(e), 'fail'))
       conn.commit()
       conn.close()
       curs.close()
@@ -129,3 +131,5 @@ class CustomerParser:
       curs.close()
 
 
+#do = CustomerParser()
+#do.parser('customers.json')
