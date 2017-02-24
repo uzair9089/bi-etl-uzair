@@ -50,8 +50,8 @@ class Importer(Thread):
                 print("import for " +self.file_name[:-4] +" completed !!!")
                 print("delta load starts for:" +self.file_name[:-4])
 
-                #$curs.execute(etl_delta_load.delta_query[self.file_name[:-4]])
-                #conn.commit()
+                curs.execute(etl_delta_load.delta_query[self.file_name[:-4]])
+                conn.commit()
 
                 print("delta load for: " +self.file_name[:-4] +" completed ***")
 
@@ -70,7 +70,6 @@ class Importer(Thread):
         finally:
             curs.close()
             conn.close()
-
 
 
           
