@@ -18,8 +18,8 @@ class param:
 	connection = ""
 	schema = ""
 	newpath = ""
-	root = '/Users/sanjivupadhyaya/Desktop/5days/data/'
-	#root = '/opt/etl/core/data/'
+	#root = '/Users/sanjivupadhyaya/Desktop/5days/data/'
+	root = '/opt/etl/core/data/'
 	counter = 0 # counter for imported tables. Used to stop the ETL process.
 
 	# should be always 1 - 2 hours
