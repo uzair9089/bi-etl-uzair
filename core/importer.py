@@ -40,27 +40,27 @@ class Importer(Thread):
                 curs.execute(param.truncate_queries[self.file_name[:-4]])
                 conn.commit()
 
-            if param.reset_time == '12':
-                curs.execute(etl_delta_load.delete_queries[self.file_name[:-4]])
-                conn.commit()
-            
-            if (os.stat(param.newpath +self.file_name).st_size > 4):
-                file = open(param.newpath +self.file_name)
-
-                curs.copy_expert(sql = """ COPY %s FROM STDIN WITH CSV HEADER DELIMITER AS ',' """ % (param.schema +'.' +self.file_name[:-4]), file = file)
-                conn.commit()
-
-                print("import for " +self.file_name[:-4] +" completed !!!")
-                print("delta load starts for:" +self.file_name[:-4])
-
                 if param.reset_time == '12':
-                    curs.execute(etl_delta_load.delta_query_reset[self.file_name[:-4]])
+                    curs.execute(etl_delta_load.delete_queries[self.file_name[:-4]])
                     conn.commit()
-                    print("delta load for: " +self.file_name[:-4] +" completed ***RESET***")
-                else:
-                    curs.execute(etl_delta_load.delta_query[self.file_name[:-4]])
+                
+                if (os.stat(param.newpath +self.file_name).st_size > 4):
+                    file = open(param.newpath +self.file_name)
+
+                    curs.copy_expert(sql = """ COPY %s FROM STDIN WITH CSV HEADER DELIMITER AS ',' """ % (param.schema +'.' +self.file_name[:-4]), file = file)
                     conn.commit()
-                    print("delta load for: " +self.file_name[:-4] +" completed ***")
+
+                    print("import for " +self.file_name[:-4] +" completed !!!")
+                    print("delta load starts for:" +self.file_name[:-4])
+
+                    if param.reset_time == '12':
+                        curs.execute(etl_delta_load.delta_query_reset[self.file_name[:-4]])
+                        conn.commit()
+                        print("delta load for: " +self.file_name[:-4] +" completed ***RESET***")
+                    else:
+                        curs.execute(etl_delta_load.delta_query[self.file_name[:-4]])
+                        conn.commit()
+                        print("delta load for: " +self.file_name[:-4] +" completed ***")
 
             else:
                 print("Empty file for: " +self.file_name[:-4])
