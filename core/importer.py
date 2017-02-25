@@ -40,7 +40,7 @@ class Importer(Thread):
                 curs.execute(param.truncate_queries[self.file_name[:-4]])
                 conn.commit()
 
-            if param.reset_time == '12':
+            if param.reset_time == '12' and self.file_name[:-4] not in param.truncate_tbl:
                 curs.execute(etl_delta_load.delete_queries[self.file_name[:-4]])
                 conn.commit()
             
