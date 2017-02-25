@@ -40,7 +40,7 @@ class Importer(Thread):
                 curs.execute(param.truncate_queries[self.file_name[:-4]])
                 conn.commit()
 
-            if param.reset_time == '13' and self.file_name[:-4] not in param.truncate_tbl:
+            if param.reset_time == param.reset_value and self.file_name[:-4] not in param.truncate_tbl:
                 curs.execute(etl_delta_load.delete_queries[self.file_name[:-4]])
                 conn.commit()
             
@@ -53,7 +53,7 @@ class Importer(Thread):
                 print("import for " +self.file_name[:-4] +" completed !!!")
                 print("delta load starts for:" +self.file_name[:-4])
 
-                if param.reset_time == '13':
+                if param.reset_time == param.reset_value:
                     curs.execute(etl_delta_load.delta_query_reset[self.file_name[:-4]])
                     conn.commit()
                     print("delta load for: " +self.file_name[:-4] +" completed ***RESET***")
