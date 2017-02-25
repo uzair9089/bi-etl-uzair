@@ -50,7 +50,7 @@ else:
 
 
 # filter_row/ filter_row_segment is used to filter the data based on the ETL start_date and end_date
-if param.reset_time == '00':
+if param.reset_time == '12':
 	filter_row = " where updated_at >='" +str(param.reset_start_date) +"' and updated_at<'" +str(param.reset_end_date) +"'"
 else:
 	filter_row = " where updated_at >='" +str(param.start_date) +"' and updated_at<'" +str(param.end_date) +"'"
