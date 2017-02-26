@@ -121,31 +121,6 @@ class param:
 				  'intercom':[{'tbl_source':tbl_intercom},{'tbl_source_truncate':tbl_intercom_truncate},{'tbl_source_rename':tbl_intercom_rename}]}
 
 
-	# dictionary for storing truncate queries for tables without the date attributes.
-	truncate_queries = {
-						# newsletters
-						'newsletter_customers': "truncate table nwsl.newsletter_customers;"
-						# core
-						,'employees': "truncate table core.employees;"
-						,'merchant_key_accounts':"truncate table core.merchant_key_accounts;"
-						,'merchant_permissions':"truncate table core.merchant_permissions;"
-						# messages
-						,'conversation_senders': "truncate table msg.conversation_senders;"
-						# communication
-						,'merchants': "truncate table comm.merchants;"
-						# payment
-						,'merchants_pymt': "truncate table pymt.merchants_pymt;"
-						,'disputes': "truncate table pymt.disputes;"
-						,'bank_accounts': "truncate table pymt.bank_accounts;"
-						,'request_logs': "truncate table pymt.request_logs;"
-						,'stripe_events': "truncate table pymt.stripe_events;"
-						,'charges': "truncate table pymt.charges;"
-						# intercom
-						,'tags_intercom': "truncate table intercom.tags_intercom;"
-						,'admins_intercom': "truncate table intercom.admins_intercom;"
-	}
-
-
 
 	# allocation of db connection when runner program is executed. 
 	@classmethod

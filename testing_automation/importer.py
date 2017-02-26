@@ -6,8 +6,8 @@ Function: connect to the BI server and import csv files into respective tables.
 
 from sqlalchemy import create_engine
 from threading import Thread, Lock
-from param import param
 import etl_delta_load
+from param import param
 import pandas as pd
 import threading
 import psycopg2
@@ -37,7 +37,7 @@ class Importer(Thread):
 
                 print("truncating table " +self.file_name[:-4])
                 
-                curs.execute(param.truncate_queries[self.file_name[:-4]])
+                curs.execute(etl_delta_load.truncate_queries[self.file_name[:-4]])
                 conn.commit()
 
             if param.reset_time == param.reset_value and self.file_name[:-4] not in param.truncate_tbl:

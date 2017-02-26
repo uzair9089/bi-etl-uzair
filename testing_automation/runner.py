@@ -19,13 +19,13 @@ import os
 
 # argument passed to ##runner program is stored in host variable
 host = sys.argv[1]
-#host = 'intercom'
 
 param.dbconn(host)
 
 # perform no_op load from postgres so that the json objects are treated as json instead of text or string
 psycopg2.extras.register_default_json(loads=lambda x: x)
 psycopg2.extras.register_default_jsonb(loads=lambda x: x)
+
 
 DEC2FLOAT = psycopg2.extensions.new_type(
     psycopg2.extensions.DECIMAL.values,
@@ -34,20 +34,16 @@ DEC2FLOAT = psycopg2.extensions.new_type(
 psycopg2.extensions.register_type(DEC2FLOAT)
 
 
+
+
 # populate the source, truncating behaviour and table renaming schemes from the param file
 def fetch_table(source_name):
     tbl_source = copy.copy(param.table_hash[source_name][0]['tbl_source'])
-
     tbl_source_truncate = copy.copy(param.table_hash[source_name][1]['tbl_source_truncate'])
-
     tbl_source_rename = copy.copy(param.table_hash[source_name][2]['tbl_source_rename'])
-
     tbl_all = copy.copy(tbl_source) + copy.copy(tbl_source_truncate)
-
     param.tbl_source = copy.copy(tbl_source)
-
     param.tbl_source_truncate = copy.copy(tbl_source_truncate)
-
     param.tbl_source_rename = copy.copy(tbl_source_rename)
 
     # setting tables which needs to be truncatted where table contains no date attributes
@@ -70,22 +66,24 @@ def fetch_table(source_name):
 
     
     param.exported_file = dict((el, 0) for el in tbl_all)
-    #param.truncate_tbl = tbl_source_truncate
     param.truncate_tbl = copy.copy(truncate_table)
-    print(tbl_source_truncate)
 
-    print(param.exported_file)
-    print param.truncate_tbl
+
 
 
 if not os.path.exists(param.newpath):
     os.makedirs(param.newpath)
+
+
+
 
 if sys.argv[1] in param.sources:
     if param.reset_time == param.reset_value:
         print("Resetting data from " +str(param.reset_start_date) +" - " +str(param.reset_end_date))
     else:
         print("Running ETL for " +str(param.start_date) +" - " +str(param.end_date))
+
+
 
 # filter_row/ filter_row_segment is used to filter the data based on the ETL start_date and end_date
 if param.reset_time == param.reset_value:
@@ -95,11 +93,12 @@ else:
 # filter_row = " "
 filter_row_segment = " where updated_at::date >= current_date::date -1 and updated_at::date < current_date::date "
 
+
+
 # if host in param.list_of_available_sources
 if (host in param.sources):
     fetch_table(host)
     param.counter = len(param.tbl_source) + len(param.tbl_source_truncate)
-
 
     for i in param.tbl_source:
         print('extraction of ' + i + ' started')
