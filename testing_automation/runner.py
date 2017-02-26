@@ -17,7 +17,7 @@ import time
 import sys
 import os
 
-# argument passed to #runner program is stored in host variable
+# argument passed to ##runner program is stored in host variable
 host = sys.argv[1]
 #host = 'intercom'
 
@@ -72,10 +72,10 @@ def fetch_table(source_name):
     param.exported_file = dict((el, 0) for el in tbl_all)
     #param.truncate_tbl = tbl_source_truncate
     param.truncate_tbl = copy.copy(truncate_table)
-    #print(tbl_source_truncate)
+    print(tbl_source_truncate)
 
-    #print(param.exported_file)
-    #print param.truncate_tbl
+    print(param.exported_file)
+    print param.truncate_tbl
 
 
 if not os.path.exists(param.newpath):
@@ -98,31 +98,31 @@ if (host in param.sources):
 
 
     for i in param.tbl_source:
-        #print('extraction of ' + i + ' started')
+        print('extraction of ' + i + ' started')
         # handle the table renaming while importing the table
 
         if i in param.tbl_source_rename:
             runner = Exporter("select * from " + i + filter_row, param.tbl_source_rename[i]) #need to tackle the renamed tables
             runner.start()
-            #print('select * from ' + i, param.tbl_source_rename[i])
+            print('select * from ' + i, param.tbl_source_rename[i])
 
         else:
-        	runner = Exporter("select * from " + i + filter_row, i) #need to tackle the renamed tables
+			runner = Exporter("select * from " + i + filter_row, i) #need to tackle the renamed tables
             runner.start()
-            #print('select * from ' + i, i)
+            print('select * from ' + i, i)
 
     for j in param.tbl_source_truncate:
-        #print('extraction of ' + j + ' started')
+        print('extraction of ' + j + ' started')
 
         if j in param.tbl_source_rename:
             runner2 = Exporter('select * from '+ j, param.tbl_source_rename[j])
             runner2.start()
-            #print('select * from ' + j, param.tbl_source_rename[j])
+            print('select * from ' + j, param.tbl_source_rename[j])
 
         else:
             runner2 = Exporter('select * from '+ j, j)
             runner2.start()
-            #print('select * from ' + j, j)
+            print('select * from ' + j, j)
 
 
 # run the ETL process until all the mentioned tables in the param file are exported.
