@@ -89,7 +89,7 @@ if (host in param.sources):
 
 		if i in param.tbl_source_rename:
 			runner = Exporter("select * from " + i + filter_row, param.tbl_source_rename[i]) #need to tackle the renamed tables
-			runner.start()s
+			runner.start()
 			#print('select * from '+ i, param.tbl_source_rename[i])
 
 		else:
@@ -112,8 +112,8 @@ if (host in param.sources):
 
 
 # run the ETL process until all the mentioned tables in the param file are exported.
-#while param.counter != 0:
-#	importer.import_data()
+while param.counter != 0:
+	importer.import_data()
 
 
 
