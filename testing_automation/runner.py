@@ -36,14 +36,30 @@ psycopg2.extensions.register_type(DEC2FLOAT)
 def fetch_table(source_name):
 
 	tbl_source = param.table_hash[source_name][0]['tbl_source']
+
 	tbl_source_truncate =  param.table_hash[source_name][1]['tbl_source_truncate']
+
 	tbl_source_rename = param.table_hash[source_name][2]['tbl_source_rename']
+
 	tbl_all = tbl_source + tbl_source_truncate
 
 	param.tbl_source = tbl_source
+
 	param.tbl_source_truncate = tbl_source_truncate
+
 	param.tbl_source_rename = tbl_source_rename
 
+	# setting tables which needs to be truncatted where table contains no date attributes
+	for table in tbl_source_truncate:
+		if table in tbl_source_rename.keys():
+			#for table in tbl_source_truncate:
+			tbl_source_truncate.remove(table)
+			tbl_source_truncate.append(tbl_source_rename[table])
+		else:
+			pass
+
+	
+	# for adjusting the table name if it is to be renamed in the BI DWH because of potential similar name clash
 	for table in tbl_all:
 		if table in tbl_source_rename.keys():
 			for table in tbl_source_rename.keys():
@@ -53,7 +69,8 @@ def fetch_table(source_name):
 			pass
 
 	param.exported_file = dict((el,0) for el in tbl_all)
-
+	param.truncate_tbl = tbl_source_truncate
+	#print(tbl_source_truncate)
 
 if not os.path.exists(param.newpath):
     os.makedirs(param.newpath)
@@ -82,6 +99,8 @@ if (host in param.sources):
 	fetch_table(host)
 	param.counter = len(param.tbl_source) + len(param.tbl_source_truncate)
 
+	print(param.truncate_tbl)
+	print(param.exported_file)
 
 	for i in param.tbl_source:
 		print('extraction of ' +i + ' started')
