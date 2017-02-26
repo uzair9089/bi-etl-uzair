@@ -18,8 +18,8 @@ class param:
 	connection = ""
 	schema = ""
 	newpath = ""
-	root = '/opt/etl/core/data/'
-	#root = '/Users/sanjivupadhyaya/Desktop/prac/'
+	#root = '/opt/etl/core/data/'
+	root = '/Users/sanjivupadhyaya/Desktop/prac/'
 	counter = 0 # counter for imported tables. Used to stop the ETL process.
 
 	# should be always 1 - 2 hours
@@ -57,6 +57,7 @@ class param:
 
 	tbl_source_rename = []
 
+	exported_file = {}
 
 	#tbl_core= ['shifts','shift_plan_templates']
 	tbl_core = ['appointment_services', 'appointment_resources', 'customers', 'merchant_accounts', 'events', 'feedbacks', 
@@ -95,15 +96,29 @@ class param:
 
 	tbl_pymt_rename = {'merchants': 'merchants_pymt'}
 
-	tbl_intercom = ['companies', 'segments', 'contacts',
-					'users', 'conversations', 'conversation_parts']
+	tbl_intercom = ['companies', 'segments', 'contacts', 'users',
+					 'conversations', 'conversation_parts']
 
 	tbl_intercom_truncate = ['tags', 'admins']
 
 	# if tables has been renamed while importing into our BI-DWH, then renamed_table has to be kept bzw., intercom			
-	tbl_intercom_rename =  {'companies': 'companies_intercom', 'segments': 'segments_intercom', 'contacts': 'contacts_intercom',
-					   'users': 'users_intercom', 'conversation':'conversations_intercom','conversation_parts': 'conversation_parts_intercom'
-					   , 'tags': 'tags_intercom', 'admins': 'admins_intercom'}
+	tbl_intercom_rename =  {'companies': 'companies_intercom', 'segments': 'segments_intercom', 'contacts': 'contacts_intercom','users': 'users_intercom', 
+						'conversations':'conversations_intercom','conversation_parts': 'conversation_parts_intercom','tags': 'tags_intercom', 'admins': 'admins_intercom'}
+
+
+	# complete list of tables to be extracted 
+	#tbl_bi = tbl_core + tbl_core_truncate + tbl_msg + tbl_msg_truncate + tbl_comm + tbl_comm_truncate + tbl_intercom + tbl_intercom_truncate + tbl_nwsl + tbl_nwsl_truncate + tbl_pymt + tbl_pymt_truncate
+
+	truncate_tbl = tbl_core_truncate + tbl_msg_truncate + tbl_comm_truncate + tbl_intercom_truncate + tbl_nwsl_truncate + tbl_pymt_truncate
+	# files ready to be extracted: checked by the import_data module.
+
+
+	table_hash = {'core':[{'tbl_source':tbl_core},{'tbl_source_truncate':tbl_core_truncate},{'tbl_source_rename':tbl_core_rename}], 
+				  'nwsl':[{'tbl_source':tbl_nwsl},{'tbl_source_truncate':tbl_nwsl_truncate},{'tbl_source_rename':tbl_nwsl_rename}], 
+				  'msg':[{'tbl_source':tbl_msg},{'tbl_source_truncate':tbl_msg_truncate},{'tbl_source_rename':tbl_msg_rename}], 
+				  'comm':[{'tbl_source':tbl_comm},{'tbl_source_truncate':tbl_comm_truncate},{'tbl_source_rename':tbl_comm_rename}],
+				  'pymt':[{'tbl_source':tbl_pymt},{'tbl_source_truncate':tbl_pymt_truncate},{'tbl_source_rename':tbl_pymt_rename}], 
+				  'intercom':[{'tbl_source':tbl_intercom},{'tbl_source_truncate':tbl_intercom_truncate},{'tbl_source_rename':tbl_intercom_rename}]}
 
 
 	# dictionary for storing truncate queries for tables without the date attributes.
@@ -130,20 +145,6 @@ class param:
 						,'admins_intercom': "truncate table intercom.admins_intercom;"
 	}
 
-
-	# complete list of tables to be extracted 
-	tbl_bi = tbl_core + tbl_core_truncate + tbl_msg + tbl_msg_truncate + tbl_comm + tbl_comm_truncate + tbl_intercom + tbl_intercom_truncate + tbl_nwsl + tbl_nwsl_truncate + tbl_pymt + tbl_pymt_truncate
-
-	truncate_tbl = tbl_core_truncate + tbl_msg_truncate + tbl_comm_truncate + tbl_intercom_truncate + tbl_nwsl_truncate + tbl_pymt_truncate
-	# files ready to be extracted: checked by the import_data module.
-	exported_file = dict((el,0) for el in tbl_bi)
-
-	table_hash = {'core':[{'tbl_source':tbl_core},{'tbl_source_truncate':tbl_core_truncate},{'tbl_source_rename':tbl_core_rename}], 
-				  'nwsl':[{'tbl_source':tbl_nwsl},{'tbl_source_truncate':tbl_nwsl_truncate},{'tbl_source_rename':tbl_nwsl_rename}], 
-				  'msg':[{'tbl_source':tbl_msg},{'tbl_source_truncate':tbl_msg_truncate},{'tbl_source_rename':tbl_msg_rename}], 
-				  'comm':[{'tbl_source':tbl_comm},{'tbl_source_truncate':tbl_comm_truncate},{'tbl_source_rename':tbl_comm_rename}],
-				  'pymt':[{'tbl_source':tbl_pymt},{'tbl_source_truncate':tbl_pymt_truncate},{'tbl_source_rename':tbl_pymt_rename}], 
-				  'intercom':[{'tbl_source':tbl_intercom},{'tbl_source_truncate':tbl_intercom_truncate},{'tbl_source_rename':tbl_intercom_rename}]}
 
 
 	# allocation of db connection when runner program is executed. 

@@ -34,9 +34,25 @@ psycopg2.extensions.register_type(DEC2FLOAT)
 
 # populate the source, truncating behaviour and table renaming schemes from the param file
 def fetch_table(source_name):
-	param.tbl_source = param.table_hash[source_name][0]['tbl_source']
-	param.tbl_source_truncate =  param.table_hash[source_name][1]['tbl_source_truncate']
-	param.tbl_source_rename = param.table_hash[source_name][2]['tbl_source_rename']
+
+	tbl_source = param.table_hash[source_name][0]['tbl_source']
+	tbl_source_truncate =  param.table_hash[source_name][1]['tbl_source_truncate']
+	tbl_source_rename = param.table_hash[source_name][2]['tbl_source_rename']
+	tbl_all = tbl_source + tbl_source_truncate
+
+	param.tbl_source = tbl_source
+	param.tbl_source_truncate = tbl_source_truncate
+	param.tbl_source_rename = tbl_source_rename
+
+	for table in tbl_all:
+		if table in tbl_source_rename.keys():
+			for table in tbl_source_rename.keys():
+				tbl_all.remove(table)
+				tbl_all.append(tbl_source_rename[table])
+		else:
+			pass
+
+	param.exported_file = dict((el,0) for el in tbl_all)
 
 
 if not os.path.exists(param.newpath):
@@ -61,39 +77,43 @@ else:
 filter_row_segment =  " where updated_at::date >= current_date::date -1 and updated_at::date < current_date::date "
 
 
-
-
 # if host in param.list_of_available_sources
 if (host in param.sources):
 	fetch_table(host)
 	param.counter = len(param.tbl_source) + len(param.tbl_source_truncate)
+
+
 	for i in param.tbl_source:
 		print('extraction of ' +i + ' started')
 		# handle the table renaming while importing the table
+
 		if i in param.tbl_source_rename:
 			runner = Exporter("select * from " + i + filter_row, param.tbl_source_rename[i]) #need to tackle the renamed tables
-			runner.start()
-			print('select * from '+ i, param.tbl_source_rename[i])
+			runner.start()s
+			#print('select * from '+ i, param.tbl_source_rename[i])
+
 		else:
 			runner = Exporter("select * from " + i + filter_row, i) #need to tackle the renamed tables
 			runner.start()
-			print('select * from '+ i,i)
+			#print('select * from '+ i,i)
 
 	for j in param.tbl_source_truncate:
 		print('extraction of ' + j + ' started')
+
 		if j in param.tbl_source_rename:
 			runner2 = Exporter('select * from '+ j, param.tbl_source_rename[j])
 			runner2.start()
-			print('select * from '+ j, param.tbl_source_rename[j])
+			#print('select * from '+ j, param.tbl_source_rename[j])
+
 		else:
 			runner2 = Exporter('select * from '+ j, j)
 			runner2.start()
-			print('select * from '+ j, j)
+			#print('select * from '+ j, j)
 
 
 # run the ETL process until all the mentioned tables in the param file are exported.
-while param.counter != 0:
-	importer.import_data()
+#while param.counter != 0:
+#	importer.import_data()
 
 
 
