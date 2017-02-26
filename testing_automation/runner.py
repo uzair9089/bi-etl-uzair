@@ -77,18 +77,18 @@ if (host in param.sources):
 		else:
 			runner = Exporter("select * from " + i + filter_row, i) #need to tackle the renamed tables
 			runner.start()
-			#print('select * from '+ i,i)
+			print('select * from '+ i,i)
 
 	for j in param.tbl_source_truncate:
 		print('extraction of ' + j + ' started')
 		if j in param.tbl_source_rename:
 			runner2 = Exporter('select * from '+ j, param.tbl_source_rename[j])
 			runner2.start()
-			#print('select * from '+ j, param.tbl_source_rename[j])
+			print('select * from '+ j, param.tbl_source_rename[j])
 		else:
 			runner2 = Exporter('select * from '+ j, j)
 			runner2.start()
-			#print('select * from '+ j, j)
+			print('select * from '+ j, j)
 
 
 # run the ETL process until all the mentioned tables in the param file are exported.
