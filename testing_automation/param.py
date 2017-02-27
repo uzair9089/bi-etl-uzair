@@ -18,12 +18,10 @@ class param:
 	connection = ""
 	schema = ""
 	newpath = ""
-	#root = '/opt/etl/core/data/'
-	root = '/Users/sanjivupadhyaya/Desktop/prac/'
-	counter = 0 # counter for imported tables. Used to stop the ETL process.
+	root = '/opt/etl/core/data/'
+	counter = 0 
 
 	# should be always 1 - 2 hours
-	# to run every hour change it to 2 and 1 both are negatives
 	start_date = datetime.datetime.now() - datetime.timedelta(hours = 2)
 	start_date = start_date.strftime('%Y-%m-%d %H:00:00')
 
@@ -41,13 +39,15 @@ class param:
 	reset_end_date = reset_end_date.strftime('%Y-%m-%d %H:00:00')
 
 	# database connections for source and destination
-	conn_nwsl = os.environ['conn_nwsl']
-	conn_core = os.environ['conn_core']
-	conn_msg = os.environ['conn_msg']
-	conn_comm = os.environ['conn_comm']
-	conn_pymt = os.environ['conn_pymt']
-	conn_intercom = os.environ['conn_intercom']
-	conn_bi = os.environ['conn_bi']
+	conn_hash = {
+				'nwsl': os.environ['conn_nwsl']
+				,'core': os.environ['conn_core']
+				,'msg': os.environ['conn_msg']
+				,'comm': os.environ['conn_comm']
+				,'pymt': os.environ['conn_pymt']
+				,'intercom': os.environ['conn_intercom']
+				,'bi': os.environ['conn_bi'] 
+			}
 
 	sources = ['core', 'nwsl', 'msg', 'comm', 'pymt', 'intercom']
 
@@ -125,40 +125,10 @@ class param:
 	# allocation of db connection when runner program is executed. 
 	@classmethod
 	def dbconn(self,host):
-		if(host == "nwsl"):
-			param.connection = self.conn_nwsl
-			param.schema = "nwsl"
+		if host in param.sources:
+			param.connection = self.conn_hash[host]
+			param.schema = host
 			param.newpath = param.root +param.schema +'/' +param.start_date +'/'
-
-		elif(host == "msg"):
-			param.connection = self.conn_msg
-			param.schema = "msg"
-			param.newpath = param.root +param.schema +'/' +param.start_date +'/'
-
-		elif(host == "core"):
-			param.connection = self.conn_core
-			param.schema = "core"
-			param.newpath = param.root +param.schema +'/' +param.start_date +'/'
-
-		elif(host == "comm"):
-			param.connection = self.conn_comm
-			param.schema = "comm"
-			param.newpath = param.root +param.schema +'/' +param.start_date +'/'
-
-		elif(host == "pymt"):
-			param.connection = self.conn_pymt
-			param.schema = "pymt"
-			param.newpath = param.root +param.schema +'/' +param.start_date +'/'
-		
-		elif(host == "intercom"):
-			param.connection = self.conn_intercom
-			param.schema = "intercom"
-			param.newpath = param.root +param.schema +'/' +param.start_date +'/'
-
-
-		elif(host == "bi"):
-			param.connection = self.conn_bi
-
 		else:
 			print("Invalid Host given : Please enter the details of the host in param.py file ")
 

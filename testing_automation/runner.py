@@ -17,22 +17,39 @@ import time
 import sys
 import os
 
-# argument passed to ##runner program is stored in host variable
-host = sys.argv[1]
 
+host = sys.argv[1]
 param.dbconn(host)
 
 # perform no_op load from postgres so that the json objects are treated as json instead of text or string
 psycopg2.extras.register_default_json(loads=lambda x: x)
 psycopg2.extras.register_default_jsonb(loads=lambda x: x)
 
-
+# python specific handling while exporting data into csv
 DEC2FLOAT = psycopg2.extensions.new_type(
     psycopg2.extensions.DECIMAL.values,
     'DEC2FLOAT',
     lambda value, curs: int(value) if value is not None else None)
 psycopg2.extensions.register_type(DEC2FLOAT)
 
+# dir generation if it does not already exists in the root dir
+if not os.path.exists(param.newpath):
+    os.makedirs(param.newpath)
+
+# printing useful information in the std output
+if sys.argv[1] in param.sources:
+    if param.reset_time == param.reset_value:
+        print("Resetting data from " +str(param.reset_start_date) +" - " +str(param.reset_end_date))
+    else:
+        print("Running ETL for " +str(param.start_date) +" - " +str(param.end_date))
+
+# filter_row/ filter_row_segment is used to filter the data based on the ETL start_date and end_date
+if param.reset_time == param.reset_value:
+    filter_row = " where updated_at >='" + str(param.reset_start_date) + "' and updated_at<'" + str(param.reset_end_date) + "'"
+else:
+    filter_row = " where updated_at >='" + str(param.start_date) + "' and updated_at<'" + str(param.end_date) + "'"
+
+filter_row_segment = " where updated_at::date >= current_date::date -1 and updated_at::date < current_date::date "
 
 
 
@@ -67,32 +84,6 @@ def fetch_table(source_name):
     
     param.exported_file = dict((el, 0) for el in tbl_all)
     param.truncate_tbl = copy.copy(truncate_table)
-
-
-
-
-if not os.path.exists(param.newpath):
-    os.makedirs(param.newpath)
-
-
-
-
-if sys.argv[1] in param.sources:
-    if param.reset_time == param.reset_value:
-        print("Resetting data from " +str(param.reset_start_date) +" - " +str(param.reset_end_date))
-    else:
-        print("Running ETL for " +str(param.start_date) +" - " +str(param.end_date))
-
-
-
-# filter_row/ filter_row_segment is used to filter the data based on the ETL start_date and end_date
-if param.reset_time == param.reset_value:
-    filter_row = " where updated_at >='" + str(param.reset_start_date) + "' and updated_at<'" + str(param.reset_end_date) + "'"
-else:
-    filter_row = " where updated_at >='" + str(param.start_date) + "' and updated_at<'" + str(param.end_date) + "'"
-# filter_row = " "
-filter_row_segment = " where updated_at::date >= current_date::date -1 and updated_at::date < current_date::date "
-
 
 
 # if host in param.list_of_available_sources
