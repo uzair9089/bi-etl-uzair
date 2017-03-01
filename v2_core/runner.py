@@ -99,6 +99,7 @@ if (host in param.sources):
             runner = Exporter('select * from '+ i + ' where appointment_series_id in (select id from appointment_series '+filter_row+')', i)
             runner.start()
             print('select * from ' + i, i)
+            print('select * from '+ i + ' where appointment_series_id in (select id from appointment_series '+filter_row+')')
 
 
         if i in param.tbl_source_rename:
