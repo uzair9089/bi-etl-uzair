@@ -60,7 +60,7 @@ class param:
 	exported_file = {}
 
 	#tbl_core= ['shifts','shift_plan_templates']
-	tbl_core = ['appointment_services', 'appointment_resources', 'customers', 'merchant_accounts', 'events', 'feedbacks', 
+	tbl_core = ['appointment_services', 'appointment_resources', 'customers', 'events', 'feedbacks', 
 				'merchant_customers', 'shift_plan_templates', 'newsletters', 'resources', 'services', 
 				'merchant_profiles', 'event_participants', 'appointment_series', 'shifts',
 				'pdf_forms', 'merchant_customer_tags', 'customer_custom_attributes', 
@@ -68,7 +68,7 @@ class param:
 				'newsletter_blacklists',
 				'service_categories', 'closing_times', 'merchant_customer_custom_attributes', 'uberall_accounts']
 	
-	tbl_core_truncate = ['employees', 'merchant_permissions', 'merchant_key_accounts']
+	tbl_core_truncate = ['employees', 'merchant_permissions', 'merchant_key_accounts', 'merchant_accounts']
 
 	tbl_core_rename = {}
 
