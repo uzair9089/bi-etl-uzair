@@ -81,7 +81,7 @@ delta_query = {
 			,'merchant_key_accounts': "truncate table stage.s_merchant_key_accounts; insert into stage.s_merchant_key_accounts select * from core.merchant_key_accounts;"
 			,'merchant_roles': "truncate table stage.s_merchant_roles; insert into stage.s_merchant_roles select * from core.merchant_roles;"
 			#,'appointment_occurrences': "select 1;"
-			,'appointment_occurrences': "delete from stage.s_appointment_occurrences where starts_at > '"+str(param.start_date)+"'; insert into stage.s_apointment_occurrences select * from core.appointment_occurrences where starts_at > '"+str(param.start_date)+"';"
+			,'appointment_occurrences': "delete from stage.s_appointment_occurrences where starts_at > '"+str(param.start_date)+"'; insert into stage.s_appointment_occurrences select * from core.appointment_occurrences where starts_at > '"+str(param.start_date)+"';"
 			# intercom
 			,'companies_intercom':"truncate table stage.s_companies_intercom; insert into stage.s_companies_intercom select * from intercom.companies_intercom;"
 			,'segments_intercom':"truncate table stage.s_segments_intercom; insert into stage.s_segments_intercom select * from intercom.segments_intercom;"
@@ -213,7 +213,7 @@ delta_query_reset = {
 				,'merchant_key_accounts': "truncate table stage.s_merchant_key_accounts; insert into stage.s_merchant_key_accounts select * from core.merchant_key_accounts;"
 				,'merchant_roles': "truncate table stage.s_merchant_roles; insert into stage.s_merchant_roles select * from core.merchant_roles;"
 				#,'appointment_occurrences': "select 1;"
-				,'appointment_occurrences': "delete from stage.s_appointment_occurrences where starts_at > '"+str(param.start_date)+"'; insert into stage.s_apointment_occurrences select * from core.appointment_occurrences where starts_at > '"+str(param.start_date)+"';"
+				,'appointment_occurrences': "delete from stage.s_appointment_occurrences where starts_at > '"+str(param.start_date)+"'; insert into stage.s_appointment_occurrences select * from core.appointment_occurrences where starts_at > '"+str(param.start_date)+"';"
 				# intercom
 				,'companies_intercom':"truncate table stage.s_companies_intercom; insert into stage.s_companies_intercom select * from intercom.companies_intercom;"
 				,'segments_intercom':"truncate table stage.s_segments_intercom; insert into stage.s_segments_intercom select * from intercom.segments_intercom;"
