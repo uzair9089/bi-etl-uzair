@@ -29,8 +29,8 @@ class param:
 	end_date = end_date+'.000Z'
 
 	#filter data for delta loads
-	#rows = ""
-	rows = " where SystemModstamp >= " +start_date +" and SystemModstamp < " +end_date
+	rows = ""
+	#rows = " where SystemModstamp >= " +start_date +" and SystemModstamp < " +end_date
 	rows_leadhistory = " where createddate>=" +start_date +" and createddate <" +end_date
 	#rows_lead_history=" "
 	newpath = '/opt/etl/sfdc/sf_data/' +str(st_dt) +'/'
