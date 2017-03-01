@@ -36,12 +36,12 @@ psycopg2.extensions.register_type(DEC2FLOAT)
 if not os.path.exists(param.newpath):
     os.makedirs(param.newpath)
 
-# printing useful information in the std output
+# #printing useful information in the std output
 if sys.argv[1] in param.sources:
     if param.reset_time == param.reset_value:
-        print("Resetting data from " +str(param.reset_start_date) +" - " +str(param.reset_end_date))
+        #print("Resetting data from " +str(param.reset_start_date) +" - " +str(param.reset_end_date))
     else:
-        print("Running ETL for " +str(param.start_date) +" - " +str(param.end_date))
+        #print("Running ETL for " +str(param.start_date) +" - " +str(param.end_date))
 
 # filter_row/ filter_row_segment is used to filter the data based on the ETL start_date and end_date
 if param.reset_time == param.reset_value:
@@ -92,36 +92,36 @@ if (host in param.sources):
     param.counter = len(param.tbl_source) + len(param.tbl_source_truncate)
 
     for i in param.tbl_source:
-        print('extraction of ' + i + ' started')
+        #print('extraction of ' + i + ' started')
         # handle the table renaming while importing the table
 
-        if i in param.tbl_source_rename:
-            runner = Exporter("select * from " + i + filter_row, param.tbl_source_rename[i]) #need to tackle the renamed tables
-            runner.start()
-            print('select * from ' + i, param.tbl_source_rename[i])
-
-        elif i == 'appointment_occurences': # use another key in hash for these kind of special cases
+        if i == 'appointment_occurrences': # use another key in hash for these kind of special cases
             runner = Exporter("select * from "+ i + " where appointment_series_id in (select id from appointment_series "+filter_row+")", i)
             runner.start()
-            print('select * from ' + i, i)
+            #print("select * from "+ i + " where appointment_series_id in (select id from appointment_series "+filter_row+")", i)
+
+        elif i in param.tbl_source_rename:
+            runner = Exporter("select * from " + i + filter_row, param.tbl_source_rename[i]) #need to tackle the renamed tables
+            runner.start()
+            #print("select * from " + i + filter_row, param.tbl_source_rename[i])
 
         else:
             runner = Exporter("select * from " + i + filter_row, i) #need to tackle the renamed tables
             runner.start()
-            print('select * from ' + i, i)
+            #print("select * from " + i + filter_row, i, "from here")
 
     for j in param.tbl_source_truncate:
-        print('extraction of ' + j + ' started')
+        #print('extraction of ' + j + ' started')
 
         if j in param.tbl_source_rename:
             runner2 = Exporter('select * from '+ j, param.tbl_source_rename[j])
             runner2.start()
-            print('select * from ' + j, param.tbl_source_rename[j])
+            #print('select * from '+ j, param.tbl_source_rename[j])
 
         else:
             runner2 = Exporter('select * from '+ j, j)
             runner2.start()
-            print('select * from ' + j, j)
+            #print('select * from '+ j, j)
 
 
 # run the ETL process until all the mentioned tables in the param file are exported.

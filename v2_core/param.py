@@ -19,6 +19,7 @@ class param:
 	schema = ""
 	newpath = ""
 	root = '/opt/etl/core/data/'
+	#root = '/Users/sanjivupadhyaya/Desktop/prac/'
 	counter = 0 
 
 	# should be always 1 - 2 hours
