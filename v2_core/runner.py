@@ -44,14 +44,15 @@ if sys.argv[1] in param.sources:
         print("Running ETL for " +str(param.start_date) +" - " +str(param.end_date))
 
 # filter_row/ filter_row_segment is used to filter the data based on the ETL start_date and end_date
-if param.reset_time == param.reset_value:
-    filter_row = " where updated_at >='" + str(param.reset_start_date) + "' and updated_at<'" + str(param.reset_end_date) + "'"
+if host != 'intercom' :
+    if param.reset_time == param.reset_value:
+        filter_row = " where updated_at >='" + str(param.reset_start_date) + "' and updated_at<'" + str(param.reset_end_date) + "'"
+    else:
+        filter_row = " where updated_at >='" + str(param.start_date) + "' and updated_at<'" + str(param.end_date) + "'"
 else:
-    filter_row = " where updated_at >='" + str(param.start_date) + "' and updated_at<'" + str(param.end_date) + "'"
+    filter_row = " where updated_at::date >= current_date::date -1 and updated_at::date < current_date::date "
 
-filter_row_segment = " where updated_at::date >= current_date::date -1 and updated_at::date < current_date::date "
-
-
+filter_occurrences = " where updated_at >='" + str(param.start_date) + "' and updated_at<'" + str(param.end_date) + "'"
 
 # populate the source, truncating behaviour and table renaming schemes from the param file
 def fetch_table(source_name):
@@ -96,7 +97,7 @@ if (host in param.sources):
         # handle the table renaming while importing the table
 
         if i == 'appointment_occurrences': # use another key in hash for these kind of special cases
-            runner = Exporter("select * from "+ i + " where appointment_series_id in (select id from appointment_series "+filter_row+")", i)
+            runner = Exporter("select * from "+ i + " where appointment_series_id in (select id from appointment_series "+filter_occurrences+")", i)
             runner.start()
             #print("select * from "+ i + " where appointment_series_id in (select id from appointment_series "+filter_row+")", i)
 
