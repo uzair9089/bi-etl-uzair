@@ -101,7 +101,7 @@ if (host in param.sources):
             print('select * from ' + i, param.tbl_source_rename[i])
 
         elif i == 'appointment_occurences': # use another key in hash for these kind of special cases
-            runner = Exporter('select * from '+ i + ' where appointment_series_id in (select id from appointment_series '+filter_row+')', i)
+            runner = Exporter("select * from "+ i + " where appointment_series_id in (select id from appointment_series "+filter_row+")", i)
             runner.start()
             print('select * from ' + i, i)
 
