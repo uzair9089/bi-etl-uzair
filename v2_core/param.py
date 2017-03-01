@@ -68,7 +68,7 @@ class param:
 				'newsletter_blacklists',
 				'service_categories', 'closing_times', 'merchant_customer_custom_attributes', 'uberall_accounts']
 	
-	tbl_core_truncate = ['employees', 'merchant_permissions', 'merchant_key_accounts', 'merchant_accounts']
+	tbl_core_truncate = ['employees', 'merchant_permissions', 'merchant_key_accounts', 'merchant_accounts', 'merchant_roles']
 
 	tbl_core_rename = {}
 
