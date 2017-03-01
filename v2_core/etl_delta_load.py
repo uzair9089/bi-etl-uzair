@@ -16,7 +16,7 @@ truncate_queries = {
 					,'employees': "truncate table core.employees;"
 					,'merchant_key_accounts':"truncate table core.merchant_key_accounts;"
 					,'merchant_permissions':"truncate table core.merchant_permissions;"
-					,'merchant_accounts' : "truncate table core.merchant_accounts;"
+					,'merchant_accounts': "truncate table core.merchant_accounts;"
 					# messages
 					,'conversation_senders': "truncate table msg.conversation_senders;"
 					# communication
