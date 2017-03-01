@@ -95,17 +95,18 @@ if (host in param.sources):
         print('extraction of ' + i + ' started')
         # handle the table renaming while importing the table
 
-        if i == 'appointment_occurrences': # use another key in hash for these kind of special cases
-            runner = Exporter('select * from '+ i + ' where appointment_series_id in (select id from appointment_series '+filter_row+')', i)
-            runner.start()
-            print('select * from ' + i, i)
-            print('select * from '+ i + ' where appointment_series_id in (select id from appointment_series '+filter_row+')')
-
 
         if i in param.tbl_source_rename:
-            runner = Exporter("select * from " + i + filter_row, param.tbl_source_rename[i]) #need to tackle the renamed tables
-            runner.start()
-            print('select * from ' + i, param.tbl_source_rename[i])
+
+            if i == 'appointment_occurrences': # use another key in hash for these kind of special cases
+                runner = Exporter('select * from '+ i + ' where appointment_series_id in (select id from appointment_series '+filter_row+')', i)
+                runner.start()
+                print('select * from ' + i, i)
+                print('select * from '+ i + ' where appointment_series_id in (select id from appointment_series '+filter_row+')')
+            else:
+                runner = Exporter("select * from " + i + filter_row, param.tbl_source_rename[i]) #need to tackle the renamed tables
+                runner.start()
+                print('select * from ' + i, param.tbl_source_rename[i])
 
         else:
             runner = Exporter("select * from " + i + filter_row, i) #need to tackle the renamed tables
