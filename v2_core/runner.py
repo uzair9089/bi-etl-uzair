@@ -119,7 +119,6 @@ if (host in param.sources):
             print('select * from ' + j, param.tbl_source_rename[j])
 
         else:
-            elif j == 'appointment_occurences':
             runner2 = Exporter('select * from '+ j, j)
             runner2.start()
             print('select * from ' + j, j)
