@@ -93,36 +93,28 @@ if (host in param.sources):
     param.counter = len(param.tbl_source) + len(param.tbl_source_truncate)
 
     for i in param.tbl_source:
-        #print('extraction of ' + i + ' started')
-        # handle the table renaming while importing the table
 
         if i == 'appointment_occurrences': # use another key in hash for these kind of special cases
             runner = Exporter("select * from "+ i + " where appointment_series_id in (select id from appointment_series "+filter_occurrences+")", i)
             runner.start()
-            #print("select * from "+ i + " where appointment_series_id in (select id from appointment_series "+filter_row+")", i)
 
         elif i in param.tbl_source_rename:
             runner = Exporter("select * from " + i + filter_row, param.tbl_source_rename[i]) #need to tackle the renamed tables
             runner.start()
-            #print("select * from " + i + filter_row, param.tbl_source_rename[i])
 
         else:
             runner = Exporter("select * from " + i + filter_row, i) #need to tackle the renamed tables
             runner.start()
-            #print("select * from " + i + filter_row, i, "from here")
 
     for j in param.tbl_source_truncate:
-        #print('extraction of ' + j + ' started')
 
         if j in param.tbl_source_rename:
             runner2 = Exporter('select * from '+ j, param.tbl_source_rename[j])
             runner2.start()
-            #print('select * from '+ j, param.tbl_source_rename[j])
 
         else:
             runner2 = Exporter('select * from '+ j, j)
             runner2.start()
-            #print('select * from '+ j, j)
 
 
 # run the ETL process until all the mentioned tables in the param file are exported.
