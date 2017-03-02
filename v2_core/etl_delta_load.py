@@ -140,6 +140,7 @@ delete_queries = {
 				,'services': "delete from core.services where updated_at>='" +str(param.reset_start_date) +"';"
 				,'merchant_customers': "delete from core.merchant_customers where updated_at>='" +str(param.reset_start_date) +"';"
 				,'appointment_resources': "delete from core.appointment_resources where updated_at>='" +str(param.reset_start_date) +"';"
+				,'appointment_occurrences': "select 1;"
 
 				# newsletter
 				,'newsletters_nwsl': "delete from nwsl.newsletters_nwsl where updated_at>='" +str(param.reset_start_date) +"';"
