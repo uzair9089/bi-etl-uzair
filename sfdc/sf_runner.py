@@ -31,7 +31,7 @@ if not os.path.exists(param.newpath):
     os.makedirs(param.newpath)
 
 #19
-param.counter = 19
+param.counter = 20
 
 
 print("Running ETL for  " +str(param.start_date) +" - " +str(param.end_date))
@@ -99,6 +99,9 @@ while param.counter != 0:
 
 		runner14 = Exporter(queries.leadhistory +param.rows_leadhistory,'leadhistory', col = queries.leadhistory.split(','))
 		runner14.start()
+
+		runner20 = Exporter(queries.order +param.rows,'order', col = queries.order.split(','))
+		runner20.start()
 
 		param.exported_table.append('Stop Iteration !')
 
