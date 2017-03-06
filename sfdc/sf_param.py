@@ -16,13 +16,13 @@ import os
 
 class param:
 	# 4 and - 1
-	st_dt = datetime.datetime.utcnow() - datetime.timedelta(hours = 56)
+	st_dt = datetime.datetime.utcnow() - datetime.timedelta(hours = 4)
 	st_dt = st_dt.strftime('%Y-%m-%d %H:00:00')
 	gmt_dt = time.strftime("%Y-%m-%d %H:%M:%S", time.gmtime(time.mktime(time.strptime(st_dt, "%Y-%m-%d %H:%M:%S"))))
 	st_dt = gmt_dt.replace(' ','T')
 	start_date =  str(st_dt) +'.000Z'
 
-	end_date = datetime.datetime.utcnow() - datetime.timedelta(hours = 2)
+	end_date = datetime.datetime.utcnow() - datetime.timedelta(hours = 1)
 	end_date = end_date.strftime('%Y-%m-%d %H:00:00')
 	gmt_dt = time.strftime("%Y-%m-%d %H:%M:%S", time.gmtime(time.mktime(time.strptime(end_date, "%Y-%m-%d %H:%M:%S"))))
 	end_date = gmt_dt.replace(' ','T')
