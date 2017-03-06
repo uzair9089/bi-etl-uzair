@@ -31,7 +31,7 @@ class param:
 
 	reset_time = end_date[11:13]
 
-	reset_value = '00'
+	reset_value = '10'
 	
 	reset_start_date = datetime.datetime.now() - datetime.timedelta(hours = 241)
 	reset_start_date = reset_start_date.strftime('%Y-%m-%d %H:00:00')
