@@ -27,7 +27,7 @@ class Exporter(Thread):
             conn_string = param.conn_bi
             conn = psycopg2.connect(conn_string)
             curs = conn.cursor()
-            var = "mongoexport -h {5} --readPreference=secondary --collection {7} --out {6}{7}.json  -q {0}{1}{2}{3}{4}".format(param.filters[0], param.start_date, param.filters[1], param.end_date, param.filters[2], param.conn_cs, param.newpath, self.collection_name)
+            var = "mongoexport -h {5} --readPreference secondary --collection {7} --out {6}{7}.json  -q {0}{1}{2}{3}{4}".format(param.filters[0], param.start_date, param.filters[1], param.end_date, param.filters[2], param.conn_cs, param.newpath, self.collection_name)
             err =  commands.getstatusoutput(var)
             err
             #print str(param.exported_file[self.collection_name])+" : " + self.collection_name
