@@ -25,7 +25,7 @@ class Rerun():
 			for table_name in tbl['table_name'].unique():
 				if table_name in param.truncate_tbl:
 					print("truncating table " +table_name)
-					curs.execute(param.truncate_queries[table_name])
+					curs.execute(etl_delta_load.truncate_queries[table_name])
 					conn.commit()
 
 			for file_path in tbl['file_path'].unique():
