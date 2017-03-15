@@ -16,8 +16,11 @@ conn_string = "host='segment-warehouse.c9sl8obym0ce.eu-central-1.rds.amazonaws.c
 conn = psycopg2.connect(conn_string)
 curs = conn.cursor()
 
+user = os.environ['jira_user']
+password = os.environ['jira_pass']
+
 options = {'server': 'https://jira.shore.com'}
-jira = JIRA(options, basic_auth=('sanjiv.upadhyaya@shore.com', 'AndreJuliaSanjiv@shore'))
+jira = JIRA(options, basic_auth=(user, password))
 projects = jira.projects()
 #issues = jira.search_issues("updated >= -2w  order by created DESC", startAt=0, maxResults=20000, validate_query=True, fields=None, expand='changelog,customfield', json_result=None)
 issues = jira.search_issues("updated >= -2d and updated < -1d  order by created DESC", startAt=0, maxResults=2000, validate_query=True, fields=None, expand='changelog,customfield', json_result=None)
