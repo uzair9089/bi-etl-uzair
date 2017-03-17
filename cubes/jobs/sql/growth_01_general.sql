@@ -795,4 +795,6 @@ alter table dmart.list_sfdc_accounts alter column num_success_cases TYPE text;
 alter table dmart.list_sfdc_accounts alter column num_churn_cases TYPE text;
 alter table dmart.list_date_02 add column week int;
 update dmart.list_date_02 set week = extract(week from  date );
+delete from dmart.list_sfdc_accounts where num_churn_cases is null or num_success_cases is null;
 --select * from dmart.list_sfdc_accounts where num_churn_cases is null
+
