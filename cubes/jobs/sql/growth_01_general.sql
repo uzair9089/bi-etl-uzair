@@ -665,6 +665,7 @@ Use the above created list and temp tables to create fact table and indices
 DROP TABLE IF EXISTS dmart.fact_growth_general; 
 CREATE TABLE dmart.fact_growth_general AS (
 SELECT COALESCE(temp_fact_growth01_basis.date_id, -1) as date_id, 
+list_sfdc_accounts.account_owner as account_owner,
 COALESCE(temp_fact_growth01_basis.merchant_profile_id, -1) as merchant_profile_id,
 COALESCE(list_sfdc_accounts.city_id, -1) as city_id,
 COALESCE(list_sfdc_accounts.industry_id, -1) as industry_id,
@@ -797,4 +798,20 @@ alter table dmart.list_date_02 add column week int;
 update dmart.list_date_02 set week = extract(week from  date );
 delete from dmart.list_sfdc_accounts where num_churn_cases is null or num_success_cases is null;
 --select * from dmart.list_sfdc_accounts where num_churn_cases is null
+
+
+
+-- for fixing multiple owners display problem in the cube
+create table dmart.list_owner (owner_id SERIAL, account_owner varchar(800));
+
+insert into dmart.list_owner  (account_owner)
+select distinct account_owner from dmart.list_sfdc_accounts;
+
+alter table dmart.fact_growth_general add column owner_id integer;
+
+UPDATE dmart.fact_growth_general 
+SET owner_id = lo.owner_id
+FROM dmart.list_owner lo 
+WHERE account_owner = lo.account_owner;
+
 
