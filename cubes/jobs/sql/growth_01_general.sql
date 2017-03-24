@@ -802,6 +802,8 @@ delete from dmart.list_sfdc_accounts where num_churn_cases is null or num_succes
 
 
 -- for fixing multiple owners display problem in the cube
+
+drop table if exists dmart.list_owner;
 create table dmart.list_owner (owner_id SERIAL, account_owner varchar(800));
 
 insert into dmart.list_owner  (account_owner)
