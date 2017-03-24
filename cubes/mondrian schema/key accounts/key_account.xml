@@ -1,0 +1,242 @@
+<Schema name="Growth_01_General_Cube">
+  <Dimension visible="true" highCardinality="false" name="Created Date">
+    <Hierarchy name="Date" visible="true" hasAll="true" primaryKey="created_at_id">
+      <Table name="list_date_02" schema="dmart">
+      </Table>
+      <Level name="Short Date" visible="true" column="date" type="Date" uniqueMembers="false" levelType="Regular" hideMemberIf="Never">
+      </Level>
+      <Level name="Long Date" visible="true" column="full_day_description" ordinalColumn="date" type="String" uniqueMembers="false" levelType="Regular" hideMemberIf="Never">
+      </Level>
+    </Hierarchy>
+    <Hierarchy name="Day of week" visible="true" hasAll="true" primaryKey="created_at_id">
+      <Table name="list_date_02" schema="dmart">
+      </Table>
+      <Level name="Day of week" visible="true" column="day_of_week" ordinalColumn="order_day_of_week" type="String" uniqueMembers="false" levelType="Regular" hideMemberIf="Never">
+      </Level>
+      <Level name="Weekend" visible="true" column="weekend" type="String" uniqueMembers="false" levelType="Regular" hideMemberIf="Never">
+      </Level>
+    </Hierarchy>
+    <Hierarchy name="Month" visible="true" hasAll="true" primaryKey="created_at_id">
+      <Table name="list_date_02" schema="dmart">
+      </Table>
+      <Level name="Month" visible="true" column="calendar_month" ordinalColumn="month_id" type="String" uniqueMembers="false" levelType="Regular" hideMemberIf="Never">
+      </Level>
+    </Hierarchy>
+    <Hierarchy name="Year" visible="true" hasAll="true" primaryKey="created_at_id">
+      <Table name="list_date_02" schema="dmart">
+      </Table>
+      <Level name="Calendar Year" visible="true" column="calendar_year" type="Numeric" uniqueMembers="false" levelType="Regular" hideMemberIf="Never">
+      </Level>
+    </Hierarchy>
+    <Hierarchy name="Calendar Week" visible="true" hasAll="true" primaryKey="created_at_id">
+      <Table name="list_date_02" schema="dmart">
+      </Table>
+      <Level name="Calendar Week" visible="true" column="week" type="Numeric" uniqueMembers="false" levelType="Regular" hideMemberIf="Never">
+      </Level>
+    </Hierarchy>
+  </Dimension>
+  <Dimension visible="true" highCardinality="false" name="Account Information">
+    <Hierarchy name="Account Information" visible="true" hasAll="true" primaryKey="merchant_profile_id">
+      <Table name="list_sfdc_accounts" schema="dmart">
+      </Table>
+      <Level name="Merchant Profile ID" visible="true" column="merchant_profile_id" type="Numeric" uniqueMembers="false" levelType="Regular" hideMemberIf="Never">
+      </Level>
+      <Level name="Merchant UUID" visible="true" column="merchant_uuid" type="String" uniqueMembers="false" levelType="Regular" hideMemberIf="Never">
+      </Level>
+      <Level name="Account ID" visible="true" column="id" type="String" uniqueMembers="false" levelType="Regular" hideMemberIf="Never">
+      </Level>
+      <Level name="Merchant Key Account ID" visible="true" column="merchant_key_account_id" type="Numeric" uniqueMembers="false" levelType="Regular" hideMemberIf="Never">
+      </Level>
+      <Level name="Name" visible="true" column="name" type="String" uniqueMembers="false" levelType="Regular" hideMemberIf="Never">
+      </Level>
+      <Level name="Latest Success Case Created" visible="true" column="latest_success_case_created" type="String" uniqueMembers="false" levelType="Regular" hideMemberIf="Never">
+      </Level>
+      <Level name="Latest Churn Case Created" visible="true" column="latest_churn_case_created" type="String" uniqueMembers="false" levelType="Regular" hideMemberIf="Never">
+      </Level>
+      <Level name="Number of Success Cases" visible="true" column="num_success_cases" type="String" uniqueMembers="false" levelType="Regular" hideMemberIf="Never">
+      </Level>
+      <Level name="Number of Churn Cases" visible="true" column="num_churn_cases" type="String" uniqueMembers="false" levelType="Regular" hideMemberIf="Never">
+      </Level>
+      <Level name="Latest Success Case Status" visible="true" column="latest_success_case_status" type="String" uniqueMembers="false" levelType="Regular" hideMemberIf="Never">
+      </Level>
+      <Level name="Latest Churn Case Status" visible="true" column="latest_churn_case_status" type="String" uniqueMembers="false" levelType="Regular" hideMemberIf="Never">
+      </Level>
+      <Level name="MRR Range" visible="true" column="mrr_range" nameColumn="mrr_range" ordinalColumn="mrr_range_id" type="String" uniqueMembers="false" levelType="Regular" hideMemberIf="Never">
+      </Level>
+      <Level name="MRR" visible="true" column="mrr" type="String" uniqueMembers="false" levelType="Regular" hideMemberIf="Never">
+      </Level>
+      <Level name="Activity Score" visible="true" column="activity_score" type="String" uniqueMembers="false" levelType="Regular" hideMemberIf="Never">
+      </Level>
+    </Hierarchy>
+  </Dimension>
+  <Dimension visible="true" highCardinality="false" name="Geography">
+    <Hierarchy name="Country" visible="true" hasAll="true" primaryKey="id">
+      <Table name="list_city" schema="dmart">
+      </Table>
+      <Level name="Country" visible="true" column="country" type="String" uniqueMembers="false" levelType="Regular" hideMemberIf="Never">
+      </Level>
+    </Hierarchy>
+    <Hierarchy name="City" visible="true" hasAll="true" primaryKey="id">
+      <Table name="list_city" schema="dmart">
+      </Table>
+      <Level name="City" visible="true" column="city" type="String" uniqueMembers="false" levelType="Regular" hideMemberIf="Never">
+      </Level>
+    </Hierarchy>
+  </Dimension>
+  <Dimension visible="true" highCardinality="false" name="Industry">
+    <Hierarchy visible="true" hasAll="true" primaryKey="id">
+      <Table name="list_industry" schema="dmart">
+      </Table>
+      <Level name="Industry" visible="true" column="industry" type="String" uniqueMembers="false" levelType="Regular" hideMemberIf="Never">
+      </Level>
+    </Hierarchy>
+  </Dimension>
+  <Dimension visible="true" highCardinality="false" name="Subscription Channel">
+    <Hierarchy visible="true" hasAll="true" primaryKey="id">
+      <Table name="list_subscription_channel" schema="dmart">
+      </Table>
+      <Level name="Channel" visible="true" column="channel" type="String" uniqueMembers="false" levelType="Regular" hideMemberIf="Never">
+      </Level>
+    </Hierarchy>
+  </Dimension>
+  <Dimension visible="true" highCardinality="false" name="Subscription Status">
+    <Hierarchy name="Subscription Status" visible="true" hasAll="true" primaryKey="id">
+      <Table name="list_subscription_status" schema="dmart">
+      </Table>
+      <Level name="Subscription Status" visible="true" column="subscription_status" type="String" uniqueMembers="false" levelType="Regular" hideMemberIf="Never">
+      </Level>
+    </Hierarchy>
+  </Dimension>
+  <Dimension visible="true" highCardinality="false" name="Subscription Start Date">
+    <Hierarchy name="Date" visible="true" hasAll="true" primaryKey="created_at_id">
+      <Table name="list_subscription_start_date" schema="dmart">
+      </Table>
+      <Level name="Short Date" visible="true" column="date" type="Date" uniqueMembers="false" levelType="Regular" hideMemberIf="Never">
+      </Level>
+      <Level name="Long Date" visible="true" column="full_day_description" ordinalColumn="date" type="String" uniqueMembers="false" levelType="Regular" hideMemberIf="Never">
+      </Level>
+    </Hierarchy>
+    <Hierarchy name="Cohort" visible="true" hasAll="true" primaryKey="created_at_id">
+      <Table name="list_subscription_start_date" schema="dmart">
+      </Table>
+      <Level name="Calendar year" visible="true" column="calendar_year" type="Numeric" uniqueMembers="false" levelType="Regular" hideMemberIf="Never">
+      </Level>
+      <Level name="Calendar month" visible="true" column="calendar_month" ordinalColumn="month_id" type="String" uniqueMembers="false" levelType="Regular" hideMemberIf="Never">
+      </Level>
+    </Hierarchy>
+  </Dimension>
+  <Dimension visible="true" highCardinality="false" name="Subscription End Date">
+    <Hierarchy name="Date" visible="true" hasAll="true" primaryKey="created_at_id">
+      <Table name="list_subscription_end_date" schema="dmart">
+      </Table>
+      <Level name="Short Date" visible="true" column="date" type="Date" uniqueMembers="false" levelType="Regular" hideMemberIf="Never">
+      </Level>
+      <Level name="Long date" visible="true" column="day_of_week" ordinalColumn="date" type="String" uniqueMembers="false" levelType="Regular" hideMemberIf="Never">
+      </Level>
+    </Hierarchy>
+    <Hierarchy name="Cohort" visible="true" hasAll="true" primaryKey="created_at_id">
+      <Table name="list_subscription_end_date" schema="dmart">
+      </Table>
+      <Level name="Calendar year" visible="true" column="calendar_year" type="Numeric" uniqueMembers="false" levelType="Regular" hideMemberIf="Never">
+      </Level>
+      <Level name="Calendar month" visible="true" column="calendar_month" type="String" uniqueMembers="false" levelType="Regular" hideMemberIf="Never">
+      </Level>
+    </Hierarchy>
+  </Dimension>
+  <Dimension visible="true" highCardinality="false" name="Number of Resources">
+    <Hierarchy name="Number of Resources" visible="true" hasAll="true" primaryKey="city_id">
+      <Table name="fact_growth_general" schema="dmart">
+      </Table>
+      <Level name="Number of Resources" visible="true" column="number_resources" type="Numeric" uniqueMembers="false" levelType="Regular" hideMemberIf="Never">
+      </Level>
+    </Hierarchy>
+  </Dimension>
+  <Dimension visible="true" highCardinality="false" name="Number of Services">
+    <Hierarchy name="Number of Sevices" visible="true" hasAll="true" primaryKey="city_id">
+      <Table name="fact_growth_general" schema="dmart">
+      </Table>
+      <Level name="Number of Services" visible="true" column="number_services" type="Numeric" uniqueMembers="false" levelType="Regular" hideMemberIf="Never">
+      </Level>
+    </Hierarchy>
+  </Dimension>
+  <Cube name="Growth_01_General_Cube" visible="true" cache="true" enabled="true">
+    <Table name="fact_growth_general" schema="dmart">
+    </Table>
+    <DimensionUsage source="Created Date" name="Created Date" visible="true" foreignKey="date_id" highCardinality="false">
+    </DimensionUsage>
+    <DimensionUsage source="Account Information" name="Account Information" visible="true" foreignKey="merchant_profile_id" highCardinality="false">
+    </DimensionUsage>
+    <DimensionUsage source="Geography" name="Geography" visible="true" foreignKey="city_id" highCardinality="false">
+    </DimensionUsage>
+    <DimensionUsage source="Industry" name="Industry" visible="true" foreignKey="industry_id" highCardinality="false">
+    </DimensionUsage>
+    <DimensionUsage source="Subscription Channel" name="Subscription Channel" visible="true" foreignKey="subscription_channel_id" highCardinality="false">
+    </DimensionUsage>
+    <DimensionUsage source="Subscription Status" name="Subscription Status" visible="true" foreignKey="subscription_status_id" highCardinality="false">
+    </DimensionUsage>
+    <DimensionUsage source="Subscription Start Date" name="Subscription Start Date" visible="true" foreignKey="subscription_start_id" highCardinality="false">
+    </DimensionUsage>
+    <DimensionUsage source="Subscription End Date" name="Subscription End Date" visible="true" foreignKey="subscription_end_id" highCardinality="false">
+    </DimensionUsage>
+    <DimensionUsage source="Number of Resources" name="Number of Resources" visible="true" foreignKey="id" highCardinality="false">
+    </DimensionUsage>
+    <DimensionUsage source="Number of Services" name="Number of Services" visible="true" foreignKey="id" highCardinality="false">
+    </DimensionUsage>
+    <Dimension type="StandardDimension" visible="true" foreignKey="merchant_profile_id" highCardinality="false" name="Merchant Happiness">
+      <Hierarchy name="Merchant Happiness" visible="true" hasAll="true" primaryKey="merchant_profile_id">
+        <Table name="list_sfdc_accounts" schema="dmart">
+        </Table>
+        <Level name="Merchant Happiness" visible="true" column="merchant_happiness" type="String" uniqueMembers="false" levelType="Regular" hideMemberIf="Never">
+        </Level>
+      </Hierarchy>
+    </Dimension>
+    <Dimension type="StandardDimension" visible="true" foreignKey="owner_id" highCardinality="false" name="Owner">
+      <Hierarchy name="Owner" visible="true" hasAll="true" primaryKey="owner_id">
+        <Table name="list_owner" schema="dmart">
+        </Table>
+        <Level name="Owner Name" visible="true" column="account_owner" type="String" uniqueMembers="false" levelType="Regular" hideMemberIf="Never">
+        </Level>
+      </Hierarchy>
+    </Dimension>
+    <Measure name="Bookings" column="bookings" datatype="Integer" aggregator="sum">
+    </Measure>
+    <Measure name="Self Made Appointments" column="sma" formatString="#,###;(#,###)" aggregator="sum">
+    </Measure>
+    <Measure name="Feedbacks" column="feedbacks" formatString="#,###;(#,###)" aggregator="sum">
+    </Measure>
+    <Measure name="Messages" column="messages" formatString="#,###;(#,###)" aggregator="sum">
+    </Measure>
+    <Measure name="Conversations" column="conversations" formatString="#,###;(#,###)" aggregator="sum">
+    </Measure>
+    <Measure name="Shifts" column="shifts" formatString="#,###;(#,###)" aggregator="sum">
+    </Measure>
+    <Measure name="Newsletters" column="newsletters" formatString="#,###;(#,###)" aggregator="sum">
+    </Measure>
+    <Measure name="Number of Newsletter Recipients" column="newsletter_recipients" formatString="#,###;(#,###)" aggregator="sum">
+    </Measure>
+    <Measure name="Number of Online Payments" column="booking_widget_payments" formatString="#,###;(#,###)" aggregator="sum">
+    </Measure>
+    <Measure name="Sum of Amounts Online Payments" column="booking_widget_payment_amount" formatString="#,###.00;(#,###.00)" aggregator="sum">
+    </Measure>
+    <Measure name="Number of Gastrofix Payments" column="gastrofix_payments" formatString="#,###;(#,###)" aggregator="sum">
+    </Measure>
+    <Measure name="Sum of Amounts Gastrofix Payments" column="gastrofix_payment_amount" formatString="#,###.00;(#,###.00)" aggregator="sum">
+    </Measure>
+    <Measure name="Emails sent" column="emails_sent" formatString="#,###;(#,###)" aggregator="sum">
+    </Measure>
+    <Measure name="Sms Sent" column="sms_sent" formatString="#,###;(#,###)" aggregator="sum">
+    </Measure>
+    <Measure name="Mobile Bookings" column="mobile_bookings" datatype="Numeric" aggregator="sum" visible="true">
+    </Measure>
+    <Measure name="Mobile- Self Made Appointments" column="mobile_sma" datatype="Numeric" aggregator="sum" visible="true">
+    </Measure>
+    <Measure name="Number of Merchants" column="merchant_profile_id" datatype="Numeric" aggregator="distinct-count" visible="true">
+    </Measure>
+  </Cube>
+  <Role name="growth-bi">
+    <SchemaGrant access="all">
+      <CubeGrant cube="Growth_01_General_Cube" access="all">
+      </CubeGrant>
+    </SchemaGrant>
+  </Role>
+</Schema>
