@@ -220,7 +220,7 @@ mrr_threshold + 50
 FROM generate_series(0::int, 99950::int, 50) mrr_threshold;
 
 UPDATE temp_mrr_range
-SET mrr_range_hlp = lower_mrr_range::text || '€ - ' || higher_mrr_range || '€';
+SET mrr_range_hlp = lower_mrr_range::text || 'â‚¬ - ' || higher_mrr_range || 'â‚¬';
 
 DROP TABLE IF EXISTS dmart.list_subscription_mrr;
 CREATE TABLE dmart.list_subscription_mrr AS (SELECT item.onb2__subscription__c as id, 
@@ -350,7 +350,7 @@ CREATE TABLE dmart.list_sfdc_accounts AS (
 );
 
 UPDATE dmart.list_sfdc_accounts
-SET mrr_range = CASE WHEN mrr >= 300 THEN '>= 300€' ELSE mrr_range END;
+SET mrr_range = CASE WHEN mrr >= 300 THEN '>= 300â‚¬' ELSE mrr_range END;
 
 UPDATE dmart.list_sfdc_accounts
 SET mrr_range_id = CASE WHEN mrr > 300 THEN (SELECT id FROM temp_mrr_range WHERE lower_mrr_range >= 300 and higher_mrr_range <= 350) ELSE mrr_range_id END;
@@ -814,6 +814,5 @@ alter table dmart.fact_growth_general add column owner_id integer;
 UPDATE dmart.fact_growth_general 
 SET owner_id = lo.owner_id
 FROM dmart.list_owner lo 
-WHERE account_owner = lo.account_owner;
-
+WHERE fact_growth_general.account_owner = lo.account_owner;
 
