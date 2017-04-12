@@ -31,10 +31,25 @@ if not os.path.exists(param.newpath):
     os.makedirs(param.newpath)
 
 #20
-param.counter = 20
+param.counter = 25
 
 
 print("Running ETL for  " +str(param.start_date) +" - " +str(param.end_date))
+
+runner30 = Exporter(queries.case_churn +param.rows+" and RecordTypeId='012b0000000DheeAAC'", 'case_churn', col=queries.case_churn.split(','))
+runner30.start()
+
+runner31 = Exporter(queries.case_success +param.rows+" and RecordTypeId='012b0000000kI5fAAE'", 'case_success', col=queries.case_success.split(','))
+runner31.start()
+
+runner32 = Exporter(queries.case_onboarding +param.rows+" and RecordTypeId='012b0000000DhehAAC'", 'case_onboarding', col=queries.case_onboarding.split(','))
+runner32.start()
+
+runner33 = Exporter(queries.case_shoreapp +param.rows+" and RecordTypeId='012b0000000oPcFAAU'", 'case_shoreapp', col=queries.case_shoreapp.split(','))
+runner33.start()
+
+runner34 = Exporter(queries.case_website +param.rows+" and RecordTypeId='012b0000000DiWpAAK'", 'case_website', col=queries.case_website.split(','))
+runner34.start()
 
 
 runner19 = Exporter(queries.specs__c +param.rows,'specs__c', col = queries.specs__c.split(','))
@@ -73,9 +88,8 @@ runner7.start()
 
 
 
-
 while param.counter != 0:
-	sf_importer.import_data()
+ 	sf_importer.import_data()
 
 	if len(param.exported_table) == 10:
 		runner10 = Exporter(queries.onb2__balance__c +param.rows,'onb2__balance__c', col = queries.onb2__balance__c.split(','))
@@ -105,8 +119,6 @@ while param.counter != 0:
 		runner20 = Exporter(queries.order +param.rows,'order', col = queries.order.split(','))
 		runner20.start()
 
-		runner30 = Exporter(queries.case_churn +param.rows, 'case_churn', col=queries.case_churn.split(','))
-		runner30.start()
 
 		param.exported_table.append('Stop Iteration !')
 

@@ -49,6 +49,7 @@ class Importer(Thread):
                 curs.execute(etl_delta_load.delta_query[self.file_name[:-4]])
                 conn.commit()
 
+
                 
                 print("Delta load for: " +self.file_name[:-4] +" completed")
 
@@ -67,6 +68,7 @@ class Importer(Thread):
         finally:  
             curs.close()
             conn.close()
+
 
      
 # import_data function is called by the runner program until all the objects are taken care by the ETL process       

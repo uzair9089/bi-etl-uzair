@@ -30,12 +30,13 @@ class param:
 
 	#filter data for delta loads
 	#rows = ""
+	#rows_lead_history=" "
+	#newpath = '/Users/sanjivupadhyaya/Desktop/mars1/etl/sfdc/sf_data/' +str(st_dt) +'/'
 	rows = " where SystemModstamp >= " +start_date +" and SystemModstamp < " +end_date
 	rows_leadhistory = " where createddate>=" +start_date +" and createddate <" +end_date
-	#rows_case  = " where SystemModstamp >= " +start_date +" and SystemModstamp < " +end_date + ""
-	#rows_lead_history=" "
 	newpath = '/opt/etl/sfdc/sf_data/' +str(st_dt) +'/'
 
+	
 	user_name = os.environ['sf_username']
 	password = os.environ['sf_password']
 	token = os.environ['sf_token']
@@ -48,8 +49,9 @@ class param:
 	tbl_bi = ['account','onb2__invoice__c', 'onb2__item__c', 'onb2__subscription__c', 'onb2__dunning__c'
 	,'onb2__dunningdetail__c', 'lead', 'users', 'contract'
 	,'recordtype', 'onb2__balance__c', 'contact', 'opportunity', 'order'
-	,'onb2__dunningrun__c', 'asset', 'onb2__invoicelineitem__c', 'onb2__invoicerun__c', 'leadhistory', 'specs__c']
-	
+	,'onb2__dunningrun__c', 'asset', 'onb2__invoicelineitem__c', 'onb2__invoicerun__c', 'leadhistory', 'specs__c', 'case_churn'
+	,'case_success', 'case_onboarding', 'case_shoreapp', 'case_website']
+
 	#tbl_bi =['specs__c']
 
 	exported_file = dict((el,0) for el in tbl_bi)
