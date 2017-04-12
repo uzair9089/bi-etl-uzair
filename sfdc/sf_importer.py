@@ -68,7 +68,6 @@ class Importer(Thread):
             curs.close()
             conn.close()
 
-
      
 # import_data function is called by the runner program until all the objects are taken care by the ETL process       
 def import_data():
