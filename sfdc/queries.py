@@ -994,3 +994,58 @@ Vorraussichtlich_abgeschlossen_am__c
 from Specs__c
 """
 
+case_churn = """
+select AccountId	,
+bChurnSavedByShortenedContractTerm__c	,
+bOnHold__c	,
+ClosedDate	,
+CreatedById	,
+CreatedDate	,
+curDiscountgranted__c	,
+curDowngradedModulesMRRValue__c	,
+curFeatureMRRValue__c	,
+curModulesMRRValue__c	,
+curMonthsforfreeMRRValue__c	,
+CurrencyIsoCode	,
+curShortenedContractTermMRRValue__c	,
+dateOnHoldUntil__c	,
+Description	,
+Id	,
+IsClosed	,
+IsDeleted	,
+IsEscalated	,
+LastModifiedById	,
+LastModifiedDate	,
+LastReferencedDate	,
+LastViewedDate	,
+Origin	,
+OwnerId	,
+ParentId	,
+plCaseCategory__c	,
+plCaseReasonOnHold__c	,
+plChurnSaved__c	,
+plChurnSource__c	,
+plDowngradedModules__c	,
+plFeatureusedtosaveChurn__c	,
+plMerchantHappiness__c	,
+plModulesUsedToSaveChurn__c	,
+plOutcome__c	,
+plSubcategoriesChurnCaseReasons__c	,
+Priority	,
+Reason	,
+RecordTypeId	,
+refChurnProcessedBy__c	,
+refSpec__c	,
+Status	,
+strClosingComment__c   ,
+Subject	,
+SystemModstamp	,
+Type 
+from case
+"""
+
+#case_churn = "select Id from case"
+
+
+
+

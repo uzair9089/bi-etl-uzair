@@ -16,7 +16,7 @@ import os
 
 class param:
 	# 4 and - 1
-	st_dt = datetime.datetime.utcnow() - datetime.timedelta(hours = 4)
+	st_dt = datetime.datetime.utcnow() - datetime.timedelta(hours = 400)
 	st_dt = st_dt.strftime('%Y-%m-%d %H:00:00')
 	gmt_dt = time.strftime("%Y-%m-%d %H:%M:%S", time.gmtime(time.mktime(time.strptime(st_dt, "%Y-%m-%d %H:%M:%S"))))
 	st_dt = gmt_dt.replace(' ','T')
@@ -32,6 +32,7 @@ class param:
 	#rows = ""
 	rows = " where SystemModstamp >= " +start_date +" and SystemModstamp < " +end_date
 	rows_leadhistory = " where createddate>=" +start_date +" and createddate <" +end_date
+	#rows_case  = " where SystemModstamp >= " +start_date +" and SystemModstamp < " +end_date + ""
 	#rows_lead_history=" "
 	newpath = '/opt/etl/sfdc/sf_data/' +str(st_dt) +'/'
 
@@ -47,7 +48,7 @@ class param:
 	tbl_bi = ['account','onb2__invoice__c', 'onb2__item__c', 'onb2__subscription__c', 'onb2__dunning__c'
 	,'onb2__dunningdetail__c', 'lead', 'users', 'contract'
 	,'recordtype', 'onb2__balance__c', 'contact', 'opportunity', 'order'
-	,'onb2__dunningrun__c', 'asset', 'onb2__invoicelineitem__c', 'onb2__invoicerun__c', 'leadhistory', 'specs__c']
+	,'onb2__dunningrun__c', 'asset', 'onb2__invoicelineitem__c', 'onb2__invoicerun__c', 'leadhistory', 'specs__c', 'case_churn']
 	
 	#tbl_bi =['specs__c']
 
