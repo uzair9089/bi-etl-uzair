@@ -91,7 +91,7 @@ runner7.start()
 while param.counter != 0:
 	sf_importer.import_data()
 
-	if len(param.exported_table) == 10:
+	if len(param.exported_table) == 5:
 		runner10 = Exporter(queries.onb2__balance__c +param.rows,'onb2__balance__c', col = queries.onb2__balance__c.split(','))
 		runner10.start()
 
