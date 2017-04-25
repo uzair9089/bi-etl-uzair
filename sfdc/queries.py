@@ -663,7 +663,7 @@ bIsPartner__c	,
 CreatedById	,
 CreatedDate	,
 CurrencyIsoCode	,
-curMRR__c,
+
 dateDateCustomerImport__c	,
 dateDebtCollectionInitiated__c	,
 dateInternalUse__c	,
@@ -673,7 +673,6 @@ dateTrialStart__c	,
 dateWidgetIn__c	,
 dCRMScore__c	,
 dCustomerScore__c	,
-
 dInventoryScore__c	,
 dKeyAccountId__c	,
 dShopId__c	,
@@ -707,7 +706,9 @@ Type	,
 urlLinkToSuccessStory__c	,
 Website,
 SystemModstamp,
-dGoogleAnalyticsID__c	from Account 
+dGoogleAnalyticsID__c,
+curMRR__c	
+from Account 
 """
 
 opportunity = """ 
