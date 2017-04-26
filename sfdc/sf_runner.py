@@ -31,7 +31,7 @@ if not os.path.exists(param.newpath):
     os.makedirs(param.newpath)
 
 #25
-param.counter = 25
+param.counter = 20
 
 
 print("Running ETL for  " +str(param.start_date) +" - " +str(param.end_date))
@@ -105,21 +105,21 @@ while param.counter != 0:
 		runner20.start()
 		
 
-		if len(param.exported_table) == 18:
-			runner30 = Exporter(queries.case_churn +param.rows+" and RecordTypeId='012b0000000DheeAAC'", 'case_churn', col=queries.case_churn.split(','))
-			runner30.start()
+		# if len(param.exported_table) == 18:
+		# 	runner30 = Exporter(queries.case_churn +param.rows+" and RecordTypeId='012b0000000DheeAAC'", 'case_churn', col=queries.case_churn.split(','))
+		# 	runner30.start()
 
-			runner31 = Exporter(queries.case_success +param.rows+" and RecordTypeId='012b0000000kI5fAAE'", 'case_success', col=queries.case_success.split(','))
-			runner31.start()
+		# 	runner31 = Exporter(queries.case_success +param.rows+" and RecordTypeId='012b0000000kI5fAAE'", 'case_success', col=queries.case_success.split(','))
+		# 	runner31.start()
 
-			runner32 = Exporter(queries.case_onboarding +param.rows+" and RecordTypeId='012b0000000DhehAAC'", 'case_onboarding', col=queries.case_onboarding.split(','))
-			runner32.start()
+		# 	runner32 = Exporter(queries.case_onboarding +param.rows+" and RecordTypeId='012b0000000DhehAAC'", 'case_onboarding', col=queries.case_onboarding.split(','))
+		# 	runner32.start()
 
-			runner33 = Exporter(queries.case_shoreapp +param.rows+" and RecordTypeId='012b0000000oPcFAAU'", 'case_shoreapp', col=queries.case_shoreapp.split(','))
-			runner33.start()
+		# 	runner33 = Exporter(queries.case_shoreapp +param.rows+" and RecordTypeId='012b0000000oPcFAAU'", 'case_shoreapp', col=queries.case_shoreapp.split(','))
+		# 	runner33.start()
 
-			runner34 = Exporter(queries.case_website +param.rows+" and RecordTypeId='012b0000000DiWpAAK'", 'case_website', col=queries.case_website.split(','))
-			runner34.start()
+		# 	runner34 = Exporter(queries.case_website +param.rows+" and RecordTypeId='012b0000000DiWpAAK'", 'case_website', col=queries.case_website.split(','))
+		# 	runner34.start()
 
 
 
