@@ -15,28 +15,35 @@ import os
 class param:		
 
 	schema = ""
-	#root = '/Users/sanjivupadhyaya/Desktop/mars1/etl/absence/data/'
-	root = '/opt/etl/absence/data/'
+	root = '/Users/sanjivupadhyaya/Desktop/mars1/etl/absence/data/'
+	#root = '/opt/etl/absence/data/'
 	counter = 0 
 	newpath = ""
 	connection = ""
-	st_dt = datetime.datetime.utcnow() - datetime.timedelta(hours = 1000)
-	st_dt = st_dt.strftime('%Y-%m-%d %H:00:00')
-	gmt_dt = time.strftime("%Y-%m-%d %H:%M:%S", time.gmtime(time.mktime(time.strptime(st_dt, "%Y-%m-%d %H:%M:%S"))))
-	st_dt = gmt_dt.replace(' ','T')
-	start_date =  str(st_dt) +'Z'
-	end_date = datetime.datetime.utcnow() - datetime.timedelta(hours = 1)
-	end_date = end_date.strftime('%Y-%m-%d %H:00:00')
-	gmt_dt = time.strftime("%Y-%m-%d %H:%M:%S", time.gmtime(time.mktime(time.strptime(end_date, "%Y-%m-%d %H:%M:%S"))))
-	end_date = gmt_dt.replace(' ','T')
-	end_date = end_date+'Z'
+	# st_dt = datetime.datetime.utcnow() - datetime.timedelta(hours = 10)
+	# st_dt = st_dt.strftime('%Y-%m-%d %H:00:00')
+	# gmt_dt = time.strftime("%Y-%m-%d %H:%M:%S", time.gmtime(time.mktime(time.strptime(st_dt, "%Y-%m-%d %H:%M:%S"))))
+	# st_dt = gmt_dt.replace(' ','T')
+	# start_date =  str(st_dt) +'Z'
+	# start_date = start_date[:10]
+	# end_date = datetime.datetime.utcnow() - datetime.timedelta(hours = 1)
+	# end_date = end_date.strftime('%Y-%m-%d %H:00:00')
+	# gmt_dt = time.strftime("%Y-%m-%d %H:%M:%S", time.gmtime(time.mktime(time.strptime(end_date, "%Y-%m-%d %H:%M:%S"))))
+	# end_date = gmt_dt.replace(' ','T')
+	# end_date = end_date+'Z'
+	# end_date = end_date[:10]
+	start_date = str(date.today() - timedelta(1))
+	end_date = str(date.today())
+
 
 
 	tbl_absence= ['company']
 
 	url = "https://app.absence.io/api/v2/bi/companies"
 
-	filters = "{\n\t\"filter\": {\n\t\"modified\": {\n\t\"$gte\": \"" + str(start_date)[:10] + "\",\n\t\"$lt\": \"" + str(end_date)[:10] + "\"\n   }\n }\n}"
+	filters = "{\n\t\"limit\": 10000,\n\t\"filter\": {\n  \t\"modified\": {\n\t\"$gte\": \"" + str(start_date) + "\",\n\t\"$lt\": \"" + str(end_date) + "\"\n   }\n }\n}"
+	
+	#filters = "{\n\t\"limit\" : 10000\n}"
 
 	# move the token to the environment variable somehow
 	headers = {

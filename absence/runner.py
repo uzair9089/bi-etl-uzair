@@ -26,7 +26,6 @@ if not os.path.exists(param.newpath):
     os.makedirs(param.newpath)
 
 
-
 if sys.argv[1] in ('cs', 'absence'):
 	print("Extracting Json for " +str(param.start_date) +" - " +str(param.end_date))
 

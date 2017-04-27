@@ -27,9 +27,9 @@ class Exporter(Thread):
             conn_string = param.conn_bi
             conn = psycopg2.connect(conn_string)
             curs = conn.cursor()
-            #response = requests.request("POST", param.url, data=param.filters, headers=param.headers).json()
+            response = requests.request("POST", param.url, data=param.filters, headers=param.headers).json()
             #print ("entering to load the data")
-            response = requests.request("POST", param.url, headers=param.headers).json()
+            #response = requests.request("POST", param.url, headers=param.headers).json()
             with open(param.newpath+self.collection_name+'.json', 'w') as outfile:
                 json.dump(response, outfile)
             #print ("here i am done")
