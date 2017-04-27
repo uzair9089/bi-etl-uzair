@@ -40,13 +40,13 @@ class param:
 
 	# move the token to the environment variable somehow
 	headers = {
-	    'x-vacationtoken': os.environ['x-vacationtoken'],
+	    'x-vacationtoken': os.environ['x_vacationtoken'],
 	    'content-type': "application/json",
 	    'cache-control': "no-cache",
-	    'postman-token': os.environ['postman-token']
+	    'postman-token': os.environ['postman_token']
 	    }
 
-	    
+
 	# dictionary for storing truncate queries for tables without the date attributes.
 	truncate_queries = {
 						# example schema--> change it to appropriate table name in future when required
