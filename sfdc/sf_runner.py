@@ -31,7 +31,7 @@ if not os.path.exists(param.newpath):
     os.makedirs(param.newpath)
 
 #25
-param.counter = 20
+param.counter = 25
 
 
 print("Running ETL for  " +str(param.start_date) +" - " +str(param.end_date))
@@ -71,6 +71,11 @@ runner9.start()
 runner7 = Exporter(queries.user +param.rows,'users', col = queries.user.split(','))
 runner7.start()
 
+runner30 = Exporter(queries.case_churn +param.rows+" and RecordTypeId='012b0000000DheeAAC'", 'case_churn', col=queries.case_churn.split(','))
+runner30.start()
+
+runner31 = Exporter(queries.case_success +param.rows+" and RecordTypeId='012b0000000kI5fAAE'", 'case_success', col=queries.case_success.split(','))
+runner31.start()
 
 
 while param.counter != 0:
@@ -79,6 +84,9 @@ while param.counter != 0:
 	if len(param.exported_table) == 10:
 		runner10 = Exporter(queries.onb2__balance__c +param.rows,'onb2__balance__c', col = queries.onb2__balance__c.split(','))
 		runner10.start()
+
+		runner34 = Exporter(queries.case_website +param.rows+" and RecordTypeId='012b0000000DiWpAAK'", 'case_website', col=queries.case_website.split(','))
+	 	runner34.start()
 
 		runner11 = Exporter(queries.contact +param.rows,'contact', col = queries.contact.split(','))
 		runner11.start()
@@ -95,6 +103,9 @@ while param.counter != 0:
 		runner17 = Exporter(queries.onb2__invoicerun__c +param.rows,'onb2__invoicerun__c', col = queries.onb2__invoicerun__c.split(','))
 		runner17.start()
 
+		runner33 = Exporter(queries.case_shoreapp +param.rows+" and RecordTypeId='012b0000000oPcFAAU'", 'case_shoreapp', col=queries.case_shoreapp.split(','))
+	 	runner33.start()
+
 		runner18 = Exporter(queries.asset +param.rows,'asset', col = queries.asset.split(','))
 		runner18.start()
 
@@ -103,6 +114,13 @@ while param.counter != 0:
 
 		runner20 = Exporter(queries.order +param.rows,'order', col = queries.order.split(','))
 		runner20.start()
+
+		runner32 = Exporter(queries.case_onboarding +param.rows+" and RecordTypeId='012b0000000DhehAAC'", 'case_onboarding', col=queries.case_onboarding.split(','))
+		runner32.start()
+
+
+
+
 		
 
 		# if len(param.exported_table) == 18:
