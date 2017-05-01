@@ -119,10 +119,6 @@ while param.counter != 0:
 		runner32.start()
 
 
-
-
-		
-
 		# if len(param.exported_table) == 18:
 		# 	runner30 = Exporter(queries.case_churn +param.rows+" and RecordTypeId='012b0000000DheeAAC'", 'case_churn', col=queries.case_churn.split(','))
 		# 	runner30.start()

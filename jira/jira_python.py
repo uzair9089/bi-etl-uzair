@@ -12,7 +12,7 @@ import sys
 reload(sys)
 sys.setdefaultencoding('utf8')
 
-conn_string = "host='segment-warehouse.c9sl8obym0ce.eu-central-1.rds.amazonaws.com' dbname='business-intelligence' user='segment' password='Aa123456_'"
+conn_string = os.environ['conn_bi']
 conn = psycopg2.connect(conn_string)
 curs = conn.cursor()
 
