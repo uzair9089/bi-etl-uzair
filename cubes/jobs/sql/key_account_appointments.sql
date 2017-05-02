@@ -76,7 +76,7 @@ CREATE TABLE dmart.list_key_accounts_account AS (
   SELECT distinct Account.Id as AccountId,
       Account.dShopId__c::integer as merchant_profile_id,
       Account.Name as AccountName, 
-      Account.dTotalActivityScore__c as ActivityScore,
+      Account.dtotalengagementscore__c as ActivityScore,
       CASE WHEN Account.ParentId IS NULL THEN Account.Id ELSE Account.ParentId END as Parent_Id,
       '' as ParentName
     FROM prod.Account

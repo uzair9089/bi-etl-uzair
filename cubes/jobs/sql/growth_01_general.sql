@@ -302,7 +302,7 @@ CREATE TABLE dmart.list_sfdc_accounts AS (
 	Account.dKeyAccountId__c::integer as merchant_key_account_id, 
 	COALESCE(users.name, 'N/A') as account_owner,
 	COALESCE(Account.merchant_happiness__c, 'N/A') as merchant_happiness,
-	COALESCE(Account.dTotalActivityScore__c, 0)::text as activity_score, 
+	COALESCE(Account.dtotalengagementscore__c, 0)::text as activity_score, 
 	ONB2__Subscription__c.lastmodifieddate,
 	ONB2__Subscription__c.ONB2__startdate__c,
 	ONB2__Subscription__c.createddate,
