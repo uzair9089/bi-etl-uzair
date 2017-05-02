@@ -65,7 +65,7 @@
       </Level>
       <Level name="MRR" visible="true" column="mrr" type="String" uniqueMembers="false" levelType="Regular" hideMemberIf="Never">
       </Level>
-      <Level name="Activity Score" visible="true" column="activity_score" type="String" uniqueMembers="false" levelType="Regular" hideMemberIf="Never">
+      <Level name="Engagement Score" visible="true" column="activity_score" type="String" uniqueMembers="false" levelType="Regular" hideMemberIf="Never">
       </Level>
     </Hierarchy>
   </Dimension>
