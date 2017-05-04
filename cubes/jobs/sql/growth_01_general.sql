@@ -1,5 +1,5 @@
 /**
-This SQL Script is used to create Tables in the Data Warehouse Schema dmart. These tables are the basis for the Pentaho Cube called 'Growth_01_General_Cube'.
+This SQL Script is used to create Tables in the Data Warehouse Schema pentaho. These tables are the basis for the Pentaho Cube called 'Growth_01_General_Cube'.
 This cube has the following dimensions:
 - City
 - Country
@@ -31,64 +31,64 @@ It is a very general aggregation of the following Measures which can be displaye
 /**
 Create Table and Index on City with all Cities based on Account.BillingCity
 */
-DROP TABLE IF EXISTS dmart.list_city;
-CREATE TABLE dmart.list_city AS (
+DROP TABLE IF EXISTS pentaho.list_city;
+CREATE TABLE pentaho.list_city AS (
 	SELECT distinct ONB2__Subscription__c.ONB2__LegalCity__c As City, ONB2__Subscription__c.ONB2__LegalCountry__c As Country
 	FROM prod.ONB2__Subscription__c
 	WHERE ONB2__Subscription__c.ONB2__LegalCity__c NOTNULL
 );
-ALTER TABLE dmart.list_city ADD COLUMN id SERIAL PRIMARY KEY;
+ALTER TABLE pentaho.list_city ADD COLUMN id SERIAL PRIMARY KEY;
 
-INSERT INTO dmart.list_city (id, City, Country) VALUES (-1, 'N/A', 'N/A');
+INSERT INTO pentaho.list_city (id, City, Country) VALUES (-1, 'N/A', 'N/A');
 
 CREATE INDEX list_city_idx
-  ON dmart.list_city
+  ON pentaho.list_city
   USING btree
   (id);
 
 /**
 Create Table and Index on Industry Name with all Industries based on Account.Industry
 */
-DROP TABLE IF EXISTS dmart.list_industry;
-CREATE TABLE dmart.list_industry AS (
+DROP TABLE IF EXISTS pentaho.list_industry;
+CREATE TABLE pentaho.list_industry AS (
 	SELECT distinct Industry 
 	FROM prod.Account
 	WHERE Industry NOTNULL
 	AND refActiveSubscription__c NOTNULL
 );
-ALTER TABLE dmart.list_industry ADD COLUMN id SERIAL PRIMARY KEY;
+ALTER TABLE pentaho.list_industry ADD COLUMN id SERIAL PRIMARY KEY;
 
-INSERT INTO dmart.list_industry (id, Industry) VALUES (-1, 'N/A');
+INSERT INTO pentaho.list_industry (id, Industry) VALUES (-1, 'N/A');
 
 CREATE INDEX list_industry_idx
-  ON dmart.list_industry
+  ON pentaho.list_industry
   USING btree
   (id);
 
 /**
 Create Table and Index on Stati Name with Subscription Stati based on ONB2__Subscription__c.ONB2__Status__c
 */
-DROP TABLE IF EXISTS dmart.list_subscription_status;
-CREATE TABLE dmart.list_subscription_status AS (
+DROP TABLE IF EXISTS pentaho.list_subscription_status;
+CREATE TABLE pentaho.list_subscription_status AS (
 	SELECT distinct ONB2__Status__c as subscription_status
 	FROM prod.ONB2__Subscription__c
 	WHERE ONB2__Status__c NOTNULL
 );
-ALTER TABLE dmart.list_subscription_status ADD COLUMN id SERIAL PRIMARY KEY;
+ALTER TABLE pentaho.list_subscription_status ADD COLUMN id SERIAL PRIMARY KEY;
 
-INSERT INTO dmart.list_subscription_status (id, subscription_status) VALUES (-1, 'N/A');
+INSERT INTO pentaho.list_subscription_status (id, subscription_status) VALUES (-1, 'N/A');
 
 CREATE INDEX list_subscription_status_idx
-  ON dmart.list_subscription_status
+  ON pentaho.list_subscription_status
   USING btree
   (id);
 
 /**
 Create Series of dates with Id, Date, full date, day of week, month, year, fiscal year month, holiday, weekend (month_id and order day of week are needed for ordering the text fields correctly)
 */
-DROP TABLE IF EXISTS dmart.list_date_02;
+DROP TABLE IF EXISTS pentaho.list_date_02;
 
-CREATE TABLE IF NOT EXISTS dmart.list_date_02
+CREATE TABLE IF NOT EXISTS pentaho.list_date_02
 (
   created_at_id serial,
   Date date,
@@ -103,7 +103,7 @@ CREATE TABLE IF NOT EXISTS dmart.list_date_02
   order_day_of_week integer
 );
 
-INSERT INTO dmart.list_date_02
+INSERT INTO pentaho.list_date_02
 	(
 	Date,
 	full_day_description,
@@ -154,50 +154,50 @@ FROM
     generate_series('2013-01-01'::date, current_date::date, '1 day') day;
 
 CREATE INDEX list_date_02_date_idx
-  ON dmart.list_date_02
+  ON pentaho.list_date_02
   USING btree
   (date);
 
 CREATE INDEX list_date_02_id_idx
-  ON dmart.list_date_02
+  ON pentaho.list_date_02
   USING btree
   (created_at_id);
 
 /**
 Duplicate list_date_02 in order to have same time dimensions for Subscription Start Date
 */
-DROP TABLE if exists dmart.list_subscription_start_date;
-CREATE TABLE dmart.list_subscription_start_date as select * from dmart.list_date_02;
+DROP TABLE if exists pentaho.list_subscription_start_date;
+CREATE TABLE pentaho.list_subscription_start_date as select * from pentaho.list_date_02;
 
 CREATE INDEX list_subscription_start_date_idx
-  ON dmart.list_subscription_start_date
+  ON pentaho.list_subscription_start_date
   USING btree
   (date);
 
 -- Duplicate list_date_02 in order to have same time dimensions for Subscription End Date
-DROP TABLE if exists dmart.list_subscription_end_date;
-CREATE TABLE dmart.list_subscription_end_date as select * from dmart.list_date_02;
+DROP TABLE if exists pentaho.list_subscription_end_date;
+CREATE TABLE pentaho.list_subscription_end_date as select * from pentaho.list_date_02;
 
 CREATE INDEX list_subscription_end_date_idx
-  ON dmart.list_subscription_end_date
+  ON pentaho.list_subscription_end_date
   USING btree
   (date);
 
 /**
 Create Table and Index on Stati Name with Subscription Stati based on ONB2__Subscription__c.ONB2__Status__c
 */
-DROP TABLE IF EXISTS dmart.list_subscription_channel;
-CREATE TABLE dmart.list_subscription_channel AS (
+DROP TABLE IF EXISTS pentaho.list_subscription_channel;
+CREATE TABLE pentaho.list_subscription_channel AS (
 	SELECT distinct fmlChannel__c as channel
 	FROM prod.ONB2__Subscription__c
 	WHERE fmlChannel__c NOTNULL
 );
-ALTER TABLE dmart.list_subscription_channel ADD COLUMN id SERIAL PRIMARY KEY;
+ALTER TABLE pentaho.list_subscription_channel ADD COLUMN id SERIAL PRIMARY KEY;
 
-INSERT INTO dmart.list_subscription_channel (id, channel) VALUES (-1, 'N/A');
+INSERT INTO pentaho.list_subscription_channel (id, channel) VALUES (-1, 'N/A');
 
 CREATE INDEX list_subscription_channel_idx
-  ON dmart.list_subscription_channel
+  ON pentaho.list_subscription_channel
   USING btree
   (id);
 
@@ -222,8 +222,8 @@ FROM generate_series(0::int, 99950::int, 50) mrr_threshold;
 UPDATE temp_mrr_range
 SET mrr_range_hlp = lower_mrr_range::text || 'â‚¬ - ' || higher_mrr_range || 'â‚¬';
 
-DROP TABLE IF EXISTS dmart.list_subscription_mrr;
-CREATE TABLE dmart.list_subscription_mrr AS (SELECT item.onb2__subscription__c as id, 
+DROP TABLE IF EXISTS pentaho.list_subscription_mrr;
+CREATE TABLE pentaho.list_subscription_mrr AS (SELECT item.onb2__subscription__c as id, 
 ROUND(SUM(	CASE WHEN item.ONB2__StartDate__c::date <= now()::date 
 		AND item.ONB2__EndDate__c::date >= now()::date
 		AND item.ONB2__Active__c = true
@@ -231,71 +231,71 @@ ROUND(SUM(	CASE WHEN item.ONB2__StartDate__c::date <= now()::date
 	THEN item.fmldiscountedmrrconverted__c
 	ELSE 0
 	END)::numeric, 2) as mrr
-from report.dmart_converted_onb2__item__c item
+from report.pentaho_converted_onb2__item__c item
 inner join prod.onb2__subscription__c subscription
 on subscription.id = item.onb2__subscription__c
 where subscription.onb2__status__c IN ('Active', 'Terminated in Due Time')
 group by item.onb2__subscription__c);
 
-ALTER TABLE dmart.list_subscription_mrr ADD COLUMN mrr_range text;
-ALTER TABLE dmart.list_subscription_mrr ADD COLUMN mrr_range_id int;
+ALTER TABLE pentaho.list_subscription_mrr ADD COLUMN mrr_range text;
+ALTER TABLE pentaho.list_subscription_mrr ADD COLUMN mrr_range_id int;
 
-UPDATE dmart.list_subscription_mrr
+UPDATE pentaho.list_subscription_mrr
 SET mrr_range = (SELECT mrr_range_hlp FROM temp_mrr_range WHERE mrr < higher_mrr_range and mrr >= lower_mrr_range);
 
-UPDATE dmart.list_subscription_mrr
+UPDATE pentaho.list_subscription_mrr
 SET mrr_range_id = (SELECT id FROM temp_mrr_range WHERE mrr_range = mrr_range_hlp);
 
-INSERT INTO dmart.list_subscription_mrr (id, mrr, mrr_range_id) VALUES (-1, 0, -1);
+INSERT INTO pentaho.list_subscription_mrr (id, mrr, mrr_range_id) VALUES (-1, 0, -1);
 
 CREATE INDEX list_subscription_mrr_idx
-  ON dmart.list_subscription_mrr
+  ON pentaho.list_subscription_mrr
   USING btree
   (id);
 
-DROP TABLE IF EXISTS dmart.list_last_churn_case_per_account;
-CREATE TABLE dmart.list_last_churn_case_per_account AS (SELECT churn_cases.accountid as id, 
+DROP TABLE IF EXISTS pentaho.list_last_churn_case_per_account;
+CREATE TABLE pentaho.list_last_churn_case_per_account AS (SELECT churn_cases.accountid as id, 
 	count(distinct churn_cases.id) as num_churn_cases, 
 	max(churn_cases.createddate) as latest_churn_case_created, 
 	tmptble.status as latest_churn_case_status
-	from report.dmart_churn_cases churn_cases 
-	INNER JOIN (select accountid, status, row_number() over (partition by accountid order by createddate desc) as rnk from report.dmart_churn_cases) as tmptble 
+	from report.pentaho_churn_cases churn_cases 
+	INNER JOIN (select accountid, status, row_number() over (partition by accountid order by createddate desc) as rnk from report.pentaho_churn_cases) as tmptble 
 	ON tmptble.accountid = churn_cases.accountid
 	where rnk = 1
 	group by churn_cases.accountid, tmptble.status
 	order by churn_cases.accountid);
 
-INSERT INTO dmart.list_last_churn_case_per_account (id, num_churn_cases, latest_churn_case_created, latest_churn_case_status) VALUES (-1, 0, '2009-01-01', 'N/A');
+INSERT INTO pentaho.list_last_churn_case_per_account (id, num_churn_cases, latest_churn_case_created, latest_churn_case_status) VALUES (-1, 0, '2009-01-01', 'N/A');
 
 CREATE INDEX list_churn_case_per_account_idx
-  ON dmart.list_last_churn_case_per_account
+  ON pentaho.list_last_churn_case_per_account
   USING btree
   (id);
 
-DROP TABLE IF EXISTS dmart.list_last_success_case_per_account;
-CREATE TABLE dmart.list_last_success_case_per_account AS (SELECT success_cases.accountid as id, 
+DROP TABLE IF EXISTS pentaho.list_last_success_case_per_account;
+CREATE TABLE pentaho.list_last_success_case_per_account AS (SELECT success_cases.accountid as id, 
 	count(distinct success_cases.id) as num_success_cases, 
 	max(success_cases.createddate) as latest_success_case_created, 
 	tmptble.status as latest_success_case_status
-	from report.dmart_success_cases success_cases 
-	INNER JOIN (select accountid, status, row_number() over (partition by accountid order by createddate desc) as rnk from report.dmart_success_cases) as tmptble 
+	from report.pentaho_success_cases success_cases 
+	INNER JOIN (select accountid, status, row_number() over (partition by accountid order by createddate desc) as rnk from report.pentaho_success_cases) as tmptble 
 	ON tmptble.accountid = success_cases.accountid
 	where rnk = 1
 	group by success_cases.accountid, tmptble.status
 	order by success_cases.accountid);
 
-INSERT INTO dmart.list_last_success_case_per_account (id, num_success_cases, latest_success_case_created, latest_success_case_status) VALUES (-1, 0, '2009-01-01', 'N/A');
+INSERT INTO pentaho.list_last_success_case_per_account (id, num_success_cases, latest_success_case_created, latest_success_case_status) VALUES (-1, 0, '2009-01-01', 'N/A');
 
 CREATE INDEX list_success_case_per_account_idx
-  ON dmart.list_last_success_case_per_account
+  ON pentaho.list_last_success_case_per_account
   USING btree
   (id);
 
 /**
 Create SFDC Account List Table which serves as the basis for Salesforce data
 */
-DROP TABLE IF EXISTS dmart.list_sfdc_accounts;
-CREATE TABLE dmart.list_sfdc_accounts AS (
+DROP TABLE IF EXISTS pentaho.list_sfdc_accounts;
+CREATE TABLE pentaho.list_sfdc_accounts AS (
 	SELECT Account.Id, Account.Name, 
 	Account.dShopId__c::integer as merchant_profile_id, 
 	Account.strMerchantUUID__c as merchant_uuid, 
@@ -324,39 +324,39 @@ CREATE TABLE dmart.list_sfdc_accounts AS (
 	FROM prod.Account
 	LEFT JOIN prod.users
 	ON account.ownerid = users.id
-	LEFT JOIN dmart.list_subscription_mrr 
+	LEFT JOIN pentaho.list_subscription_mrr 
 	on list_subscription_mrr.id = account.refActiveSubscription__c
-	LEFT JOIN dmart.list_industry
+	LEFT JOIN pentaho.list_industry
 	ON list_industry.Industry = Account.Industry
-	LEFT JOIN dmart.list_subscription_status
+	LEFT JOIN pentaho.list_subscription_status
 	ON list_subscription_status.subscription_status = account.fmlSubscriptionStatus__c
 	LEFT JOIN prod.onb2__subscription__c
 	ON ONB2__Subscription__c.ONB2__Account__c = Account.Id
-	LEFT JOIN dmart.list_city
+	LEFT JOIN pentaho.list_city
 	ON list_city.city = ONB2__Subscription__c.ONB2__LegalCity__c
 	AND list_city.country = ONB2__Subscription__c.ONB2__LegalCountry__c
-	LEFT JOIN dmart.list_subscription_channel
+	LEFT JOIN pentaho.list_subscription_channel
 	ON list_subscription_channel.channel = onb2__subscription__c.fmlChannel__c
-	LEFT JOIN dmart.list_subscription_start_date
+	LEFT JOIN pentaho.list_subscription_start_date
 	ON list_subscription_start_date.date = ONB2__Subscription__c.ONB2__StartDate__c
-	LEFT JOIN dmart.list_subscription_end_date
+	LEFT JOIN pentaho.list_subscription_end_date
 	ON list_subscription_end_date.date = ONB2__Subscription__c.ONB2__EndDate__c
-	LEFT JOIN dmart.list_last_success_case_per_account
+	LEFT JOIN pentaho.list_last_success_case_per_account
 	ON list_last_success_case_per_account.id = account.id
-	LEFT JOIN dmart.list_last_churn_case_per_account
+	LEFT JOIN pentaho.list_last_churn_case_per_account
 	ON list_last_churn_case_per_account.id = account.id
 	WHERE dshopId__c NOTNULL
 	AND refActiveSubscription__c NOTNULL
 );
 
-UPDATE dmart.list_sfdc_accounts
+UPDATE pentaho.list_sfdc_accounts
 SET mrr_range = CASE WHEN mrr >= 300 THEN '>= 300â‚¬' ELSE mrr_range END;
 
-UPDATE dmart.list_sfdc_accounts
+UPDATE pentaho.list_sfdc_accounts
 SET mrr_range_id = CASE WHEN mrr > 300 THEN (SELECT id FROM temp_mrr_range WHERE lower_mrr_range >= 300 and higher_mrr_range <= 350) ELSE mrr_range_id END;
 
 
-ALTER TABLE dmart.list_sfdc_accounts ALTER COLUMN mrr TYPE text;
+ALTER TABLE pentaho.list_sfdc_accounts ALTER COLUMN mrr TYPE text;
 
 /**
 The following part is used to get rid of duplicate merchant profile ids which lead to a cross join in creating the fact table
@@ -365,7 +365,7 @@ The following part is used to get rid of duplicate merchant profile ids which le
 These two steps eliminate the duplicate values.
 */
 drop table if exists to_del;
-create temp table to_del as select distinct merchant_profile_id as id, lastmodifieddate from dmart.list_sfdc_accounts;
+create temp table to_del as select distinct merchant_profile_id as id, lastmodifieddate from pentaho.list_sfdc_accounts;
 drop table if exists dup_records;
 create temp table dup_records as 
 select * 
@@ -377,11 +377,11 @@ from (
 ) as t
 where rnk > 1
 ;
-delete from dmart.list_sfdc_accounts where list_sfdc_accounts.merchant_profile_id in (select dup_records.id from dup_records) and list_sfdc_accounts.lastmodifieddate in(select dup_records.lastmodifieddate from dup_records);
+delete from pentaho.list_sfdc_accounts where list_sfdc_accounts.merchant_profile_id in (select dup_records.id from dup_records) and list_sfdc_accounts.lastmodifieddate in(select dup_records.lastmodifieddate from dup_records);
 
 
 drop table if exists to_del;
-create temp table to_del as select distinct merchant_profile_id as id, ONB2__startdate__c from dmart.list_sfdc_accounts;
+create temp table to_del as select distinct merchant_profile_id as id, ONB2__startdate__c from pentaho.list_sfdc_accounts;
 drop table if exists dup_records;
 create temp table dup_records as 
 select * 
@@ -393,10 +393,10 @@ from (
 ) as t
 where rnk > 1
 ;
-delete from dmart.list_sfdc_accounts where list_sfdc_accounts.merchant_profile_id in (select dup_records.id from dup_records) and list_sfdc_accounts.ONB2__startdate__c in(select dup_records.ONB2__startdate__c from dup_records);
+delete from pentaho.list_sfdc_accounts where list_sfdc_accounts.merchant_profile_id in (select dup_records.id from dup_records) and list_sfdc_accounts.ONB2__startdate__c in(select dup_records.ONB2__startdate__c from dup_records);
 
 drop table if exists to_del;
-create temp table to_del as select distinct merchant_profile_id as id, createddate from dmart.list_sfdc_accounts;
+create temp table to_del as select distinct merchant_profile_id as id, createddate from pentaho.list_sfdc_accounts;
 drop table if exists dup_records;
 create temp table dup_records as 
 select * 
@@ -408,16 +408,16 @@ from (
 ) as t
 where rnk > 1
 ;
-delete from dmart.list_sfdc_accounts where list_sfdc_accounts.merchant_profile_id in (select dup_records.id from dup_records) and list_sfdc_accounts.createddate in(select dup_records.createddate from dup_records);
+delete from pentaho.list_sfdc_accounts where list_sfdc_accounts.merchant_profile_id in (select dup_records.id from dup_records) and list_sfdc_accounts.createddate in(select dup_records.createddate from dup_records);
 
 
-INSERT INTO dmart.list_sfdc_accounts (merchant_profile_id, id, Name) VALUES (-1, 'N/A', 'N/A');
+INSERT INTO pentaho.list_sfdc_accounts (merchant_profile_id, id, Name) VALUES (-1, 'N/A', 'N/A');
 
 
 
 -- Index is created
 CREATE INDEX list_sfdc_accounts_idx
-  ON dmart.list_sfdc_accounts
+  ON pentaho.list_sfdc_accounts
   USING btree
   (merchant_profile_id);
 
@@ -464,7 +464,7 @@ CREATE TEMP TABLE temp_sma AS (
 	appointment_series.merchant_profile_id,
 	count(distinct appointment_series.id) as sma
 	FROM prod.appointment_series
-	INNER JOIN dmart.list_date_02
+	INNER JOIN pentaho.list_date_02
 	ON list_date_02.date = date_trunc('day', appointment_series.created_at)::date
 	WHERE appointment_series.created_by_merchant = true
 	GROUP BY date_id, merchant_profile_id
@@ -476,7 +476,7 @@ CREATE TEMP TABLE temp_mobile_sma AS (
 	appointment_series.merchant_profile_id,
 	count(distinct appointment_series.id) as mobile_sma
 	FROM prod.appointment_series
-	INNER JOIN dmart.list_date_02
+	INNER JOIN pentaho.list_date_02
 	ON list_date_02.date = date_trunc('day', appointment_series.created_at)::date
 	WHERE appointment_series.origin LIKE '%mobile%' 
 	AND (appointment_series.origin LIKE '%dienstleister%' 
@@ -490,7 +490,7 @@ CREATE TEMP TABLE temp_bookings AS (
 	appointment_series.merchant_profile_id,
 	count(distinct appointment_series.id) as bookings
 	FROM prod.appointment_series
-	INNER JOIN dmart.list_date_02
+	INNER JOIN pentaho.list_date_02
 	ON list_date_02.date = date_trunc('day', appointment_series.created_at)::date
 	WHERE appointment_series.created_by_merchant = false
 	GROUP BY date_id, merchant_profile_id
@@ -502,7 +502,7 @@ CREATE TEMP TABLE temp_mobile_bookings AS (
 	appointment_series.merchant_profile_id,
 	count(distinct appointment_series.id) as mobile_bookings
 	FROM prod.appointment_series
-	INNER JOIN dmart.list_date_02
+	INNER JOIN pentaho.list_date_02
 	ON list_date_02.date = date_trunc('day', appointment_series.created_at)::date
 	WHERE appointment_series.origin LIKE '%mobile%' 
 	AND (appointment_series.origin LIKE '%kunde%' 
@@ -516,7 +516,7 @@ CREATE TEMP TABLE temp_customers AS (
 	merchant_profile_id,
 	count(distinct id) as customers
 	FROM prod.merchant_customers
-	INNER JOIN dmart.list_date_02
+	INNER JOIN pentaho.list_date_02
 	ON list_date_02.date = date_trunc('day', merchant_customers.created_at)::date
 	GROUP BY date_id, merchant_profile_id
 );
@@ -529,7 +529,7 @@ CREATE TEMP TABLE temp_feedbacks AS (
 	FROM prod.feedbacks
 	INNER JOIN prod.appointment_series
 	ON appointment_series.uuid = feedbacks.appointment_id
-	INNER JOIN dmart.list_date_02
+	INNER JOIN pentaho.list_date_02
 	ON list_date_02.date = date_trunc('day', feedbacks.updated_at)::date
 	WHERE feedbacks.state = 'given'
 	GROUP BY date_id, merchant_profile_id
@@ -543,7 +543,7 @@ CREATE TEMP TABLE temp_shifts AS (
 	FROM prod.shifts
 	INNER JOIN prod.resources
 	ON resources.id = shifts.resource_id
-	INNER JOIN dmart.list_date_02
+	INNER JOIN pentaho.list_date_02
 	ON list_date_02.date = date_trunc('day', shifts.starts_at)::date
 	GROUP BY date_id, merchant_profile_id
 );
@@ -560,7 +560,7 @@ CREATE TEMP TABLE temp_newsletters AS (
 	ON newsletter_customers.newsletter_id = newsletters_nwsl.id
 	INNER JOIN prod.merchant_profiles
 	ON merchant_profiles.uuid = newsletters_nwsl.merchant_uuid
-	INNER JOIN dmart.list_date_02
+	INNER JOIN pentaho.list_date_02
 	ON list_date_02.date = date_trunc('day', newsletters_nwsl.sent_at)::date
 	Where newsletters_nwsl.sent_at NOTNULL
 	AND newsletters_nwsl.state = 'sent'
@@ -579,7 +579,7 @@ CREATE TEMP TABLE temp_messages AS (
 	ON conversations.id = messages.conversation_id
 	INNER JOIN prod.merchant_profiles
 	ON merchant_profiles.uuid = conversations.merchant_id
-	INNER JOIN dmart.list_date_02
+	INNER JOIN pentaho.list_date_02
 	ON list_date_02.date = date_trunc('day', messages.created_at)::date
 	GROUP BY date_id, conversations.merchant_id, merchant_profile_id
 );
@@ -591,7 +591,7 @@ CREATE TEMP TABLE temp_sms AS (
 	merchant_profiles.id as merchant_profile_id,
 	sum(sms.segments) as sms
 	FROM prod.sms
-	INNER JOIN dmart.list_date_02
+	INNER JOIN pentaho.list_date_02
 	ON list_date_02.date = date_trunc('day', sms.sent_at)::date
 	INNER JOIN prod.merchant_profiles
 	ON merchant_profiles.uuid = sms.merchant_id
@@ -606,7 +606,7 @@ CREATE TEMP TABLE temp_email AS (
 	merchant_profiles.id as merchant_profile_id,
 	count(distinct emails.id) as emails
 	FROM prod.emails
-	INNER JOIN dmart.list_date_02
+	INNER JOIN pentaho.list_date_02
 	ON list_date_02.date = emails.sent_at::date
 	INNER JOIN prod.merchant_profiles
 	ON merchant_profiles.uuid = emails.merchant_id
@@ -625,7 +625,7 @@ CREATE TEMP TABLE temp_stripe_charges AS (
 	count(distinct charges.stripe_charge_id) as online_payments,
 	sum(charges.amount)/100::numeric as amount
 	FROM prod.charges
-	INNER JOIN dmart.list_date_02
+	INNER JOIN pentaho.list_date_02
 	ON list_date_02.date = date_trunc('day', charges.created)::date
 	INNER JOIN prod.merchant_profiles
 	ON merchant_profiles.uuid = charges.merchant_id
@@ -642,7 +642,7 @@ CREATE TEMP TABLE temp_gastrofix_charges AS (
 	count(distinct charges.gastrofix_charge_id) as gastrofix_payments,
 	sum(charges.amount)/100::numeric as amount
 	FROM prod.charges
-	INNER JOIN dmart.list_date_02
+	INNER JOIN pentaho.list_date_02
 	ON list_date_02.date = date_trunc('day', charges.created)::date
 	INNER JOIN prod.merchant_profiles
 	ON merchant_profiles.uuid = charges.merchant_id
@@ -655,15 +655,15 @@ CREATE TEMP TABLE temp_gastrofix_charges AS (
 DROP TABLE IF EXISTS temp_fact_growth01_basis;
 CREATE TEMP TABLE temp_fact_growth01_basis AS (
 	select  a.merchant_profile_id, b.date, b.created_at_id as date_id
-	from dmart.list_sfdc_accounts a
-	cross join dmart.list_date_02 b
+	from pentaho.list_sfdc_accounts a
+	cross join pentaho.list_date_02 b
 );
 
 /**
 Use the above created list and temp tables to create fact table and indices
 */
-DROP TABLE IF EXISTS dmart.fact_growth_general; 
-CREATE TABLE dmart.fact_growth_general AS (
+DROP TABLE IF EXISTS pentaho.fact_growth_general; 
+CREATE TABLE pentaho.fact_growth_general AS (
 SELECT COALESCE(temp_fact_growth01_basis.date_id, -1) as date_id, 
 list_sfdc_accounts.account_owner as account_owner,
 COALESCE(temp_fact_growth01_basis.merchant_profile_id, -1) as merchant_profile_id,
@@ -692,7 +692,7 @@ COALESCE(temp_gastrofix_charges.amount, 0) as gastrofix_payment_amount,
 COALESCE(temp_email.emails, 0) as emails_sent,
 COALESCE(temp_sms.sms, 0) as sms_sent
 FROM temp_fact_growth01_basis
-LEFT JOIN dmart.list_sfdc_accounts
+LEFT JOIN pentaho.list_sfdc_accounts
 ON list_sfdc_accounts.merchant_profile_id = temp_fact_growth01_basis.merchant_profile_id
 LEFT JOIN agg_resources
 ON agg_resources.merchant_profile_id = temp_fact_growth01_basis.merchant_profile_id
@@ -737,36 +737,36 @@ AND temp_sms.date_id = temp_fact_growth01_basis.date_id
 );
 
 CREATE INDEX fact_growth_general_merchant_profile_id_idx
-  ON dmart.fact_growth_general
+  ON pentaho.fact_growth_general
   USING btree
   (merchant_profile_id);
 
 CREATE INDEX fact_growth_general_date_id_idx
-  ON dmart.fact_growth_general
+  ON pentaho.fact_growth_general
   USING btree
   (date_id);
 
 CREATE INDEX fact_growth_general_subscription_start_id_idx
-  ON dmart.fact_growth_general
+  ON pentaho.fact_growth_general
   USING btree
   (subscription_start_id);
 
 CREATE INDEX fact_growth_general_subscription_end_id_idx
-  ON dmart.fact_growth_general
+  ON pentaho.fact_growth_general
   USING btree
   (subscription_end_id);
 
 CREATE INDEX fact_growth_general_city_id_idx
-  ON dmart.fact_growth_general
+  ON pentaho.fact_growth_general
   USING btree
   (city_id);
 
 CREATE INDEX fact_growth_general_subscription_channel_id_idx
-  ON dmart.fact_growth_general
+  ON pentaho.fact_growth_general
   USING btree
   (subscription_channel_id);
 
-DELETE FROM dmart.fact_growth_general WHERE bookings = 0 
+DELETE FROM pentaho.fact_growth_general WHERE bookings = 0 
 AND sma = 0 
 AND mobile_sma = 0
 AND mobile_bookings = 0
@@ -784,35 +784,35 @@ AND emails_sent = 0
 AND sms_sent = 0;
 
 
-insert into dmart.list_subscription_start_date (created_at_id, date, full_day_description, day_of_week, calendar_month, calendar_year, fiscal_year_month, holiday, weekend,month_id, order_day_of_week)
+insert into pentaho.list_subscription_start_date (created_at_id, date, full_day_description, day_of_week, calendar_month, calendar_year, fiscal_year_month, holiday, weekend,month_id, order_day_of_week)
 values(-1, '2009-01-01','N/A','N/A','N/A',9999,'N/A','N/A','N/A', 0, 9999);
 
-insert into dmart.list_subscription_end_date (created_at_id, date, full_day_description, day_of_week, calendar_month, calendar_year, fiscal_year_month, holiday, weekend,month_id, order_day_of_week)
+insert into pentaho.list_subscription_end_date (created_at_id, date, full_day_description, day_of_week, calendar_month, calendar_year, fiscal_year_month, holiday, weekend,month_id, order_day_of_week)
 values(-1, '2009-01-01','N/A','N/A','N/A',9999,'N/A','N/A','N/A', 0, 9999);
 
-alter table dmart.list_sfdc_accounts alter column latest_churn_case_created TYPE text;
-alter table dmart.list_sfdc_accounts alter column latest_success_case_created TYPE text;
-alter table dmart.list_sfdc_accounts alter column num_success_cases TYPE text;
-alter table dmart.list_sfdc_accounts alter column num_churn_cases TYPE text;
-alter table dmart.list_date_02 add column week int;
-update dmart.list_date_02 set week = extract(week from  date );
-delete from dmart.list_sfdc_accounts where num_churn_cases is null or num_success_cases is null;
---select * from dmart.list_sfdc_accounts where num_churn_cases is null
+alter table pentaho.list_sfdc_accounts alter column latest_churn_case_created TYPE text;
+alter table pentaho.list_sfdc_accounts alter column latest_success_case_created TYPE text;
+alter table pentaho.list_sfdc_accounts alter column num_success_cases TYPE text;
+alter table pentaho.list_sfdc_accounts alter column num_churn_cases TYPE text;
+alter table pentaho.list_date_02 add column week int;
+update pentaho.list_date_02 set week = extract(week from  date );
+delete from pentaho.list_sfdc_accounts where num_churn_cases is null or num_success_cases is null;
+--select * from pentaho.list_sfdc_accounts where num_churn_cases is null
 
 
 
 -- for fixing multiple owners display problem in the cube
 
-drop table if exists dmart.list_owner;
-create table dmart.list_owner (owner_id SERIAL, account_owner varchar(800));
+drop table if exists pentaho.list_owner;
+create table pentaho.list_owner (owner_id SERIAL, account_owner varchar(800));
 
-insert into dmart.list_owner  (account_owner)
-select distinct account_owner from dmart.list_sfdc_accounts;
+insert into pentaho.list_owner  (account_owner)
+select distinct account_owner from pentaho.list_sfdc_accounts;
 
-alter table dmart.fact_growth_general add column owner_id integer;
+alter table pentaho.fact_growth_general add column owner_id integer;
 
-UPDATE dmart.fact_growth_general 
+UPDATE pentaho.fact_growth_general 
 SET owner_id = lo.owner_id
-FROM dmart.list_owner lo 
+FROM pentaho.list_owner lo 
 WHERE fact_growth_general.account_owner = lo.account_owner;
 

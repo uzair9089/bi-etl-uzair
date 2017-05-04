@@ -1,7 +1,7 @@
 
-DROP TABLE IF EXISTS dmart.list_date;
+DROP TABLE IF EXISTS pentaho.list_date;
 
-CREATE TABLE IF NOT EXISTS dmart.list_date
+CREATE TABLE IF NOT EXISTS pentaho.list_date
 (
   created_at_id serial,
   Date date,
@@ -15,7 +15,7 @@ CREATE TABLE IF NOT EXISTS dmart.list_date
   month_id integer
 );
 
-INSERT INTO dmart.list_date
+INSERT INTO pentaho.list_date
     (
   Date,
   full_day_description,
@@ -71,8 +71,8 @@ FROM
 
 
 
-drop table if exists dmart.list_key_accounts_account;
-CREATE TABLE dmart.list_key_accounts_account AS (
+drop table if exists pentaho.list_key_accounts_account;
+CREATE TABLE pentaho.list_key_accounts_account AS (
   SELECT distinct Account.Id as AccountId,
       Account.dShopId__c::integer as merchant_profile_id,
       Account.Name as AccountName, 
@@ -87,32 +87,32 @@ CREATE TABLE dmart.list_key_accounts_account AS (
     AND Account.ParentID NOT IN ('001b000003MxhU1','001b000000n1jFzAAI', '001b000001EjTYiAAN', '001b000000QbJBeAAN'));
 
     
-ALTER TABLE dmart.list_key_accounts_account ADD PRIMARY KEY (accountid);
+ALTER TABLE pentaho.list_key_accounts_account ADD PRIMARY KEY (accountid);
 
 -- always use small case for naming the columns
 UPDATE
-    dmart.list_key_accounts_account a
+    pentaho.list_key_accounts_account a
 SET
     parentname = aa.name
 FROM prod.account aa
 WHERE aa.id = a.parent_id;
 
-DROP TABLE if exists dmart.list_widget_in_date;
-CREATE TABLE dmart.list_widget_in_date as select * from dmart.list_date;
+DROP TABLE if exists pentaho.list_widget_in_date;
+CREATE TABLE pentaho.list_widget_in_date as select * from pentaho.list_date;
 
-DROP TABLE if exists dmart.event_did_not_appear;
-CREATE TABLE dmart.event_did_not_appear as (
+DROP TABLE if exists pentaho.event_did_not_appear;
+CREATE TABLE pentaho.event_did_not_appear as (
   SELECT appointment_id, max(created_at) as event_created_at
   FROM prod.events
   WHERE events.type = 'Event::CustomerDidNotAppear'
   GROUP BY appointment_id ORDER BY appointment_id);
 
-DROP TABLE IF EXISTS dmart.list_state;
-CREATE TABLE IF NOT EXISTS dmart.list_state (
+DROP TABLE IF EXISTS pentaho.list_state;
+CREATE TABLE IF NOT EXISTS pentaho.list_state (
 	id  SERIAL PRIMARY KEY,
 	state VARCHAR(500)
 );
-INSERT INTO dmart.list_state(
+INSERT INTO pentaho.list_state(
 	state
 )
 SELECT
@@ -121,7 +121,7 @@ DISTINCT
 FROM
 	stage.s_appointment_series a
 LEFT JOIN
-	dmart.list_state b
+	pentaho.list_state b
 ON
 	a.state = b.state
 WHERE
@@ -129,49 +129,49 @@ WHERE
 
 
 CREATE INDEX event_did_not_appear_idx
-  ON dmart.event_did_not_appear
+  ON pentaho.event_did_not_appear
   USING btree
   (appointment_id);
   
 
-DROP TABLE if exists dmart.given_feedbacks;
-CREATE TABLE dmart.given_feedbacks as (
+DROP TABLE if exists pentaho.given_feedbacks;
+CREATE TABLE pentaho.given_feedbacks as (
   SELECT appointment_id, id, updated_at, merchant_customer_id, positive
   FROM prod.feedbacks
   WHERE state = 'given');
 
-alter table dmart.given_feedbacks add positive_bkp varchar(200);
+alter table pentaho.given_feedbacks add positive_bkp varchar(200);
 
-update dmart.given_feedbacks set positive_bkp = 'Positive Feedbacks' where positive=true;
+update pentaho.given_feedbacks set positive_bkp = 'Positive Feedbacks' where positive=true;
 
-update dmart.given_feedbacks set positive_bkp = 'Negative Feedbacks' where positive=false;
+update pentaho.given_feedbacks set positive_bkp = 'Negative Feedbacks' where positive=false;
 
-alter table dmart.given_feedbacks drop column positive;
+alter table pentaho.given_feedbacks drop column positive;
 
-alter table dmart.given_feedbacks rename column positive_bkp TO positive;
+alter table pentaho.given_feedbacks rename column positive_bkp TO positive;
   
-CREATE INDEX given_feedbacks_id_index ON dmart.given_feedbacks USING btree (id);
-CREATE INDEX given_feedbacks_appointment_id_index ON dmart.given_feedbacks USING btree (appointment_id);
+CREATE INDEX given_feedbacks_id_index ON pentaho.given_feedbacks USING btree (id);
+CREATE INDEX given_feedbacks_appointment_id_index ON pentaho.given_feedbacks USING btree (appointment_id);
 
 
-DROP TABLE IF EXISTS dmart.list_created_by_merchant;
-CREATE TABLE if not exists dmart.list_created_by_merchant (
+DROP TABLE IF EXISTS pentaho.list_created_by_merchant;
+CREATE TABLE if not exists pentaho.list_created_by_merchant (
 	id SERIAL PRIMARY KEY,
 	description VARCHAR(255)
 );
-INSERT INTO dmart.list_created_by_merchant(
+INSERT INTO pentaho.list_created_by_merchant(
 	description
 )
 SELECT
 	('SMA');
-INSERT INTO dmart.list_created_by_merchant(
+INSERT INTO pentaho.list_created_by_merchant(
 	description
 )
 SELECT
 	('Booking');
 
-DROP TABLE IF EXISTS dmart.fact_key_accounts_appointments;
-CREATE TABLE dmart.fact_key_accounts_appointments AS (
+DROP TABLE IF EXISTS pentaho.fact_key_accounts_appointments;
+CREATE TABLE pentaho.fact_key_accounts_appointments AS (
 SELECT 
   act.merchant_profile_id::integer, 
   list_widget_in_date.created_at_id as date_widget_in_id, 
@@ -184,17 +184,17 @@ SELECT
   list_state.id as state_id,
   CASE WHEN given_feedbacks.id NOTNULL THEN 1 ELSE 0 END as given_feedbacks
 FROM prod.appointment_series
-INNER JOIN dmart.list_key_accounts_account act
+INNER JOIN pentaho.list_key_accounts_account act
   ON appointment_series.merchant_profile_id = act.merchant_profile_id
-LEFT JOIN dmart.event_did_not_appear --new table 1:1
+LEFT JOIN pentaho.event_did_not_appear --new table 1:1
   ON event_did_not_appear.appointment_id = appointment_series.uuid
 LEFT JOIN prod.Account as account
   ON appointment_series.merchant_profile_id = account.dshopid__c
-LEFT JOIN dmart.given_feedbacks
+LEFT JOIN pentaho.given_feedbacks
   ON given_feedbacks.appointment_id = appointment_series.uuid
-LEFT JOIN dmart.list_date
+LEFT JOIN pentaho.list_date
   ON list_date.date::date = appointment_series.created_at::date
-LEFT JOIN dmart.list_widget_in_date
+LEFT JOIN pentaho.list_widget_in_date
   ON list_widget_in_date.date::date = account.dateWidgetIn__c::date
-LEFT JOIN dmart.list_state
+LEFT JOIN pentaho.list_state
   ON list_state.state = appointment_series.state);

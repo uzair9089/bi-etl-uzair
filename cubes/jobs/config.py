@@ -22,7 +22,7 @@ class config:
 	end_date= datetime.datetime.now() - datetime.timedelta(hours=2)
 	end_date= end_date.strftime('%Y-%m-%d %H:00:00')		
 
-	schema= "dmart"
+	schema= "pentaho"
 	conn_bi = os.environ['conn_bi']
 	sql_file_path = "/opt/etl/cubes/jobs/sql/"
 

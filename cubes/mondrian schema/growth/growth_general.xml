@@ -1,7 +1,7 @@
 <Schema name="Growth_01_General_Cube">
   <Dimension visible="true" highCardinality="false" name="Created Date">
     <Hierarchy name="Date" visible="true" hasAll="true" primaryKey="created_at_id">
-      <Table name="list_date_02" schema="dmart">
+      <Table name="list_date_02" schema="pentaho">
       </Table>
       <Level name="Short Date" visible="true" column="date" type="Date" uniqueMembers="false" levelType="Regular" hideMemberIf="Never">
       </Level>
@@ -9,7 +9,7 @@
       </Level>
     </Hierarchy>
     <Hierarchy name="Day of week" visible="true" hasAll="true" primaryKey="created_at_id">
-      <Table name="list_date_02" schema="dmart">
+      <Table name="list_date_02" schema="pentaho">
       </Table>
       <Level name="Day of week" visible="true" column="day_of_week" ordinalColumn="order_day_of_week" type="String" uniqueMembers="false" levelType="Regular" hideMemberIf="Never">
       </Level>
@@ -17,19 +17,19 @@
       </Level>
     </Hierarchy>
     <Hierarchy name="Month" visible="true" hasAll="true" primaryKey="created_at_id">
-      <Table name="list_date_02" schema="dmart">
+      <Table name="list_date_02" schema="pentaho">
       </Table>
       <Level name="Month" visible="true" column="calendar_month" ordinalColumn="month_id" type="String" uniqueMembers="false" levelType="Regular" hideMemberIf="Never">
       </Level>
     </Hierarchy>
     <Hierarchy name="Year" visible="true" hasAll="true" primaryKey="created_at_id">
-      <Table name="list_date_02" schema="dmart">
+      <Table name="list_date_02" schema="pentaho">
       </Table>
       <Level name="Calendar Year" visible="true" column="calendar_year" type="Numeric" uniqueMembers="false" levelType="Regular" hideMemberIf="Never">
       </Level>
     </Hierarchy>
     <Hierarchy name="Calendar Week" visible="true" hasAll="true" primaryKey="created_at_id">
-      <Table name="list_date_02" schema="dmart">
+      <Table name="list_date_02" schema="pentaho">
       </Table>
       <Level name="Calendar Week" visible="true" column="week" type="Numeric" uniqueMembers="false" levelType="Regular" hideMemberIf="Never">
       </Level>
@@ -37,7 +37,7 @@
   </Dimension>
   <Dimension visible="true" highCardinality="false" name="Account Information">
     <Hierarchy name="Account Information" visible="true" hasAll="true" primaryKey="merchant_profile_id">
-      <Table name="list_sfdc_accounts" schema="dmart">
+      <Table name="list_sfdc_accounts" schema="pentaho">
       </Table>
       <Level name="Merchant Profile ID" visible="true" column="merchant_profile_id" type="Numeric" uniqueMembers="false" levelType="Regular" hideMemberIf="Never">
       </Level>
@@ -71,13 +71,13 @@
   </Dimension>
   <Dimension visible="true" highCardinality="false" name="Geography">
     <Hierarchy name="Country" visible="true" hasAll="true" primaryKey="id">
-      <Table name="list_city" schema="dmart">
+      <Table name="list_city" schema="pentaho">
       </Table>
       <Level name="Country" visible="true" column="country" type="String" uniqueMembers="false" levelType="Regular" hideMemberIf="Never">
       </Level>
     </Hierarchy>
     <Hierarchy name="City" visible="true" hasAll="true" primaryKey="id">
-      <Table name="list_city" schema="dmart">
+      <Table name="list_city" schema="pentaho">
       </Table>
       <Level name="City" visible="true" column="city" type="String" uniqueMembers="false" levelType="Regular" hideMemberIf="Never">
       </Level>
@@ -85,7 +85,7 @@
   </Dimension>
   <Dimension visible="true" highCardinality="false" name="Industry">
     <Hierarchy visible="true" hasAll="true" primaryKey="id">
-      <Table name="list_industry" schema="dmart">
+      <Table name="list_industry" schema="pentaho">
       </Table>
       <Level name="Industry" visible="true" column="industry" type="String" uniqueMembers="false" levelType="Regular" hideMemberIf="Never">
       </Level>
@@ -93,7 +93,7 @@
   </Dimension>
   <Dimension visible="true" highCardinality="false" name="Subscription Channel">
     <Hierarchy visible="true" hasAll="true" primaryKey="id">
-      <Table name="list_subscription_channel" schema="dmart">
+      <Table name="list_subscription_channel" schema="pentaho">
       </Table>
       <Level name="Channel" visible="true" column="channel" type="String" uniqueMembers="false" levelType="Regular" hideMemberIf="Never">
       </Level>
@@ -101,7 +101,7 @@
   </Dimension>
   <Dimension visible="true" highCardinality="false" name="Subscription Status">
     <Hierarchy name="Subscription Status" visible="true" hasAll="true" primaryKey="id">
-      <Table name="list_subscription_status" schema="dmart">
+      <Table name="list_subscription_status" schema="pentaho">
       </Table>
       <Level name="Subscription Status" visible="true" column="subscription_status" type="String" uniqueMembers="false" levelType="Regular" hideMemberIf="Never">
       </Level>
@@ -109,7 +109,7 @@
   </Dimension>
   <Dimension visible="true" highCardinality="false" name="Subscription Start Date">
     <Hierarchy name="Date" visible="true" hasAll="true" primaryKey="created_at_id">
-      <Table name="list_subscription_start_date" schema="dmart">
+      <Table name="list_subscription_start_date" schema="pentaho">
       </Table>
       <Level name="Short Date" visible="true" column="date" type="Date" uniqueMembers="false" levelType="Regular" hideMemberIf="Never">
       </Level>
@@ -117,7 +117,7 @@
       </Level>
     </Hierarchy>
     <Hierarchy name="Cohort" visible="true" hasAll="true" primaryKey="created_at_id">
-      <Table name="list_subscription_start_date" schema="dmart">
+      <Table name="list_subscription_start_date" schema="pentaho">
       </Table>
       <Level name="Calendar year" visible="true" column="calendar_year" type="Numeric" uniqueMembers="false" levelType="Regular" hideMemberIf="Never">
       </Level>
@@ -127,7 +127,7 @@
   </Dimension>
   <Dimension visible="true" highCardinality="false" name="Subscription End Date">
     <Hierarchy name="Date" visible="true" hasAll="true" primaryKey="created_at_id">
-      <Table name="list_subscription_end_date" schema="dmart">
+      <Table name="list_subscription_end_date" schema="pentaho">
       </Table>
       <Level name="Short Date" visible="true" column="date" type="Date" uniqueMembers="false" levelType="Regular" hideMemberIf="Never">
       </Level>
@@ -135,7 +135,7 @@
       </Level>
     </Hierarchy>
     <Hierarchy name="Cohort" visible="true" hasAll="true" primaryKey="created_at_id">
-      <Table name="list_subscription_end_date" schema="dmart">
+      <Table name="list_subscription_end_date" schema="pentaho">
       </Table>
       <Level name="Calendar year" visible="true" column="calendar_year" type="Numeric" uniqueMembers="false" levelType="Regular" hideMemberIf="Never">
       </Level>
@@ -145,7 +145,7 @@
   </Dimension>
   <Dimension visible="true" highCardinality="false" name="Number of Resources">
     <Hierarchy name="Number of Resources" visible="true" hasAll="true" primaryKey="city_id">
-      <Table name="fact_growth_general" schema="dmart">
+      <Table name="fact_growth_general" schema="pentaho">
       </Table>
       <Level name="Number of Resources" visible="true" column="number_resources" type="Numeric" uniqueMembers="false" levelType="Regular" hideMemberIf="Never">
       </Level>
@@ -153,14 +153,14 @@
   </Dimension>
   <Dimension visible="true" highCardinality="false" name="Number of Services">
     <Hierarchy name="Number of Sevices" visible="true" hasAll="true" primaryKey="city_id">
-      <Table name="fact_growth_general" schema="dmart">
+      <Table name="fact_growth_general" schema="pentaho">
       </Table>
       <Level name="Number of Services" visible="true" column="number_services" type="Numeric" uniqueMembers="false" levelType="Regular" hideMemberIf="Never">
       </Level>
     </Hierarchy>
   </Dimension>
   <Cube name="Growth_01_General_Cube" visible="true" cache="true" enabled="true">
-    <Table name="fact_growth_general" schema="dmart">
+    <Table name="fact_growth_general" schema="pentaho">
     </Table>
     <DimensionUsage source="Created Date" name="Created Date" visible="true" foreignKey="date_id" highCardinality="false">
     </DimensionUsage>
@@ -184,7 +184,7 @@
     </DimensionUsage>
     <Dimension type="StandardDimension" visible="true" foreignKey="merchant_profile_id" highCardinality="false" name="Merchant Happiness">
       <Hierarchy name="Merchant Happiness" visible="true" hasAll="true" primaryKey="merchant_profile_id">
-        <Table name="list_sfdc_accounts" schema="dmart">
+        <Table name="list_sfdc_accounts" schema="pentaho">
         </Table>
         <Level name="Merchant Happiness" visible="true" column="merchant_happiness" type="String" uniqueMembers="false" levelType="Regular" hideMemberIf="Never">
         </Level>
@@ -192,7 +192,7 @@
     </Dimension>
     <Dimension type="StandardDimension" visible="true" foreignKey="owner_id" highCardinality="false" name="Owner">
       <Hierarchy name="Owner" visible="true" hasAll="true" primaryKey="owner_id">
-        <Table name="list_owner" schema="dmart">
+        <Table name="list_owner" schema="pentaho">
         </Table>
         <Level name="Owner Name" visible="true" column="account_owner" type="String" uniqueMembers="false" levelType="Regular" hideMemberIf="Never">
         </Level>

@@ -1,7 +1,7 @@
-<Schema name="161110_Key_Accounts_Appointments">
+<Schema name="Key_Accounts_Appointments">
   <Dimension visible="true" highCardinality="false" name="Appointment State">
     <Hierarchy visible="true" hasAll="true" primaryKey="id">
-      <Table name="list_state" schema="dmart">
+      <Table name="list_state" schema="pentaho">
       </Table>
       <Level name="Appointment State" visible="true" column="state" type="String" uniqueMembers="false" levelType="Regular" hideMemberIf="Never">
         <Annotations>
@@ -20,7 +20,7 @@
   </Dimension>
   <Dimension visible="true" highCardinality="false" name="Feedback Type">
     <Hierarchy visible="true" hasAll="true" primaryKey="id">
-      <Table name="given_feedbacks" schema="dmart">
+      <Table name="given_feedbacks" schema="pentaho">
       </Table>
       <Level name="Feedback Type" visible="true" column="positive" type="Boolean" uniqueMembers="false" levelType="Regular" hideMemberIf="Never">
       </Level>
@@ -28,7 +28,7 @@
   </Dimension>
   <Dimension visible="true" highCardinality="false" name="Appointment Type">
     <Hierarchy visible="true" hasAll="true" primaryKey="id">
-      <Table name="list_created_by_merchant" schema="dmart">
+      <Table name="list_created_by_merchant" schema="pentaho">
       </Table>
       <Level name="Appointment Type" visible="true" column="description" type="String" uniqueMembers="false" levelType="Regular" hideMemberIf="Never">
       </Level>
@@ -36,31 +36,31 @@
   </Dimension>
   <Dimension visible="true" highCardinality="false" name="Appointment Created Date">
     <Hierarchy name="Calendar month" visible="true" hasAll="true" primaryKey="created_at_id">
-      <Table name="list_date" schema="dmart">
+      <Table name="list_date" schema="pentaho">
       </Table>
       <Level name="Calendar month" visible="true" column="calendar_month" ordinalColumn="day_of_week" type="String" uniqueMembers="false" levelType="Regular" hideMemberIf="Never">
       </Level>
     </Hierarchy>
     <Hierarchy name="Calendar year" visible="true" hasAll="true" primaryKey="created_at_id">
-      <Table name="list_date" schema="dmart">
+      <Table name="list_date" schema="pentaho">
       </Table>
       <Level name="Calendar year" visible="true" column="calendar_year" type="Numeric" uniqueMembers="false" levelType="Regular" hideMemberIf="Never">
       </Level>
     </Hierarchy>
     <Hierarchy name="Date" visible="true" hasAll="true" primaryKey="created_at_id">
-      <Table name="list_date" schema="dmart">
+      <Table name="list_date" schema="pentaho">
       </Table>
       <Level name="Date" visible="true" column="date" type="Date" uniqueMembers="false" levelType="Regular" hideMemberIf="Never">
       </Level>
     </Hierarchy>
     <Hierarchy name="Full Date" visible="true" hasAll="true" primaryKey="created_at_id">
-      <Table name="list_date" schema="dmart">
+      <Table name="list_date" schema="pentaho">
       </Table>
       <Level name="Full day description" visible="true" column="full_day_description" ordinalColumn="date" type="String" uniqueMembers="false" levelType="Regular" hideMemberIf="Never">
       </Level>
     </Hierarchy>
     <Hierarchy name="Weekend" visible="true" hasAll="true" primaryKey="created_at_id">
-      <Table name="list_date" schema="dmart">
+      <Table name="list_date" schema="pentaho">
       </Table>
       <Level name="Weekend" visible="true" column="weekend" type="String" uniqueMembers="false" levelType="Regular" hideMemberIf="Never">
       </Level>
@@ -68,7 +68,7 @@
   </Dimension>
   <Dimension visible="true" highCardinality="false" name="Hour">
     <Hierarchy visible="true" hasAll="true" primaryKey="id">
-      <Table name="list_hour" schema="dmart">
+      <Table name="list_hour" schema="pentaho">
       </Table>
       <Level name="Hour" visible="true" column="hour" ordinalColumn="id" type="String" uniqueMembers="false" levelType="Regular" hideMemberIf="Never">
       </Level>
@@ -76,13 +76,13 @@
   </Dimension>
   <Dimension visible="true" highCardinality="false" name="Key Account Information">
     <Hierarchy name="Salesforce Account ID" visible="true" hasAll="true" primaryKey="merchant_profile_id">
-      <Table name="list_key_accounts_account" schema="dmart">
+      <Table name="list_key_accounts_account" schema="pentaho">
       </Table>
       <Level name="Account ID" visible="true" column="accountid" type="String" uniqueMembers="false" levelType="Regular" hideMemberIf="Never">
       </Level>
     </Hierarchy>
     <Hierarchy name="Name" visible="true" hasAll="true" primaryKey="merchant_profile_id">
-      <Table name="list_key_accounts_account" schema="dmart">
+      <Table name="list_key_accounts_account" schema="pentaho">
       </Table>
       <Level name="Parent Name" visible="true" column="parentname" type="String" uniqueMembers="false" levelType="Regular" hideMemberIf="Never">
       </Level>
@@ -90,19 +90,19 @@
       </Level>
     </Hierarchy>
     <Hierarchy name="Total Engagement Score" visible="true" hasAll="true" primaryKey="merchant_profile_id">
-      <Table name="list_key_accounts_account" schema="dmart">
+      <Table name="list_key_accounts_account" schema="pentaho">
       </Table>
       <Level name="Total Engagement Score" visible="true" column="activityscore" type="Numeric" uniqueMembers="false" levelType="Regular" hideMemberIf="Never">
       </Level>
     </Hierarchy>
     <Hierarchy name="Merchant Profile ID" visible="true" hasAll="true" primaryKey="merchant_profile_id">
-      <Table name="list_key_accounts_account" schema="dmart">
+      <Table name="list_key_accounts_account" schema="pentaho">
       </Table>
       <Level name="Merchant Profile ID" visible="true" column="merchant_profile_id" type="Numeric" uniqueMembers="false" levelType="Regular" hideMemberIf="Never">
       </Level>
     </Hierarchy>
     <Hierarchy name="Salesforce Parent ID" visible="true" hasAll="true" primaryKey="merchant_profile_id">
-      <Table name="list_key_accounts_account" schema="dmart">
+      <Table name="list_key_accounts_account" schema="pentaho">
       </Table>
       <Level name="Parent ID" visible="true" column="parent_id" type="String" uniqueMembers="false" levelType="Regular" hideMemberIf="Never">
       </Level>
@@ -110,14 +110,14 @@
   </Dimension>
   <Dimension visible="true" highCardinality="false" name="Widget In Date">
     <Hierarchy visible="true" hasAll="true" primaryKey="created_at_id">
-      <Table name="list_widget_in_date" schema="dmart">
+      <Table name="list_widget_in_date" schema="pentaho">
       </Table>
       <Level name="Date" visible="true" column="date" type="Date" uniqueMembers="false" levelType="Regular" hideMemberIf="Never">
       </Level>
     </Hierarchy>
   </Dimension>
-  <Cube name="161110_Key_Accounts_Appointments" visible="true" cache="true" enabled="true">
-    <Table name="fact_key_accounts_appointments" schema="dmart">
+  <Cube name="Key_Accounts_Appointments" visible="true" cache="true" enabled="true">
+    <Table name="fact_key_accounts_appointments" schema="pentaho">
     </Table>
     <DimensionUsage source="Appointment State" name="Appointment State" visible="true" foreignKey="state_id" highCardinality="false">
     </DimensionUsage>
@@ -142,9 +142,9 @@
     <Measure name="Number of Merchants" column="merchant_profile_id" formatString="#" aggregator="distinct count">
     </Measure>
   </Cube>
-  <Role name="keyaccount-bi">
+  <Role name="testing">
     <SchemaGrant access="all">
-      <CubeGrant cube="161110_Key_Accounts_Appointments" access="custom">
+      <CubeGrant cube="Key_Accounts_Appointments" access="custom">
       </CubeGrant>
     </SchemaGrant>
   </Role>
