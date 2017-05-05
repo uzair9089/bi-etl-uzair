@@ -228,10 +228,10 @@ ROUND(SUM(	CASE WHEN item.ONB2__StartDate__c::date <= now()::date
 		AND item.ONB2__EndDate__c::date >= now()::date
 		AND item.ONB2__Active__c = true
 		AND item.ONB2__BillingType__c = 'Recurring'
-	THEN item.fmldiscountedmrrconverted__c
+	THEN item.to_euro_fmlDiscountedMRR__c
 	ELSE 0
 	END)::numeric, 2) as mrr
-from report.pentaho_converted_onb2__item__c item
+from prod.onb2__item__c item
 inner join prod.onb2__subscription__c subscription
 on subscription.id = item.onb2__subscription__c
 where subscription.onb2__status__c IN ('Active', 'Terminated in Due Time')
@@ -258,8 +258,8 @@ CREATE TABLE pentaho.list_last_churn_case_per_account AS (SELECT churn_cases.acc
 	count(distinct churn_cases.id) as num_churn_cases, 
 	max(churn_cases.createddate) as latest_churn_case_created, 
 	tmptble.status as latest_churn_case_status
-	from report.pentaho_churn_cases churn_cases 
-	INNER JOIN (select accountid, status, row_number() over (partition by accountid order by createddate desc) as rnk from report.pentaho_churn_cases) as tmptble 
+	from report.dmart_churn_cases churn_cases 
+	INNER JOIN (select accountid, status, row_number() over (partition by accountid order by createddate desc) as rnk from report.dmart_churn_cases) as tmptble 
 	ON tmptble.accountid = churn_cases.accountid
 	where rnk = 1
 	group by churn_cases.accountid, tmptble.status
@@ -277,8 +277,8 @@ CREATE TABLE pentaho.list_last_success_case_per_account AS (SELECT success_cases
 	count(distinct success_cases.id) as num_success_cases, 
 	max(success_cases.createddate) as latest_success_case_created, 
 	tmptble.status as latest_success_case_status
-	from report.pentaho_success_cases success_cases 
-	INNER JOIN (select accountid, status, row_number() over (partition by accountid order by createddate desc) as rnk from report.pentaho_success_cases) as tmptble 
+	from report.dmart_success_cases success_cases 
+	INNER JOIN (select accountid, status, row_number() over (partition by accountid order by createddate desc) as rnk from report.dmart_success_cases) as tmptble 
 	ON tmptble.accountid = success_cases.accountid
 	where rnk = 1
 	group by success_cases.accountid, tmptble.status
