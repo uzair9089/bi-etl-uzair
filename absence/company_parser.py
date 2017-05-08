@@ -33,7 +33,7 @@ class CompanyParser:
 
 					for data_lines in x["data"]:
 						id =  modified = created = name = email = region = country = first_bill_date = company_size = suspended =  test_expired = pricing_type = billing_interval = payment_type = is_billed = 'N/A'
-						team_count = user_billable_count = yearly_revenue = activity_index = days_active = price_flat = user_count = user_active_count = user_deleted_count =  0
+						price_per_user = team_count = user_billable_count = yearly_revenue = activity_index = days_active = price_flat = user_count = user_active_count = user_deleted_count =  0
 						
 						id = str(data_lines["id"]).replace("'","")
 					 	#print id
@@ -159,8 +159,8 @@ class CompanyParser:
 
 
 						#print ("here")
-						curs.execute("insert into absence.company(id,  modified, created, name, email, region, country, first_bill_date, company_size, suspended, team_count, user_billable_count, yearly_revenue, activity_index, days_active, price_flat,  test_expired, pricing_type, billing_interval, payment_type, is_billed,user_count, user_active_count, user_deleted_count) values ('{0}','{1}','{2}','{3}','{4}','{5}','{6}','{7}','{8}','{9}',{10},{11},{12},{13},{14},{15},'{16}','{17}','{18}','{19}','{20}',{21},{22},{23})"
-						.format(id,  modified, created, name, email, region, country, first_bill_date, company_size, suspended, team_count, user_billable_count, yearly_revenue, activity_index, days_active, price_flat,  test_expired, pricing_type, billing_interval, payment_type,is_billed,user_count, user_active_count, user_deleted_count))
+						curs.execute("insert into absence.company(id,  modified, created, name, email, region, country, first_bill_date, company_size, suspended, team_count, user_billable_count, yearly_revenue, activity_index, days_active, price_flat,  test_expired, pricing_type, billing_interval, payment_type, is_billed,user_count, user_active_count, user_deleted_count, price_per_user) values ('{0}','{1}','{2}','{3}','{4}','{5}','{6}','{7}','{8}','{9}',{10},{11},{12},{13},{14},{15},'{16}','{17}','{18}','{19}','{20}',{21},{22},{23},{24})"
+						.format(id,  modified, created, name, email, region, country, first_bill_date, company_size, suspended, team_count, user_billable_count, yearly_revenue, activity_index, days_active, price_flat,  test_expired, pricing_type, billing_interval, payment_type,is_billed,user_count, user_active_count, user_deleted_count, price_per_user))
 						conn.commit()
 						#print ("here after commit")
 
