@@ -15,8 +15,8 @@ import os
 class param:		
 
 	schema = ""
-	root = '/Users/sanjivupadhyaya/Desktop/mars1/etl/absence/data/'
-	#root = '/opt/etl/absence/data/'
+	#root = '/Users/sanjivupadhyaya/Desktop/mars1/etl/absence/data/'
+	root = '/opt/etl/absence/data/'
 	counter = 0 
 	newpath = ""
 	connection = ""
