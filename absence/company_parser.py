@@ -65,7 +65,6 @@ class CompanyParser:
 						if 'firstBilldate' in data_lines.keys():
 							first_bill_date = data_lines["firstBilldate"]
 							#print first_bill_date
-							#print ("before size")
 
 						if 'companySize' in data_lines.keys():
 							company_size =  data_lines["companySize"]["value"]
@@ -158,9 +157,6 @@ class CompanyParser:
 							payment_type = str(data_lines["paymentType"]).replace("'","")
 							#print payment_type
 
-						#print ("insert into absence.company(id,  modified, created, name, email, region, country, first_bill_date, company_size, suspended, team_count, user_billable_count, yearly_revenue, activity_index, days_active, price_flat,  test_expired, pricing_type, billing_interval, payment_type,is_billed, user_count, user_active_count, user_deleted_count) values ('{0}','{1}','{2}','{3}','{4}','{5}','{6}','{7}','{8}','{9}',{10},{11},{12},{13},{14},{15},'{16}','{17}','{18}','{19}','{20}',{21},{22},{23})"
-						#.format(id,  modified, created, name, email, region, country, first_bill_date, company_size, suspended, team_count, user_billable_count, yearly_revenue, activity_index, days_active, price_flat,  test_expired, pricing_type, billing_interval, payment_type, is_billed,user_count, user_active_count, user_deleted_count))
-					
 
 						#print ("here")
 						curs.execute("insert into absence.company(id,  modified, created, name, email, region, country, first_bill_date, company_size, suspended, team_count, user_billable_count, yearly_revenue, activity_index, days_active, price_flat,  test_expired, pricing_type, billing_interval, payment_type, is_billed,user_count, user_active_count, user_deleted_count) values ('{0}','{1}','{2}','{3}','{4}','{5}','{6}','{7}','{8}','{9}',{10},{11},{12},{13},{14},{15},'{16}','{17}','{18}','{19}','{20}',{21},{22},{23})"
@@ -168,8 +164,6 @@ class CompanyParser:
 						conn.commit()
 						#print ("here after commit")
 
-			#curs.execute(etl_delta_load.delta_query[collection_name[:-5]]).replace("'","")
-			#conn.commit()
 
 			print("finished parsing data for: "+collection_name)
 
