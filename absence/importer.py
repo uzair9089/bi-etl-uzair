@@ -33,7 +33,7 @@ class Importer(Thread):
 
         if self.collection_name == 'company.json':
             #print ("did someone called me")
-            if param.newpath+self.collection_name
+            if param.newpath+self.collection_name:
                 do = cp()
                 do.parser(self.collection_name)
 
