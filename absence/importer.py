@@ -38,6 +38,7 @@ class Importer(Thread):
                 print param.newpath+self.collection_name
                 do = cp()
                 do.parser(self.collection_name)
+                print "finished parsing data"
 
         if self.collection_name == 'users.json':
             do = up()
