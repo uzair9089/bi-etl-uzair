@@ -15,7 +15,7 @@ import os
 class param:		
 
 	schema = ""
-	#root = '/Users/sanjivupadhyaya/Desktop/mars1/etl/absence/data/'
+	#root = '/Users/sanjivupadhyaya/Desktop/mars1/etl/absence/data'
 	root = '/opt/etl/absence/data'
 	counter = 0 
 	newpath = ""
@@ -41,9 +41,9 @@ class param:
 
 	url = "https://app.absence.io/api/v2/bi/companies"
 
-	filters = "{\n\t\"limit\": 10000,\n\t\"filter\": {\n  \t\"modified\": {\n\t\"$gte\": \"" + str(start_date) + "\",\n\t\"$lt\": \"" + str(end_date) + "\"\n   }\n }\n}"
+	#filters = "{\n\t\"limit\": 10000,\n\t\"filter\": {\n  \t\"modified\": {\n\t\"$gte\": \"" + str(start_date) + "\",\n\t\"$lt\": \"" + str(end_date) + "\"\n   }\n }\n}"
 	
-	#filters = "{\n\t\"limit\" : 10000\n}"
+	filters = "{\n\t\"limit\" : 10000\n}"
 
 	# move the token to the environment variable somehow
 	headers = {

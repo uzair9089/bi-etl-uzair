@@ -32,8 +32,8 @@ class CompanyParser:
 				if 'data' in keys_in_record:
 
 					for data_lines in x["data"]:
-						id =  modified = created = name = email = region = country = first_bill_date = company_size = suspended =  test_expired = pricing_type = billing_interval = payment_type = is_billed = 'N/A'
-						price_per_user = team_count = user_billable_count = yearly_revenue = activity_index = days_active = price_flat = user_count = user_active_count = user_deleted_count =  0
+						id =  modified = created = name = email = region = country = first_bill_date = company_size = suspended =  test_expired = pricing_type = billing_interval = payment_type = is_billed = is_test = 'N/A' 
+						price_per_user = free_users = team_count = user_billable_count = yearly_revenue = activity_index = days_active = price_flat = user_count = user_active_count = user_deleted_count =  0
 						
 						id = str(data_lines["id"]).replace("'","")
 					 	#print id
@@ -130,7 +130,7 @@ class CompanyParser:
 							#print is_billed
 						#print("out")
 						if 'isTest' in data_lines.keys():
-							billing_interval = str(data_lines["isTest"]).replace("'","")
+							is_test = str(data_lines["isTest"]).replace("'","")
 							#print billing_interval
 
 						if 'active' in data_lines.keys():
@@ -145,6 +145,9 @@ class CompanyParser:
 							price_per_user = str(data_lines["pricePerUser"]).replace("'","")
 							#print price_per_user
 
+						if 'freeUsers' in data_lines.keys():
+							free_users = data_lines["freeUsers"]
+
 						if 'pricingType' in data_lines.keys():
 							pricing_type = str(data_lines["pricingType"]).replace("'","")
 							#print pricing_type
@@ -157,10 +160,9 @@ class CompanyParser:
 							payment_type = str(data_lines["paymentType"]).replace("'","")
 							#print payment_type
 
-
 						#print ("here")
-						curs.execute("insert into absence.company(id,  modified, created, name, email, region, country, first_bill_date, company_size, suspended, team_count, user_billable_count, yearly_revenue, activity_index, days_active, price_flat,  test_expired, pricing_type, billing_interval, payment_type, is_billed,user_count, user_active_count, user_deleted_count, price_per_user) values ('{0}','{1}','{2}','{3}','{4}','{5}','{6}','{7}','{8}','{9}',{10},{11},{12},{13},{14},{15},'{16}','{17}','{18}','{19}','{20}',{21},{22},{23},{24})"
-						.format(id,  modified, created, name, email, region, country, first_bill_date, company_size, suspended, team_count, user_billable_count, yearly_revenue, activity_index, days_active, price_flat,  test_expired, pricing_type, billing_interval, payment_type,is_billed,user_count, user_active_count, user_deleted_count, price_per_user))
+						curs.execute("insert into absence.company(id,  modified, created, name, email, region, country, first_bill_date, company_size, suspended, team_count, user_billable_count, yearly_revenue, activity_index, days_active, price_flat,  test_expired, pricing_type, billing_interval, payment_type, is_billed,user_count, user_active_count, user_deleted_count, price_per_user , is_test, free_users) values ('{0}','{1}','{2}','{3}','{4}','{5}','{6}','{7}','{8}','{9}',{10},{11},{12},{13},{14},{15},'{16}','{17}','{18}','{19}','{20}',{21},{22},{23},{24},'{25}',{26})"
+						.format(id,  modified, created, name, email, region, country, first_bill_date, company_size, suspended, team_count, user_billable_count, yearly_revenue, activity_index, days_active, price_flat,  test_expired, pricing_type, billing_interval, payment_type,is_billed,user_count, user_active_count, user_deleted_count, price_per_user, is_test, free_users))
 						conn.commit()
 						#print ("here after commit")
 
