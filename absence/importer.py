@@ -32,7 +32,6 @@ class Importer(Thread):
     def run(self):
 
         if self.collection_name == 'company.json':
-            #print ("did someone called me")
             print param.newpath+self.collection_name
             if param.newpath+self.collection_name:
                 print param.newpath+self.collection_name

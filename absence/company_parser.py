@@ -1,7 +1,7 @@
 from sqlalchemy import create_engine
 from threading import Thread, Lock
 from param import param
-import etl_delta_load
+from etl_delta_load import delta_query
 import psycopg2
 import os
 import json
@@ -168,6 +168,10 @@ class CompanyParser:
 
 
 			print("finished parsing data for: "+collection_name)
+
+			print ("delta load starts ")
+			curs.execute(delta_query[collection_name[:-5]])
+			conn.commit()
 
 		except Exception as e:
 			param.counter-1

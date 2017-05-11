@@ -20,22 +20,8 @@ class param:
 	counter = 0 
 	newpath = ""
 	connection = ""
-	# st_dt = datetime.datetime.utcnow() - datetime.timedelta(hours = 10)
-	# st_dt = st_dt.strftime('%Y-%m-%d %H:00:00')
-	# gmt_dt = time.strftime("%Y-%m-%d %H:%M:%S", time.gmtime(time.mktime(time.strptime(st_dt, "%Y-%m-%d %H:%M:%S"))))
-	# st_dt = gmt_dt.replace(' ','T')
-	# start_date =  str(st_dt) +'Z'
-	# start_date = start_date[:10]
-	# end_date = datetime.datetime.utcnow() - datetime.timedelta(hours = 1)
-	# end_date = end_date.strftime('%Y-%m-%d %H:00:00')
-	# gmt_dt = time.strftime("%Y-%m-%d %H:%M:%S", time.gmtime(time.mktime(time.strptime(end_date, "%Y-%m-%d %H:%M:%S"))))
-	# end_date = gmt_dt.replace(' ','T')
-	# end_date = end_date+'Z'
-	# end_date = end_date[:10]
 	start_date = str(date.today() - timedelta(1))
 	end_date = str(date.today())
-
-
 
 	tbl_absence= ['company']
 
