@@ -61,11 +61,11 @@ class param:
 	exported_file = {}
 
 	#tbl_core= ['shifts','shift_plan_templates']
-	tbl_core = ['appointment_services', 'appointment_resources', 'customers', 'events', 'feedbacks', 
+	tbl_core = ['appointment_services', 'appointment_resources', 'events', 'feedbacks', 
 				'merchant_customers', 'shift_plan_templates', 'newsletters', 'resources', 'services', 
 				'merchant_profiles', 'event_participants', 'appointment_series', 'shifts',
 				'pdf_forms', 'customer_custom_attributes', 'appointment_occurrences',
-				#'notification_channels', 'merchant_customer_tags'
+				#'notification_channels', -- removed on 13th of may 'merchant_customer_tags', customers
 				'newsletter_blacklists',
 				'service_categories', 'closing_times', 'merchant_customer_custom_attributes', 'uberall_accounts']
 	
