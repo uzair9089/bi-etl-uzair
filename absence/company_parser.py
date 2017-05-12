@@ -27,7 +27,7 @@ class CompanyParser:
 			for line in file:
 				x = json.loads(line,strict=False) 
 				keys_in_record = x.keys() 
-				#print keys_in_record
+				print keys_in_record
 
 				if 'data' in keys_in_record:
 
@@ -51,15 +51,15 @@ class CompanyParser:
 							#print name
 
 						if 'email' in data_lines.keys() and len(data_lines["email"]) <2:
-							email = str(data_lines["email"])
-							email.replace("'","")
+							email = str(data_lines["email"]).replace("'","")
+							#email.replace("'","")
 							#print email
 
 						if 'region' in data_lines.keys():
 							region = str(data_lines["region"]).replace("'","")
 							#print region
 
-						if 'name' in data_lines.keys():
+						if 'country' in data_lines.keys():
 							country = str(data_lines["country"]).replace("'","")
 							#print country
 
@@ -68,11 +68,7 @@ class CompanyParser:
 							#print first_bill_date
 
 						if 'companySize' in data_lines.keys():
-							company_size =  data_lines["companySize"]#["value"]
-							#company_size.replace("'","")
-							#print(type(company_size))
-							#print company_size
-						#print("after size")
+							company_size =  str(data_lines["companySize"]).replace("'","")#["value"]
 
 						if 'customSettings' in data_lines.keys():
 							if 'suspended' in data_lines["customSettings"]:
@@ -163,7 +159,6 @@ class CompanyParser:
 							payment_type = str(data_lines["paymentType"]).replace("'","")
 							#print payment_type
 
-						#print ("here")
 						curs.execute("insert into absence.company(id,  modified, created, name, email, region, country, first_bill_date, company_size, suspended, team_count, user_billable_count, yearly_revenue, activity_index, days_active, price_flat,  test_expired, pricing_type, billing_interval, payment_type, is_billed,user_count, user_active_count, user_deleted_count, price_per_user , is_test, free_users) values ('{0}','{1}','{2}','{3}','{4}','{5}','{6}','{7}','{8}','{9}',{10},{11},{12},{13},{14},{15},'{16}','{17}','{18}','{19}','{20}',{21},{22},{23},{24},'{25}',{26})"
 						.format(id,  modified, created, name, email, region, country, first_bill_date, company_size, suspended, team_count, user_billable_count, yearly_revenue, activity_index, days_active, price_flat,  test_expired, pricing_type, billing_interval, payment_type,is_billed,user_count, user_active_count, user_deleted_count, price_per_user, is_test, free_users))
 						conn.commit()
