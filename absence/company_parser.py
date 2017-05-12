@@ -50,8 +50,9 @@ class CompanyParser:
 							name = str(data_lines["name"]).replace("'","")
 							#print name
 
-						if 'email' in data_lines.keys():
-							email = str(data_lines["email"]).replace("'","")
+						if 'email' in data_lines.keys() and len(data_lines["email"]) <2:
+							email = str(data_lines["email"])
+							email.replace("'","")
 							#print email
 
 						if 'region' in data_lines.keys():
@@ -67,7 +68,9 @@ class CompanyParser:
 							#print first_bill_date
 
 						if 'companySize' in data_lines.keys():
-							company_size =  data_lines["companySize"]["value"]
+							company_size =  data_lines["companySize"]#["value"]
+							#company_size.replace("'","")
+							#print(type(company_size))
 							#print company_size
 						#print("after size")
 
@@ -131,7 +134,7 @@ class CompanyParser:
 						#print("out")
 						if 'isTest' in data_lines.keys():
 							is_test = str(data_lines["isTest"]).replace("'","")
-							#print billing_interval
+							#print is_test
 
 						if 'active' in data_lines.keys():
 							is_active = str(data_lines["active"]).replace("'","")
@@ -161,9 +164,10 @@ class CompanyParser:
 							#print payment_type
 
 						#print ("here")
-						curs.execute("insert into absence.company(id,  modified, created, name, email, region, country, first_bill_date, company_size, suspended, team_count, user_billable_count, yearly_revenue, activity_index, days_active, price_flat,  test_expired, pricing_type, billing_interval, payment_type, is_billed,user_count, user_active_count, user_deleted_count, price_per_user , is_test, free_users) values ('{0}','{1}','{2}','{3}','{4}','{5}','{6}','{7}','{8}','{9}',{10},{11},{12},{13},{14},{15},'{16}','{17}','{18}','{19}','{20}',{21},{22},{23},{24},'{25}',{26})"
+						#curs.execute
+						print("insert into absence.company(id,  modified, created, name, email, region, country, first_bill_date, company_size, suspended, team_count, user_billable_count, yearly_revenue, activity_index, days_active, price_flat,  test_expired, pricing_type, billing_interval, payment_type, is_billed,user_count, user_active_count, user_deleted_count, price_per_user , is_test, free_users) values ('{0}','{1}','{2}','{3}','{4}','{5}','{6}','{7}','{8}','{9}',{10},{11},{12},{13},{14},{15},'{16}','{17}','{18}','{19}','{20}',{21},{22},{23},{24},'{25}',{26})"
 						.format(id,  modified, created, name, email, region, country, first_bill_date, company_size, suspended, team_count, user_billable_count, yearly_revenue, activity_index, days_active, price_flat,  test_expired, pricing_type, billing_interval, payment_type,is_billed,user_count, user_active_count, user_deleted_count, price_per_user, is_test, free_users))
-						conn.commit()
+						#conn.commit()
 						#print ("here after commit")
 
 
@@ -178,7 +182,7 @@ class CompanyParser:
 			print ("exception")
 			conn.rollback()
 			curs.execute("insert into etl_status(start_date, end_date, schema_name, table_name, file_path, error_phase, error_message, status) values ('{0}','{1}','{2}','{3}','{4}','{5}','{6}','{7}')"
-			.format(param.start_date, param.end_date, param.schema, collection_name, param.root+collection_name, 'parsing', str(e), 'fail'))
+			.format(param.start_date, param.end_date, param.schema, collection_name, param.root+collection_name, 'parsing', str(e).replace("'",""), 'fail'))
 			conn.commit()
 			conn.close()
 			curs.close()
