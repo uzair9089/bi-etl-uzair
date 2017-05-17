@@ -18,8 +18,8 @@ class param:
 	connection = ""
 	schema = ""
 	newpath = ""
-	root = '/opt/etl/core/data/'
-	#root = '/Users/sanjivupadhyaya/Desktop/prac/'
+	#root = '/opt/etl/core/data/'
+	root = '/Users/sanjivupadhyaya/Desktop/'
 	counter = 0 
 
 	# should be always 1 - 2 hours
@@ -93,7 +93,7 @@ class param:
 
 	tbl_pymt = []
 
-	tbl_pymt_truncate = ['merchants', 'disputes', 'bank_accounts', 'request_logs', 'stripe_events', 'charges']
+	tbl_pymt_truncate = ['merchants', 'disputes', 'bank_accounts', 'request_logs', 'stripe_events', 'charges', 'payments', 'charge_items', 'refunds']
 
 	tbl_pymt_rename = {'merchants': 'merchants_pymt'}
 

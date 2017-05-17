@@ -29,6 +29,9 @@ truncate_queries = {
 					,'request_logs': "truncate table pymt.request_logs;"
 					,'stripe_events': "truncate table pymt.stripe_events;"
 					,'charges': "truncate table pymt.charges;"
+					,'payments': "truncate table pymt.payments;"
+					,'refunds': "truncate table pymt.refunds;"
+					,'charge_items': "truncate table pymt.charge_items;"
 					# intercom
 					,'tags_intercom': "truncate table intercom.tags_intercom;"
 					,'admins_intercom': "truncate table intercom.admins_intercom;"
@@ -98,7 +101,10 @@ delta_query = {
 			,'request_logs': "truncate table stage.s_request_logs; insert into stage.s_request_logs select * from pymt.request_logs;"
 			,'stripe_events': "truncate table stage.s_stripe_events; insert into stage.s_stripe_events select * from pymt.stripe_events;"
 			,'charges': "truncate table stage.s_charges; insert into stage.s_charges select * from pymt.charges;"
-			,'merchants_pymt':"truncate table stage.s_merchants_pymt; insert into stage.s_merchants_pymt select * from pymt.merchants_pymt;"
+			,'merchants_pymt': "truncate table stage.s_merchants_pymt; insert into stage.s_merchants_pymt select * from pymt.merchants_pymt;"
+			,'charge_items': "truncate table stage.s_charge_items; insert into stage.s_charge_items select * from pymt.charge_items;"
+			,'refunds':"truncate table stage.s_refunds; insert into stage.s_refunds select * from pymt.refunds;"
+			,'payments':"truncate table stage.s_payments; insert into stage.s_payments select * from pymt.payments;"
 
 			# communication
 			,'merchants': "truncate table stage.s_merchants; insert into stage.s_merchants select * from comm.merchants;"
@@ -232,6 +238,9 @@ delta_query_reset = {
 				,'stripe_events': "truncate table stage.s_stripe_events; insert into stage.s_stripe_events select * from pymt.stripe_events;"
 				,'charges': "truncate table stage.s_charges; insert into stage.s_charges select * from pymt.charges;"
 				,'merchants_pymt':"truncate table stage.s_merchants_pymt; insert into stage.s_merchants_pymt select * from pymt.merchants_pymt;"
+				,'charge_items': "truncate table stage.s_charge_items; insert into stage.s_charge_items select * from pymt.charge_items;"
+				,'refunds':"truncate table stage.s_refunds; insert into stage.s_refunds select * from pymt.refunds;"
+				,'payments':"truncate table stage.s_payments; insert into stage.s_payments select * from pymt.payments;"
 
 				# communication
 				,'merchants': "truncate table stage.s_merchants; insert into stage.s_merchants select * from comm.merchants;"
