@@ -6,6 +6,7 @@ Function: main program to run the ETL process.
 
 from exporter import Exporter
 from importer import Importer
+from uploader import Uploader
 from param import param
 import psycopg2.extras
 import threading
