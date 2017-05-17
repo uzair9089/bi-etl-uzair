@@ -60,7 +60,7 @@ def upload_data_to_s3():
 	for key, values in param.exported_file.iteritems():
 		if(param.exported_file[key] == 1):
 			print("Transferring data to the S3 bucket: "+ param.root + param.start_date + key + '.csv')
-			runner = Uploader( param.root + param.start_date + '/' + param.schema + '/' + key + '.csv') # put the variable in the param file for the s3 bucket details 
+			runner = Uploader( param.root + param.schema + '/' +  param.start_date  +  '/' + key + '.csv') # put the variable in the param file for the s3 bucket details 
 			param.exported_file[key] = 0
 			param.redshift_counter = param.redshift_counter - 1
 			print param.redshift_counter
