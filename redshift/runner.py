@@ -122,11 +122,12 @@ if (host in param.sources):
 
 
 # run the ETL process until all the mentioned tables in the param file are exported.
-#while param.counter != 0:
-#	importer.import_data()
-
 while param.redshift_counter != 0:
 	uploader.upload_data_to_s3()
+
+
+#while param.counter != 0:
+#    importer.import_data()
 
 
 

@@ -19,9 +19,10 @@ class Importer(Thread):
     __lock = Lock()
 
 
-    def __init__(self, file_name):
+    def __init__(self, file_name, full_path):
         Thread.__init__(self)
         self.file_name = file_name
+        self.full_path = full_path
 
 
 
@@ -33,45 +34,50 @@ class Importer(Thread):
             curs = conn.cursor()
 
 
-            if(self.file_name[:-4] in param.truncate_tbl):
+            if(self.file_name in param.truncate_tbl):
 
-                print("truncating table " +self.file_name[:-4])
+                print("truncating table " +self.file_name)
                 
-                curs.execute(etl_delta_load.truncate_queries[self.file_name[:-4]])
+                curs.execute(etl_delta_load.truncate_queries[self.file_name])
                 conn.commit()
 
-            if param.reset_time == param.reset_value and self.file_name[:-4] not in param.truncate_tbl:
-                curs.execute(etl_delta_load.delete_queries[self.file_name[:-4]])
+            if param.reset_time == param.reset_value and self.file_name not in param.truncate_tbl:
+                curs.execute(etl_delta_load.delete_queries[self.file_name])
                 conn.commit()
             
             if (os.stat(param.newpath +self.file_name).st_size > 4):
                 file = open(param.newpath +self.file_name)
 
-                curs.copy_expert(sql = """ COPY %s FROM STDIN WITH CSV HEADER DELIMITER AS ',' """ % (param.schema +'.' +self.file_name[:-4]), file = file)
-                conn.commit()
+                #curs.copy_expert(sql = """ COPY %s FROM STDIN WITH CSV HEADER DELIMITER AS ',' """ % (param.schema +'.' +self.file_name[:-4]), file = file)
 
-                print("import for " +self.file_name[:-4] +" completed !!!")
-                print("delta load starts for:" +self.file_name[:-4])
+                #curs.copy_expert(sql = """ COPY %s FROM 's3://shore-bi-etl'%s iam_role 'arn:aws:iam::601812874785:role/BIs3Access' CSV IGNOREHEADER 1 """ % (self.file_name,self.full_path), file = file)
+                print (""" COPY %s FROM 's3://shore-bi-etl'%s iam_role 'arn:aws:iam::601812874785:role/BIs3Access' CSV IGNOREHEADER 1 """ % (self.file_name,self.full_path))
+
+
+                #conn.commit()
+
+                print("import for " +self.file_name +" completed !!!")
+                print("delta load starts for:" +self.file_name)
 
                 if param.reset_time == param.reset_value:
-                    curs.execute(etl_delta_load.delta_query_reset[self.file_name[:-4]])
+                    curs.execute(etl_delta_load.delta_query_reset[self.file_name])
                     conn.commit()
-                    print("delta load for: " +self.file_name[:-4] +" completed ***RESET***")
+                    print("delta load for: " +self.file_name +" completed ***RESET***")
                 else:
-                    curs.execute(etl_delta_load.delta_query[self.file_name[:-4]])
+                    curs.execute(etl_delta_load.delta_query[self.file_name])
                     conn.commit()
-                    print("delta load for: " +self.file_name[:-4] +" completed ***")
+                    print("delta load for: " +self.file_name +" completed ***")
 
             else:
-                print("Empty file for: " +self.file_name[:-4])
+                print("Empty file for: " +self.file_name)
 
         except Exception as e:
-            print("Unable to access database, import error %s %s" % (str(e), self.file_name[:-4]))
+            print("Unable to access database, import error %s %s" % (str(e), self.file_name)
             param.counter-1
 
             conn.rollback()
             curs.execute("""INSERT INTO etl_status (start_date, end_date, schema_name, table_name, file_path, error_phase, error_message, status) 
-            VALUES(%s, %s, %s, %s, %s, %s, %s, %s)""",[param.start_date, param.end_date, param.schema, self.file_name[:-4], param.newpath+self.file_name, 'import', str(e),'fail'])
+            VALUES(%s, %s, %s, %s, %s, %s, %s, %s)""",[param.start_date, param.end_date, param.schema, self.file_name, param.newpath+self.file_name, 'import', str(e),'fail'])
             conn.commit()
             
         finally:

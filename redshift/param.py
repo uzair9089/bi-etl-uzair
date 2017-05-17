@@ -22,6 +22,12 @@ class param:
 	#root = '/Users/sanjivupadhyaya/Desktop/prac/'
 	counter = redshift_counter = 0 
 
+	BUCKET_NAME = 'shore-bi-etl'
+	AWS_ACCESS_KEY_ID =  "AKIAIVBSMDRFXBB4YM6Q"
+	AWS_SECRET_ACCESS_KEY= "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"
+	REGION_HOST = 's3.eu-central-1.amazonaws.com'
+
+
 	# should be always 1 - 2 hours
 	start_date = datetime.datetime.now() - datetime.timedelta(hours = 2)
 	start_date = start_date.strftime('%Y-%m-%d %H:00:00')
