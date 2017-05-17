@@ -53,7 +53,7 @@ class Uploader(Thread):
 			print 'error while transferring data to the s3 bucket '+ self.file_name
 
 # import_data function is called every minute by the runner program until ETL for all the tables are completed  
-def upload_data_to_s3(key):
+def upload_data_to_s3():
 	for key, values in param.exported_file.iteritems():
 		if(param.exported_file[key] == 1):
 			print("Transferring data to the S3 bucket: "+ key)
