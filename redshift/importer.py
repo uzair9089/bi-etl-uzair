@@ -73,7 +73,7 @@ class Importer(Thread):
 
         except Exception as e:
             print("Unable to access database, import error %s %s" % (str(e), self.file_name)
-            param.counter-1
+            #param.counter-1
 
             conn.rollback()
             curs.execute("""INSERT INTO etl_status (start_date, end_date, schema_name, table_name, file_path, error_phase, error_message, status) 
