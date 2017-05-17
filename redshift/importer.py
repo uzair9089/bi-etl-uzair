@@ -29,7 +29,9 @@ class Importer(Thread):
     def run(self):
 
         try:
-            conn_string = param.conn_hash['bi']
+
+            conn_string = "dbname='segment' port='5439' user='dwhadmin' password='1e14SYTzJoC2H12' host='shore-dwh.ciwq6khdxggb.eu-central-1.redshift.amazonaws.com'"
+            #conn_string = param.conn_hash['bi']
             conn = psycopg2.connect(conn_string)
             curs = conn.cursor()
 
@@ -73,7 +75,7 @@ class Importer(Thread):
 
         except Exception as e:
             print("Unable to access database, import error %s %s" % (str(e), self.file_name)
-            #param.counter-1
+            param.counter-1
 
             conn.rollback()
             curs.execute("""INSERT INTO etl_status (start_date, end_date, schema_name, table_name, file_path, error_phase, error_message, status) 
