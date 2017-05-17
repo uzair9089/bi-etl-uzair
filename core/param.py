@@ -93,7 +93,7 @@ class param:
 
 	tbl_pymt = []
 
-	tbl_pymt_truncate = ['merchants', 'disputes', 'bank_accounts', 'request_logs', 'stripe_events', 'charges', 'payments', 'charge_items', 'refunds']
+	tbl_pymt_truncate = ['merchants', 'disputes', 'bank_accounts',  'stripe_events', 'charges', 'payments', 'charge_items', 'refunds'] # 'request_logs' was depricated
 
 	tbl_pymt_rename = {'merchants': 'merchants_pymt'}
 
