@@ -27,6 +27,8 @@ class Uploader(Thread):
 
 		try:
 
+			print self.file_name
+			
 			os.environ['S3_USE_SIGV4'] = 'True'
 			BUCKET_NAME = 'shore-bi-etl'
 			AWS_ACCESS_KEY_ID = "AKIAIVBSMDRFXBB4YM6Q"
@@ -43,6 +45,7 @@ class Uploader(Thread):
 
 			if bucket.lookup(self.file_name):
 				file_exists_or_not.delete()
+				print 'file does not exists so needed to add'
 
 			k = Key(bucket)
 
@@ -56,10 +59,11 @@ class Uploader(Thread):
 def upload_data_to_s3():
 	for key, values in param.exported_file.iteritems():
 		if(param.exported_file[key] == 1):
-			print("Transferring data to the S3 bucket: "+ key)
-			runner = Uploader( param.root + param.start_date + key + '.csv') # put the variable in the param file for the s3 bucket details
+			print("Transferring data to the S3 bucket: "+ param.root + param.start_date + key + '.csv')
+			runner = Uploader( param.root + param.start_date + key + '.csv') # put the variable in the param file for the s3 bucket details 
 			param.exported_file[key] = 0
 			param.redshift_counter = param.redshift_counter - 1
+			print param.redshift_counter
 			runner.start()
 
 
