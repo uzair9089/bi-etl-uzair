@@ -60,9 +60,11 @@ class Uploader(Thread):
 
 			print 'Importing into the redhisft begins here'
 			# To do Import into the redhshift from this block of the code
+
 			runner = Importer(self.table_name)
 			param.counter = param.counter - 1
 			runner.start()
+
 		except:
 			print 'error while transferring data to the s3 bucket '+ self.file_name
 
