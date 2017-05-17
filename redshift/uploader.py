@@ -62,7 +62,7 @@ class Uploader(Thread):
 			# To do Import into the redhshift from this block of the code
 
 			runner = Importer(self.table_name)
-			param.counter = param.counter - 1
+			#param.counter = param.counter - 1
 			runner.start()
 
 		except:
