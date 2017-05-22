@@ -18,7 +18,7 @@ class param:
 	connection = ""
 	schema = ""
 	newpath = ""
-	full_path = param.root + param.schema + '/' +  param.start_date  +  '/'
+
 	root = '/opt/etl/core/data/'
 	#root = '/Users/sanjivupadhyaya/Desktop/prac/'
 	counter = redshift_counter = 0 
@@ -45,6 +45,8 @@ class param:
 
 	reset_end_date =  datetime.datetime.now() - datetime.timedelta(hours = 1)
 	reset_end_date = reset_end_date.strftime('%Y-%m-%d %H:00:00')
+
+	full_path = root + schema + '/' +  start_date  +  '/'
 
 	# database connections for source and destination
 	conn_hash = {
