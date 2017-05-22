@@ -11,6 +11,7 @@ from param import param
 import pandas as pd
 import threading
 import psycopg2
+import boto
 import os
 
 
@@ -52,11 +53,31 @@ class Importer(Thread):
                 conn.commit()
             
             print 'checking file size'
-            if True: 
-            #(os.stat(param.full_path+self.file_name+'.csv').st_size > 4):
-                file = open('s3://shore-bi-etl'+param.full_path+self.file_name+'.csv')
-                print 'file openining = '+param.newpath +self.file_name
-                print 'no error while checking fize size'
+            # here a connection to the s3 bucket has to be established to connect to the files and only then use the psycopg2 to import data into the redshift
+
+
+            os.environ['S3_USE_SIGV4'] = 'True'
+            BUCKET_NAME = param.BUCKET_NAME 
+            AWS_ACCESS_KEY_ID = param.AWS_ACCESS_KEY_ID 
+            AWS_SECRET_ACCESS_KEY= param.AWS_SECRET_ACCESS_KEY 
+            REGION_HOST = param.REGION_HOST 
+            conn2 = boto.connect_s3(AWS_ACCESS_KEY_ID,
+            AWS_SECRET_ACCESS_KEY, host = REGION_HOST)
+            bucket = conn2.get_bucket(BUCKET_NAME)
+
+            identifier = self.file_name
+
+            if bucket.lookup(param.full_path+self.file_name+'.csv'):
+                print 'file exists'
+                print (""" COPY %s FROM 's3://shore-bi-etl'%s iam_role 'arn:aws:iam::601812874785:role/BIs3Access' CSV IGNOREHEADER 1 """ % (self.file_name,bucket.lookup(param.full_path+self.file_name+'.csv'))
+                    #self.full_path))
+
+
+
+            #if (os.stat(param.full_path+self.file_name+'.csv').st_size > 4):
+            #    file = open('s3://shore-bi-etl'+param.full_path+self.file_name+'.csv')
+            #    print 'file openining = '+param.newpath +self.file_name
+            #    print 'no error while checking fize size'
 
                 #curs.copy_expert(sql = """ COPY %s FROM STDIN WITH CSV HEADER DELIMITER AS ',' """ % (param.schema +'.' +self.file_name[:-4]), file = file)
 
