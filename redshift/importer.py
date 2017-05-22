@@ -112,8 +112,8 @@ class Importer(Thread):
                     conn.commit()
                   #  print("delta load for: " +self.file_name +" completed ***")
 
-            else:
-                print("Empty file for: " +self.file_name)
+            #else:
+            #    print("Empty file for: " +self.file_name)
 
         except Exception as e:
             print("Unable to access database, import error %s %s" % (str(e), self.file_name))
