@@ -77,10 +77,12 @@ class Importer(Thread):
                     #self.full_path))
 
             print self.full_path
-            
-            if self.full_path in bucket:
-                print (""" COPY %s FROM 's3://shore-bi-etl'%s iam_role 'arn:aws:iam::601812874785:role/BIs3Access' CSV IGNOREHEADER 1 """ % (self.file_name,self.full_path))
-                print 'finally insertingggg wohuu'
+
+            for i in bucket:
+                if self.full_path == i:
+                    print (""" COPY %s FROM 's3://shore-bi-etl'%s iam_role 'arn:aws:iam::601812874785:role/BIs3Access' CSV IGNOREHEADER 1 """ % (self.file_name,i))
+                    print 'finally insertingggg wohuu'
+                    print i
 
             #if (os.stat(param.full_path+self.file_name+'.csv').st_size > 4):
             #    file = open('s3://shore-bi-etl'+param.full_path+self.file_name+'.csv')
