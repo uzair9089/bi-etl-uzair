@@ -80,9 +80,8 @@ class Importer(Thread):
                 print("Empty file for: " +self.file_name)
 
         except Exception as e:
-            print("Unable to access database, import error %s %s" % (str(e), self.file_name)
+            print("Unable to access database, import error %s %s" % (str(e), self.file_name))
             param.counter-1
-
             conn.rollback()
             curs.execute("""INSERT INTO etl_status (start_date, end_date, schema_name, table_name, file_path, error_phase, error_message, status) 
             VALUES(%s, %s, %s, %s, %s, %s, %s, %s)""",[param.start_date, param.end_date, param.schema, self.file_name, param.newpath+self.file_name, 'import', str(e),'fail'])
