@@ -54,7 +54,7 @@ class Importer(Thread):
             print 'checking file size'
             if True: 
             #(os.stat(param.full_path+self.file_name+'.csv').st_size > 4):
-                file = open(param.full_path+self.file_name+'.csv')
+                file = open('s3://shore-bi-etl'+param.full_path+self.file_name+'.csv')
                 print 'file openining = '+param.newpath +self.file_name
                 print 'no error while checking fize size'
 
