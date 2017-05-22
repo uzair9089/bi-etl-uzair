@@ -83,6 +83,7 @@ class Importer(Thread):
                 #print i.key
                 if self.full_path == '/'+i.key:
                     print 'entering the copy'
+                    print i.key
                     break;
                     #print (""" COPY %s FROM 's3://shore-bi-etl/%s' iam_role 'arn:aws:iam::601812874785:role/BIs3Access' CSV IGNOREHEADER 1 """ % (self.file_name,i.key))
                    # print 'finally insertingggg wohuu'
