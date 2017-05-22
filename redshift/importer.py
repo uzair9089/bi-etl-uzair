@@ -51,7 +51,8 @@ class Importer(Thread):
                 print 'no error after resetting time'
                 conn.commit()
             
-            if (os.stat(param.newpath +self.file_name).st_size > 4):
+            print 'checking file size'
+            if (os.stat(param.full_path+self.fil_name+'.csv').st_size > 4):
                 file = open(param.newpath +self.file_name)
                 print 'file openining = '+param.newpath +self.file_name
                 print 'no error while checking fize size'
