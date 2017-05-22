@@ -40,19 +40,19 @@ class Importer(Thread):
             if(self.file_name in param.truncate_tbl):
 
                 print (self.file_name)
-                print("truncating table " +self.file_name)
+               # print("truncating table " +self.file_name)
                 
                 curs.execute(etl_delta_load.truncate_queries[self.file_name])
-                print 'no error after etl_delta_load'
+               # print 'no error after etl_delta_load'
 
                 conn.commit()
 
             if param.reset_time == param.reset_value and self.file_name not in param.truncate_tbl:
                 curs.execute(etl_delta_load.delete_queries[self.file_name])
-                print 'no error after resetting time'
+               # print 'no error after resetting time'
                 conn.commit()
             
-            print 'checking file size'
+           # print 'checking file size'
             # here a connection to the s3 bucket has to be established to connect to the files and only then use the psycopg2 to import data into the redshift
 
 
@@ -80,9 +80,10 @@ class Importer(Thread):
 
             for i in bucket:
                 #print (""" COPY %s FROM 's3://shore-bi-etl%s' iam_role 'arn:aws:iam::601812874785:role/BIs3Access' CSV IGNOREHEADER 1 """ % (self.file_name,i.key))
-                print i.key
+                #print i.key
                 if self.full_path == '/'+i.key:
-                    print (""" COPY %s FROM 's3://shore-bi-etl/%s' iam_role 'arn:aws:iam::601812874785:role/BIs3Access' CSV IGNOREHEADER 1 """ % (self.file_name,i.key))
+                    print 'entering the copy'
+                    #print (""" COPY %s FROM 's3://shore-bi-etl/%s' iam_role 'arn:aws:iam::601812874785:role/BIs3Access' CSV IGNOREHEADER 1 """ % (self.file_name,i.key))
                    # print 'finally insertingggg wohuu'
                    # print i
 
