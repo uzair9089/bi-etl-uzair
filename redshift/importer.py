@@ -67,22 +67,22 @@ class Importer(Thread):
 
             identifier = self.file_name
 
-            print self.file_name,bucket.lookup(param.full_path+self.file_name+'.csv')
+            #print self.file_name,bucket.lookup(param.full_path+self.file_name+'.csv')
 
-            print (""" COPY %s FROM 's3://shore-bi-etl'%s iam_role 'arn:aws:iam::601812874785:role/BIs3Access' CSV IGNOREHEADER 1 """ % (self.file_name,bucket.lookup(param.full_path+self.file_name+'.csv')))
+            #print (""" COPY %s FROM 's3://shore-bi-etl'%s iam_role 'arn:aws:iam::601812874785:role/BIs3Access' CSV IGNOREHEADER 1 """ % (self.file_name,bucket.lookup(param.full_path+self.file_name+'.csv')))
 
             if bucket.lookup(param.full_path+self.file_name+'.csv'):
-                print 'file exists'
-                print (""" COPY %s FROM 's3://shore-bi-etl'%s iam_role 'arn:aws:iam::601812874785:role/BIs3Access' CSV IGNOREHEADER 1 """ % (self.file_name,bucket.lookup(param.full_path+self.file_name+'.csv')))
+              #  print 'file exists'
+               # print (""" COPY %s FROM 's3://shore-bi-etl'%s iam_role 'arn:aws:iam::601812874785:role/BIs3Access' CSV IGNOREHEADER 1 """ % (self.file_name,bucket.lookup(param.full_path+self.file_name+'.csv')))
                     #self.full_path))
 
-            print self.full_path
+           # print self.full_path
 
             for i in bucket:
                 if self.full_path == i:
                     print (""" COPY %s FROM 's3://shore-bi-etl'%s iam_role 'arn:aws:iam::601812874785:role/BIs3Access' CSV IGNOREHEADER 1 """ % (self.file_name,i))
-                    print 'finally insertingggg wohuu'
-                    print i
+                   # print 'finally insertingggg wohuu'
+                   # print i
 
             #if (os.stat(param.full_path+self.file_name+'.csv').st_size > 4):
             #    file = open('s3://shore-bi-etl'+param.full_path+self.file_name+'.csv')
@@ -92,22 +92,22 @@ class Importer(Thread):
                 #curs.copy_expert(sql = """ COPY %s FROM STDIN WITH CSV HEADER DELIMITER AS ',' """ % (param.schema +'.' +self.file_name[:-4]), file = file)
 
                 #curs.copy_expert(sql = """ COPY %s FROM 's3://shore-bi-etl'%s iam_role 'arn:aws:iam::601812874785:role/BIs3Access' CSV IGNOREHEADER 1 """ % (self.file_name,self.full_path), file = file)
-                print (""" COPY %s FROM 's3://shore-bi-etl'%s iam_role 'arn:aws:iam::601812874785:role/BIs3Access' CSV IGNOREHEADER 1 """ % (self.file_name,self.full_path))
+                #print (""" COPY %s FROM 's3://shore-bi-etl'%s iam_role 'arn:aws:iam::601812874785:role/BIs3Access' CSV IGNOREHEADER 1 """ % (self.file_name,self.full_path))
 
 
                 #conn.commit()
 
-                print("import for " +self.file_name +" completed !!!")
-                print("delta load starts for:" +self.file_name)
+                #print("import for " +self.file_name +" completed !!!")
+                #print("delta load starts for:" +self.file_name)
 
                 if param.reset_time == param.reset_value:
                     curs.execute(etl_delta_load.delta_query_reset[self.file_name])
                     conn.commit()
-                    print("delta load for: " +self.file_name +" completed ***RESET***")
+                 #   print("delta load for: " +self.file_name +" completed ***RESET***")
                 else:
                     curs.execute(etl_delta_load.delta_query[self.file_name])
                     conn.commit()
-                    print("delta load for: " +self.file_name +" completed ***")
+                  #  print("delta load for: " +self.file_name +" completed ***")
 
             else:
                 print("Empty file for: " +self.file_name)
