@@ -18,7 +18,7 @@ class param:
 	connection = ""
 	schema = ""
 	newpath = ""
-	full_path = "param.root + param.schema + '/' +  param.start_date  +  '/'"
+	full_path = param.root + param.schema + '/' +  param.start_date  +  '/'
 	root = '/opt/etl/core/data/'
 	#root = '/Users/sanjivupadhyaya/Desktop/prac/'
 	counter = redshift_counter = 0 
