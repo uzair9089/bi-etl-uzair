@@ -69,7 +69,7 @@ class Importer(Thread):
 
             if bucket.lookup(param.full_path+self.file_name+'.csv'):
                 print 'file exists'
-                print (""" COPY %s FROM 's3://shore-bi-etl'%s iam_role 'arn:aws:iam::601812874785:role/BIs3Access' CSV IGNOREHEADER 1 """ % (self.file_name,bucket.lookup(param.full_path+self.file_name+'.csv'))
+                print (""" COPY %s FROM 's3://shore-bi-etl'%s iam_role 'arn:aws:iam::601812874785:role/BIs3Access' CSV IGNOREHEADER 1 """ % (self.file_name,bucket.lookup(param.full_path+self.file_name+'.csv')))
                     #self.full_path))
 
 
