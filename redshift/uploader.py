@@ -61,8 +61,8 @@ class Uploader(Thread):
 			print 'Importing into the redhisft begins here'
 			# To do Import into the redhshift from this block of the code
 
-			print self.table_name + " is the name of the table "
-			runner = Importer(self.table_name)
+			print self.table_name + " and " + param.full_path 
+			runner = Importer(self.table_name, param.full_path+self.table_name+'.csv')
 			#param.counter = param.counter - 1
 			runner.start()
 
