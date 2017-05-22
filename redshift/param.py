@@ -46,7 +46,6 @@ class param:
 	reset_end_date =  datetime.datetime.now() - datetime.timedelta(hours = 1)
 	reset_end_date = reset_end_date.strftime('%Y-%m-%d %H:00:00')
 
-	full_path = root + schema + '/' +  start_date  +  '/'
 
 	# database connections for source and destination
 	conn_hash = {
@@ -139,6 +138,7 @@ class param:
 			param.connection = self.conn_hash[host]
 			param.schema = host
 			param.newpath = param.root +param.schema +'/' +param.start_date +'/'
+			param.full_path = param.root + param.schema + '/' +  param.start_date  +  '/'
 		else:
 			print("Invalid Host given : Please enter the details of the host in param.py file ")
 
