@@ -81,6 +81,7 @@ def upload_data_to_s3():
 			runner.start()
 
 
-
+def check_uploaded_file(file_name):
+	checkClass = 
 
 
