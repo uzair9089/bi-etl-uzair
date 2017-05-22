@@ -38,17 +38,23 @@ class Importer(Thread):
 
             if(self.file_name in param.truncate_tbl):
 
+                print (self.file_name)
                 print("truncating table " +self.file_name)
                 
                 curs.execute(etl_delta_load.truncate_queries[self.file_name])
+                print 'no error after etl_delta_load'
+
                 conn.commit()
 
             if param.reset_time == param.reset_value and self.file_name not in param.truncate_tbl:
                 curs.execute(etl_delta_load.delete_queries[self.file_name])
+                print 'no error after resetting time'
                 conn.commit()
             
             if (os.stat(param.newpath +self.file_name).st_size > 4):
                 file = open(param.newpath +self.file_name)
+                print 'file openining = '+param.newpath +self.file_name
+                print 'no error while checking fize size'
 
                 #curs.copy_expert(sql = """ COPY %s FROM STDIN WITH CSV HEADER DELIMITER AS ',' """ % (param.schema +'.' +self.file_name[:-4]), file = file)
 
