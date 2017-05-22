@@ -79,6 +79,7 @@ class Importer(Thread):
            # print self.full_path
 
             for i in bucket:
+                print i
                 if self.full_path == i:
                     print (""" COPY %s FROM 's3://shore-bi-etl'%s iam_role 'arn:aws:iam::601812874785:role/BIs3Access' CSV IGNOREHEADER 1 """ % (self.file_name,i))
                    # print 'finally insertingggg wohuu'
