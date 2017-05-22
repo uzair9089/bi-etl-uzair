@@ -52,8 +52,9 @@ class Importer(Thread):
                 conn.commit()
             
             print 'checking file size'
-            if (os.stat(param.full_path+self.file_name+'.csv').st_size > 4):
-                file = open(param.newpath +self.file_name)
+            if True: 
+            #(os.stat(param.full_path+self.file_name+'.csv').st_size > 4):
+                file = open(param.full_path+self.file_name+'.csv')
                 print 'file openining = '+param.newpath +self.file_name
                 print 'no error while checking fize size'
 
