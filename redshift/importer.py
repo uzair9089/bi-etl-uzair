@@ -68,7 +68,7 @@ class Importer(Thread):
             identifier = self.file_name
 
             print self.file_name,bucket.lookup(param.full_path+self.file_name+'.csv')
-            
+
             print (""" COPY %s FROM 's3://shore-bi-etl'%s iam_role 'arn:aws:iam::601812874785:role/BIs3Access' CSV IGNOREHEADER 1 """ % (self.file_name,bucket.lookup(param.full_path+self.file_name+'.csv')))
 
             if bucket.lookup(param.full_path+self.file_name+'.csv'):
@@ -76,7 +76,9 @@ class Importer(Thread):
                 print (""" COPY %s FROM 's3://shore-bi-etl'%s iam_role 'arn:aws:iam::601812874785:role/BIs3Access' CSV IGNOREHEADER 1 """ % (self.file_name,bucket.lookup(param.full_path+self.file_name+'.csv')))
                     #self.full_path))
 
-
+            if self.full_path in bucket:
+                print (""" COPY %s FROM 's3://shore-bi-etl'%s iam_role 'arn:aws:iam::601812874785:role/BIs3Access' CSV IGNOREHEADER 1 """ % (self.file_name,self.full_path))
+                print 'finally insertingggg wohuu'
 
             #if (os.stat(param.full_path+self.file_name+'.csv').st_size > 4):
             #    file = open('s3://shore-bi-etl'+param.full_path+self.file_name+'.csv')
