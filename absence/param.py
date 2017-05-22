@@ -23,11 +23,14 @@ class param:
 	start_date = str(date.today() - timedelta(1))
 	end_date = str(date.today())
 
-	tbl_absence= ['company']
+	tbl_absence= ['company','invoices']
 
-	url = "https://app.absence.io/api/v2/bi/companies"
+	url = {'company': "https://app.absence.io/api/v2/bi/companies"
+		   ,'invoices': "https://app.absence.io/api/v2/bi/invoices"
+			}
 
-	filters = "{\n\t\"limit\": 10000,\n\t\"filter\": {\n  \t\"modified\": {\n\t\"$gte\": \"" + str(start_date) + "\",\n\t\"$lt\": \"" + str(end_date) + "\"\n   }\n }\n}"
+	filters ={'company': "{\n\t\"limit\": 10000,\n\t\"filter\": {\n  \t\"modified\": {\n\t\"$gte\": \"" + str(start_date) + "\",\n\t\"$lt\": \"" + str(end_date) + "\"\n   }\n }\n}"
+			  ,'invoices': ""}
 	
 	#filters = "{\n\t\"limit\" : 10000\n}"
 
@@ -43,7 +46,7 @@ class param:
 	# dictionary for storing truncate queries for tables without the date attributes.
 	truncate_queries = {
 						# example schema--> change it to appropriate table name in future when required
-						'example1': "truncate table cs.example1;"
+						'invoices': "truncate table absence.invoices;"
 						,'example2': "truncate table cs.eample2;"
 						
 	}

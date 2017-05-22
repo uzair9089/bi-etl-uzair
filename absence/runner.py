@@ -34,7 +34,7 @@ else:
 
 
 if (host == "absence") :
-	param.counter = 1
+	param.counter = len(param.tbl_absence)
 	for i in param.tbl_absence:
 	    print('Extracting Json for ' + i +' started')
 	    runner = Exporter(i)

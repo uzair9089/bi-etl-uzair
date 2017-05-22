@@ -39,9 +39,8 @@ class Importer(Thread):
                 do.parser(self.collection_name)
                 print "finished parsing data"
 
-        if self.collection_name == 'users.json':
-            do = up()
-            do.parser(self.collection_name)
+        if self.collection_name == 'invoices.json':
+            print 'create a parser for the invoices object and rest should be fine'
 
 
 # import_data function is called every minute by the runner program until ETL for all the tables are completed  
