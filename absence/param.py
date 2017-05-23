@@ -15,8 +15,8 @@ import os
 class param:		
 
 	schema = ""
-	#root = '/Users/sanjivupadhyaya/Desktop/mars1/etl/absence/data/'
-	root = '/opt/etl/absence/data'
+	root = '/Users/sanjivupadhyaya/Desktop/mars1/etl/absence/data/'
+	#root = '/opt/etl/absence/data'
 	counter = 0 
 	newpath = ""
 	connection = ""
@@ -30,7 +30,7 @@ class param:
 			}
 
 	filters ={'company': "{\n\t\"limit\": 10000,\n\t\"filter\": {\n  \t\"modified\": {\n\t\"$gte\": \"" + str(start_date) + "\",\n\t\"$lt\": \"" + str(end_date) + "\"\n   }\n }\n}"
-			  ,'invoices': ""}
+			  ,'invoices': "{\n\t\"limit\": 10000\n\n}"}
 	
 	#filters = "{\n\t\"limit\" : 10000\n}"
 

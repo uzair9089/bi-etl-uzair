@@ -6,10 +6,7 @@ import psycopg2
 import os
 import json
 import sys
-
-
 reload(sys)
-
 sys.setdefaultencoding('utf8')
 
 class CompanyParser:
