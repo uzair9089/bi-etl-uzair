@@ -5,6 +5,7 @@ Function: connect to the BI server and import csv files into respective tables.
 """
 from company_parser import CompanyParser as cp
 from invoice_parser import InvoiceParser as ip
+from user_parser import UserParser as up
 from sqlalchemy import create_engine
 from threading import Thread, Lock
 from param import param
@@ -47,6 +48,19 @@ class Importer(Thread):
                 print "finished parsing data for: " + self.collection_name
 
 
+        print param.temp_objects
+        print self.collection_name
+
+        #print ("self.collection_name in param.temp_objects:")
+
+        if self.collection_name[:-5] in param.temp_objects:
+            if param.newpath + self.collection_name:
+                do = up()
+                do.parser(self.collection_name)
+                print "finished parsing data for: " + self.collection_name
+        else:
+            print "no matching file found"
+
 # import_data function is called every minute by the runner program until ETL for all the tables are completed  
 def import_data():
     for key, values in param.exported_file.iteritems():
@@ -55,6 +69,7 @@ def import_data():
             runner = Importer(key + '.json')
             param.exported_file[key] = 0
             param.counter = param.counter - 1
+            print param.counter
             runner.start()
             
 

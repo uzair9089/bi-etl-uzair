@@ -15,7 +15,7 @@ import os
 class param:		
 
 	schema = ""
-	root = '/Users/sanjivupadhyaya/Desktop/mars1/etl/absence/data/'
+	root = '/Users/sanjivupadhyaya/Desktop/mars1/etl/absence/data'
 	#root = '/opt/etl/absence/data'
 	counter = 0 
 	newpath = ""
@@ -23,14 +23,27 @@ class param:
 	start_date = str(date.today() - timedelta(1))
 	end_date = str(date.today())
 
-	tbl_absence= ['company','invoices']
+	row_count = 0 
+	row_limit = 500
+	loop_counter = 0
+	skip_counter = 0
+
+	tbl_absence= ['company', 'invoices','users']
+
+	history_objects = ['users']
+
+	temp_objects = []
 
 	url = {'company': "https://app.absence.io/api/v2/bi/companies"
 		   ,'invoices': "https://app.absence.io/api/v2/bi/invoices"
+		   ,'users': "https://app.absence.io/api/v2/bi/users"
 			}
 
-	filters ={'company': "{\n\t\"limit\": 10000,\n\t\"filter\": {\n  \t\"modified\": {\n\t\"$gte\": \"" + str(start_date) + "\",\n\t\"$lt\": \"" + str(end_date) + "\"\n   }\n }\n}"
-			  ,'invoices': "{\n\t\"limit\": 10000\n\n}"}
+
+
+	filters ={'company': "{\n\t\"limit\": 1000,\n\t\"filter\": {\n  \t\"modified\": {\n\t\"$gte\": \"" + str(start_date) + "\",\n\t\"$lt\": \"" + str(end_date) + "\"\n   }\n }\n}"
+			  ,'invoices': "{\n\t\"limit\": 1000\n\n}"
+			  ,'users':"{\n\t\n\t\"limit\":500,"+"\n\t\"skip\":"}
 	
 	#filters = "{\n\t\"limit\" : 10000\n}"
 
@@ -47,6 +60,7 @@ class param:
 	truncate_queries = {
 						# example schema--> change it to appropriate table name in future when required
 						'invoices': "truncate table absence.invoices;"
+						,'users': "truncate table absence.users;"
 						,'example2': "truncate table cs.eample2;"
 						
 	}
@@ -57,7 +71,7 @@ class param:
 	# files ready to be parsed: checked by the import_data module.
 	exported_file = dict((el,0) for el in tbl_bi)
 	
-	#conn_cs = os.environ['conn_cs']
+	#conn_cs = os.environ['conn_cs']e
 
 	conn_bi = os.environ['conn_bi']
 

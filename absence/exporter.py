@@ -22,16 +22,48 @@ class Exporter(Thread):
 
 
     def run(self):
-    	
+
+
     	try:
             conn_string = param.conn_bi
             conn = psycopg2.connect(conn_string)
             curs = conn.cursor()
-            response = requests.request("POST", param.url[self.collection_name], data=param.filters[self.collection_name], headers=param.headers).json()
-            with open(param.newpath+self.collection_name+'.json', 'w') as outfile:
-                json.dump(response, outfile)
 
-            param.exported_file[self.collection_name] = 1
+            print(param.counter)
+
+            if self.collection_name in param.history_objects: 
+                response = requests.request("POST", param.url[self.collection_name], data=param.filters[self.collection_name]+str(param.skip_counter)+"\n}", headers=param.headers).json()
+                print param.filters[self.collection_name]+str(param.skip_counter)+"\n}"
+                with open(param.newpath+self.collection_name+'.json', 'w') as outfile:
+                    json.dump(response, outfile)
+
+                param.exported_file[self.collection_name] = 1
+
+                param.row_count = int(response['totalCount'])
+                param.loop_counter = (param.row_count/param.row_limit) + 2
+
+                param.counter = param.counter + param.loop_counter-1
+
+
+                for i in range(1, param.loop_counter):
+                    param.skip_counter =  i * param.row_limit
+                    response = requests.request("POST", param.url[self.collection_name], data=param.filters[self.collection_name]+str(param.skip_counter)+"\n}", headers=param.headers).json()
+                    print param.filters[self.collection_name]+str(param.skip_counter)+"\n}"
+                    with open(param.newpath+self.collection_name + "_" +str(i)+'.json', 'w') as outfile:
+                        json.dump(response, outfile)
+
+                        param.temp_objects.append(self.collection_name+"_"+str(i))
+
+                        param.exported_file[self.collection_name+"_"+str(i)] = 1
+
+
+            else:
+                response = requests.request("POST", param.url[self.collection_name], data=param.filters[self.collection_name], headers=param.headers).json()
+                with open(param.newpath+self.collection_name+'.json', 'w') as outfile:
+                    json.dump(response, outfile)
+
+                param.exported_file[self.collection_name] = 1
+                print("extraction completed for: "+ self.collection_name )
 
     	except Exception as e:
 

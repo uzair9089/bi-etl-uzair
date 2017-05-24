@@ -26,6 +26,7 @@ if not os.path.exists(param.newpath):
     os.makedirs(param.newpath)
 
 
+
 if sys.argv[1] in ('cs', 'absence'):
 	print("Extracting Json for " +str(param.start_date) +" - " +str(param.end_date))
 
@@ -39,12 +40,15 @@ if (host == "absence") :
 	    print('Extracting Json for ' + i +' started')
 	    runner = Exporter(i)
 	    runner.start()
+
 else:
 	print("no other data source is defined yet")
 
 # run the ETL process until all the mentioned collections in the param file are exported.
 while param.counter != 0:
 	importer.import_data()
+	time.sleep(10)
+
 
 
 
