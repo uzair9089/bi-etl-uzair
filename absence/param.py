@@ -30,7 +30,7 @@ class param:
 
 	tbl_absence= ['company', 'invoices','users']
 
-	history_objects = ['users']
+	history_objects = ['getthemall']
 
 	temp_objects = []
 
@@ -45,9 +45,11 @@ class param:
 			  ,'invoices': "{\n\t\"limit\": 1000\n\n}"
 			  ,'users':"{\n\t\n\t\"limit\":500,"+"\n\t\"skip\":"}
 	
-	#filters = "{\n\t\"limit\" : 10000\n}"
 
-	# 
+	filters_new ={'company': "{\n\t\"limit\": 1000,\n\t\"filter\": {\n  \t\"modified\": {\n\t\"$gte\": \"" + str(start_date) + "\",\n\t\"$lt\": \"" + str(end_date) + "\"\n   }\n }\n}"
+		  ,'invoices': "{\n\t\"limit\": 1000\n\n}"
+		  #,'users':"{\n\t\"limit\": 1000}"}
+		  ,'users': "{\n\t\"limit\": 1000,\n\t\"filter\": {\n  \t\"modified\": {\n\t\"$gte\": \"" + str(start_date) + "\",\n\t\"$lt\": \"" + str(end_date) + "\"\n   }\n }\n}"}
 
 	# move the token to the environment variable somehow
 	headers = {

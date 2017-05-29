@@ -32,7 +32,7 @@ class Exporter(Thread):
             print(param.counter)
 
             if self.collection_name in param.history_objects: 
-                response = requests.request("POST", param.url[self.collection_name], data=param.filters[self.collection_name]+str(param.skip_counter)+"\n}"+"sortBy: {\"company\": 1}", headers=param.headers).json()
+                response = requests.request("POST", param.url[self.collection_name], data=param.filters[self.collection_name]+str(param.skip_counter)+",\"sortBy\": {\"company\": 1}"+"}", headers=param.headers).json()
                 print param.filters[self.collection_name]+str(param.skip_counter)+"\n}"
                 with open(param.newpath+self.collection_name+'.json', 'w') as outfile:
                     json.dump(response, outfile)
@@ -47,7 +47,7 @@ class Exporter(Thread):
 
                 for i in range(1, param.loop_counter):
                     param.skip_counter =  i * param.row_limit
-                    response = requests.request("POST", param.url[self.collection_name], data=param.filters[self.collection_name]+str(param.skip_counter)+"\n}"+"sortBy: {\"company\": 1}", headers=param.headers).json()
+                    response = requests.request("POST", param.url[self.collection_name], data=param.filters[self.collection_name]+str(param.skip_counter)+",\"sortBy\": {\"company\": 1}"+"}", headers=param.headers).json()
                     print param.filters[self.collection_name]+str(param.skip_counter)+"\n}"
                     with open(param.newpath+self.collection_name + "_" +str(i)+'.json', 'w') as outfile:
                         json.dump(response, outfile)
@@ -58,7 +58,7 @@ class Exporter(Thread):
 
 
             else:
-                response = requests.request("POST", param.url[self.collection_name], data=param.filters[self.collection_name], headers=param.headers).json()
+                response = requests.request("POST", param.url[self.collection_name], data=param.filters_new[self.collection_name], headers=param.headers).json()
                 with open(param.newpath+self.collection_name+'.json', 'w') as outfile:
                     json.dump(response, outfile)
 

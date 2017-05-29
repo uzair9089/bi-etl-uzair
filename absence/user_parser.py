@@ -73,9 +73,6 @@ class UserParser:
               location_id = str(data_lines["locationId"]).replace("'","")
               #print location_id
 
-            #curs.execute("insert into absence.users(id, company, email, status, language, first_login, first_name, last_name, ics_link, location_id, created, modified, activation_due_date) values ('{0}','{1}','{2}','{3}','{4}','{5}','{6}',{7},{8},{9},{10},{11},{12})"
-            #.format(id, company, email, status, language, first_login, first_name, last_name, ics_link, location_id, created, modified, activation_due_date))
-            #conn.commit()
 
             curs.execute("insert into absence.users(id, company, email, status, language, first_login, first_name, last_name, ics_link, location_id, created, modified, activation_due_date) values ('{0}','{1}','{2}','{3}','{4}','{5}','{6}','{7}','{8}','{9}','{10}','{11}','{12}')"
             .format(id, company, email, status, language, first_login, first_name, last_name, ics_link, location_id, created, modified, activation_due_date))
