@@ -77,7 +77,7 @@ class param:
 
 	#tbl_nwsl_truncate = ['newsletter_customers']
 
-	tbl_nwsl_truncate = ['newsletter_customers']
+	tbl_nwsl_truncate = []
 
 	tbl_nwsl_rename = {'newsletters': 'newsletters_nwsl'}
 
