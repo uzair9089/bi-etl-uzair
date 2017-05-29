@@ -46,7 +46,7 @@ class UserParser:
               #print company
 
             if 'email' in data_lines.keys():
-              email = data_lines["email"]
+              email = data_lines["email"].replace("'","")
               #print status
 
             if 'status' in data_lines.keys(): 
