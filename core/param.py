@@ -73,7 +73,7 @@ class param:
 
 	tbl_core_rename = {}
 
-	tbl_nwsl = ['newsletters']
+	tbl_nwsl = ['newsletters','newsletters_deprecated'] #remove the deprecated after the api moves to v2.
 
 	#tbl_nwsl_truncate = ['newsletter_customers']
 
