@@ -23,7 +23,7 @@ class param:
 	counter = 0 
 
 	# should be always 1 - 2 hours
-	start_date = datetime.datetime.now() - datetime.timedelta(hours = 24)
+	start_date = datetime.datetime.now() - datetime.timedelta(hours = 2)
 	start_date = start_date.strftime('%Y-%m-%d %H:00:00')
 
 	end_date = datetime.datetime.now() - datetime.timedelta(hours = 1)
