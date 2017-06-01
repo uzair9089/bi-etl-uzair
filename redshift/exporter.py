@@ -33,7 +33,7 @@ class Exporter(Thread):
             conn = psycopg2.connect(conn_string)
             curs = conn.cursor()
 
-            outputquery = "COPY ({0}) TO STDOUT WITH CSV HEADER".format(self.query)
+            outputquery = "COPY (prod.{0}) TO STDOUT WITH CSV HEADER".format(self.query)
 
 
             with open(param.newpath+self.file_name +".csv", 'w+') as f:
