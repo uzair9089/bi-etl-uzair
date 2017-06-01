@@ -99,25 +99,25 @@ if (host in param.sources):
     for i in param.tbl_source:
 
         if i == 'appointment_occurrences': # use another key in hash for these kind of special cases
-            runner = Exporter("select * from prod."+ i + " where appointment_series_id in (select id from appointment_series "+filter_occurrences+")", i)
+            runner = Exporter("select * from redshift."+ i + " where appointment_series_id in (select id from appointment_series "+filter_occurrences+")", i)
             runner.start()
 
         elif i in param.tbl_source_rename:
-            runner = Exporter("select * from prod." + i + filter_row, param.tbl_source_rename[i]) #need to tackle the renamed tables
+            runner = Exporter("select * from redshift." + i + filter_row, param.tbl_source_rename[i]) #need to tackle the renamed tables
             runner.start()
 
         else:
-            runner = Exporter("select * from prod." + i + filter_row, i) #need to tackle the renamed tables
+            runner = Exporter("select * from redshift." + i + filter_row, i) #need to tackle the renamed tables
             runner.start()
 
     for j in param.tbl_source_truncate:
 
         if j in param.tbl_source_rename:
-            runner2 = Exporter('select * from prod.'+ j, param.tbl_source_rename[j])
+            runner2 = Exporter('select * from redshift.'+ j, param.tbl_source_rename[j])
             runner2.start()
 
         else:
-            runner2 = Exporter('select * from prod.'+ j, j)
+            runner2 = Exporter('select * from redshift.'+ j, j)
             runner2.start()
 
 
