@@ -53,7 +53,7 @@ class param:
 				,'core': os.environ['conn_core']
 				,'msg': os.environ['conn_msg']
 				,'comm': os.environ['conn_comm']
-				,'pymt': os.environ['conn_pymt']
+				,'pymt': os.environ['conn_bi']
 				,'intercom': os.environ['conn_intercom']
 				,'bi': os.environ['conn_bi'] 
 			}
