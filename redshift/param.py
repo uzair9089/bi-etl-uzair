@@ -59,7 +59,7 @@ class param:
 				,'star': os.environ['conn_bi']
 			}
 
-	sources = ['core', 'nwsl', 'msg', 'comm', 'pymt', 'intercom']
+	sources = ['core', 'nwsl', 'msg', 'comm', 'pymt', 'intercom', 'star']
 
 	tbl_source = []
 
