@@ -52,6 +52,8 @@ if host != 'intercom' :
         filter_row = " where updated_at >='" + str(param.reset_start_date) + "' and updated_at<'" + str(param.reset_end_date) + "'"
     else:
         filter_row = " where updated_at >='" + str(param.start_date) + "' and updated_at<'" + str(param.end_date) + "'"
+if host == 'star':
+    filter_row = ""    
 else:
     filter_row = " where updated_at::date >= current_date::date -1 and updated_at::date < current_date::date "
 
