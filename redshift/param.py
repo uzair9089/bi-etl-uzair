@@ -90,8 +90,12 @@ class param:
 	tbl_star_truncate = ['fact_feedbacks', 'fact_appointments', 'appointments', 'appointment_series']
 
 
-	tbl_pentaho = [
+	tbl_pentaho = []
 
+	tbl_pentaho_rename = {}
+
+	tbl_pentaho_truncate = [
+	
 				# growth cube
 				'list_date_02',
 				'list_sfdc_accounts',
@@ -112,13 +116,7 @@ class param:
 				'list_hour',
 				'list_key_accounts_account',
 				'list_widget_in_date',
-				'fact_key_accounts_appointments'
-
-]
-
-	tbl_pentaho_rename = {}
-
-	tbl_pentaho_truncate = []
+				'fact_key_accounts_appointments']
 
 
 	tbl_nwsl = ['newsletters']
