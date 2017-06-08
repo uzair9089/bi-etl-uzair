@@ -60,7 +60,7 @@ class param:
 				,'pentaho': os.environ['conn_bi']
 			}
 
-	sources = ['core', 'nwsl', 'msg', 'comm', 'pymt', 'intercom', 'star']
+	sources = ['core', 'nwsl', 'msg', 'comm', 'pymt', 'intercom', 'star' ,'pentaho']
 
 	tbl_source = []
 
