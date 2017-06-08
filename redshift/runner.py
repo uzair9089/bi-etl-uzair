@@ -52,7 +52,7 @@ if host != 'intercom' :
         filter_row = " where updated_at >='" + str(param.reset_start_date) + "' and updated_at<'" + str(param.reset_end_date) + "'"
     else:
         filter_row = " where updated_at >='" + str(param.start_date) + "' and updated_at<'" + str(param.end_date) + "'"
-if host == 'star':
+if host == 'star' or host == 'pentaho':
     filter_row = ""    
 else:
     filter_row = " where updated_at::date >= current_date::date -1 and updated_at::date < current_date::date "
@@ -101,25 +101,25 @@ if (host in param.sources):
     for i in param.tbl_source:
 
         if i == 'appointment_occurrences': # use another key in hash for these kind of special cases
-            runner = Exporter("select * from redshift."+ i + " where appointment_series_id in (select id from appointment_series "+filter_occurrences+")", i)
+            runner = Exporter("select * from {0}.".format(param.schema)+ i + " where appointment_series_id in (select id from appointment_series "+filter_occurrences+")", i)
             runner.start()
 
         elif i in param.tbl_source_rename:
-            runner = Exporter("select * from redshift." + i + filter_row, param.tbl_source_rename[i]) #need to tackle the renamed tables
+            runner = Exporter("select * from {}.".format(param.schema) + i + filter_row, param.tbl_source_rename[i]) #need to tackle the renamed tables
             runner.start()
 
         else:
-            runner = Exporter("select * from redshift." + i + filter_row, i) #need to tackle the renamed tables
+            runner = Exporter("select * from {0}}.".format(param.schema) + i + filter_row, i) #need to tackle the renamed tables
             runner.start()
 
     for j in param.tbl_source_truncate:
 
         if j in param.tbl_source_rename:
-            runner2 = Exporter('select * from redshift.'+ j, param.tbl_source_rename[j])
+            runner2 = Exporter('select * from {0}}.'.format(param.schema)+ j, param.tbl_source_rename[j])
             runner2.start()
 
         else:
-            runner2 = Exporter('select * from redshift.'+ j, j)
+            runner2 = Exporter('select * from {0}.'.format(param.schema)+ j, j)
             runner2.start()
 
 
