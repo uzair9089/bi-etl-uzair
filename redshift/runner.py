@@ -105,7 +105,7 @@ if (host in param.sources):
             runner.start()
 
         elif i in param.tbl_source_rename:
-            runner = Exporter("select * from {}.".format(param.schema) + i + filter_row, param.tbl_source_rename[i]) #need to tackle the renamed tables
+            runner = Exporter("select * from {0}.".format(param.schema) + i + filter_row, param.tbl_source_rename[i]) #need to tackle the renamed tables
             runner.start()
 
         else:
