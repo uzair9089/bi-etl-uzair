@@ -56,6 +56,7 @@ class param:
 				,'pymt': os.environ['conn_bi']
 				,'intercom': os.environ['conn_intercom']
 				,'bi': os.environ['conn_bi'] 
+				,'star': os.environ['conn_bi']
 			}
 
 	sources = ['core', 'nwsl', 'msg', 'comm', 'pymt', 'intercom']
@@ -80,6 +81,12 @@ class param:
 	tbl_core_truncate = ['employees', 'merchant_permissions', 'merchant_key_accounts', 'merchant_accounts', 'merchant_roles']
 
 	tbl_core_rename = {}
+
+	tbl_star = ['fact_feedbacks', 'fact_appointments', 'appointments', 'appointment_series']
+
+	tbl_star_rename = {}
+
+	tbl_star_truncate = []
 
 	tbl_nwsl = ['newsletters']
 
@@ -127,7 +134,8 @@ class param:
 				  'msg':[{'tbl_source':tbl_msg},{'tbl_source_truncate':tbl_msg_truncate},{'tbl_source_rename':tbl_msg_rename}], 
 				  'comm':[{'tbl_source':tbl_comm},{'tbl_source_truncate':tbl_comm_truncate},{'tbl_source_rename':tbl_comm_rename}],
 				  'pymt':[{'tbl_source':tbl_pymt},{'tbl_source_truncate':tbl_pymt_truncate},{'tbl_source_rename':tbl_pymt_rename}], 
-				  'intercom':[{'tbl_source':tbl_intercom},{'tbl_source_truncate':tbl_intercom_truncate},{'tbl_source_rename':tbl_intercom_rename}]}
+				  'intercom':[{'tbl_source':tbl_intercom},{'tbl_source_truncate':tbl_intercom_truncate},{'tbl_source_rename':tbl_intercom_rename}],
+				  'star':[{'tbl_source':tbl_star},{'tbl_source_truncate':tbl_star_truncate},{'tbl_source_rename':tbl_star_rename}]}
 
 
 

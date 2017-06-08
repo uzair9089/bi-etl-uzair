@@ -32,6 +32,14 @@ truncate_queries = {
 					# intercom
 					,'tags_intercom': "truncate table intercom.tags_intercom;"
 					,'admins_intercom': "truncate table intercom.admins_intercom;"
+
+					# star
+					,'fact_appointments': "truncate table star.fact_appointments;"
+					,'fact_feedbacks': "truncate table star.fact_feedbacks;"
+					,'appointments': "truncate table star.appointments;"
+					,'appointment_series': "truncate table star.appointment_series;"
+
+
 				}
 
 
@@ -106,6 +114,12 @@ delta_query = {
 			,'emails': "drop table if exists emails_id; create temp table emails_id as select distinct id from comm.emails where updated_at>='" +str(param.start_date) +"' and  updated_at<'" +str(param.end_date) +"';delete from stage.s_emails where id in (select id from emails_id); insert into stage.s_emails select * from (select *,row_number() over (partition by id order by updated_at desc) as rnk from comm.emails where updated_at>='" +str(param.start_date) +"' and  updated_at<'" +str(param.end_date) +"') as t where rnk=1;"
 			,'publications': "drop table if exists publications_id; create temp table publications_id as select distinct id from comm.publications where updated_at>='" +str(param.start_date) +"' and  updated_at<'" +str(param.end_date) +"';delete from stage.s_publications where id in (select id from publications_id); insert into stage.s_publications select * from (select *,row_number() over (partition by id order by updated_at desc) as rnk from comm.publications where updated_at>='" +str(param.start_date) +"' and  updated_at<'" +str(param.end_date) +"') as t where rnk=1;"
 
+			# star
+			,'fact_appointments': "truncate table stage.s_fact_appointments; insert into stage.s_fact_appointments select * from star.fact_appointments;"
+			,'fact_feedbacks': "truncate table stage.s_fact_feedbacks; insert into stage.s_fact_feedbacks select * from star.fact_feedbacks;"
+			,'appointments': "truncate table stage.s_appointments; insert into stage.s_appointments select * from star.appointments;"
+			,'appointment_series': "truncate table stage.s_appointment_series; insert into stage.s_appointment_series select * from star.appointment_series;"
+
 		}
 
 
@@ -166,6 +180,13 @@ delete_queries = {
 				,'sms' :"delete from comm.sms where updated_at>='" +str(param.reset_start_date) +"';"
 				,'publications' :"delete from comm.publications where updated_at>='" +str(param.reset_start_date) +"';"
 				#'merchants' : "delete from comm.merchants where updated_at>='" +str(param.reset_start_date) +"';"
+
+				# star
+				,'fact_appointments': "truncate table stage.s_fact_appointments; insert into stage.s_fact_appointments select * from star.fact_appointments;"
+				,'fact_feedbacks': "truncate table stage.s_fact_feedbacks; insert into stage.s_fact_feedbacks select * from star.fact_feedbacks;"
+				,'appointments': "truncate table stage.s_appointments; insert into stage.s_appointments select * from star.appointments;"
+				,'appointment_series': "truncate table stage.s_appointment_series; insert into stage.s_appointment_series select * from star.appointment_series;"
+
 			}
 
 
@@ -238,6 +259,13 @@ delta_query_reset = {
 				,'sms': "drop table if exists sms_id; create temp table sms_id as select distinct id from comm.sms where updated_at>='" +str(param.reset_start_date) +"' and  updated_at<'" +str(param.reset_end_date) +"';delete from stage.s_sms where id in (select id from sms_id); insert into stage.s_sms select * from (select *,row_number() over (partition by id order by updated_at desc) as rnk from comm.sms where updated_at>='" +str(param.reset_start_date) +"' and  updated_at<'" +str(param.reset_end_date) +"') as t where rnk=1;"
 				,'emails': "drop table if exists emails_id; create temp table emails_id as select distinct id from comm.emails where updated_at>='" +str(param.reset_start_date) +"' and  updated_at<'" +str(param.reset_end_date) +"';delete from stage.s_emails where id in (select id from emails_id); insert into stage.s_emails select * from (select *,row_number() over (partition by id order by updated_at desc) as rnk from comm.emails where updated_at>='" +str(param.reset_start_date) +"' and  updated_at<'" +str(param.reset_end_date) +"') as t where rnk=1;"
 				,'publications': "drop table if exists publications_id; create temp table publications_id as select distinct id from comm.publications where updated_at>='" +str(param.reset_start_date) +"' and  updated_at<'" +str(param.reset_end_date) +"';delete from stage.s_publications where id in (select id from publications_id); insert into stage.s_publications select * from (select *,row_number() over (partition by id order by updated_at desc) as rnk from comm.publications where updated_at>='" +str(param.reset_start_date) +"' and  updated_at<'" +str(param.reset_end_date) +"') as t where rnk=1;"
+
+				# star
+				,'fact_appointments': "truncate table stage.s_fact_appointments; insert into stage.s_fact_appointments select * from star.fact_appointments;"
+				,'fact_feedbacks': "truncate table stage.s_fact_feedbacks; insert into stage.s_fact_feedbacks select * from star.fact_feedbacks;"
+				,'appointments': "truncate table stage.s_appointments; insert into stage.s_appointments select * from star.appointments;"
+				,'appointment_series': "truncate table stage.s_appointment_series; insert into stage.s_appointment_series select * from star.appointment_series;"
+
 
 }
 
