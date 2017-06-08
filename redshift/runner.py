@@ -109,13 +109,13 @@ if (host in param.sources):
             runner.start()
 
         else:
-            runner = Exporter("select * from {0}}.".format(param.schema) + i + filter_row, i) #need to tackle the renamed tables
+            runner = Exporter("select * from {0}.".format(param.schema) + i + filter_row, i) #need to tackle the renamed tables
             runner.start()
 
     for j in param.tbl_source_truncate:
 
         if j in param.tbl_source_rename:
-            runner2 = Exporter('select * from {0}}.'.format(param.schema)+ j, param.tbl_source_rename[j])
+            runner2 = Exporter('select * from {0}.'.format(param.schema)+ j, param.tbl_source_rename[j])
             runner2.start()
 
         else:
