@@ -83,68 +83,37 @@ class param:
 
 	tbl_core_rename = {}
 
-	tbl_star = ['fact_feedbacks', 'fact_appointments', 'appointments', 'appointment_series']
+	tbl_star = []
 
 	tbl_star_rename = {}
 
-	tbl_star_truncate = []
+	tbl_star_truncate = ['fact_feedbacks', 'fact_appointments', 'appointments', 'appointment_series']
 
 
 	tbl_pentaho = [
 
-				'list_hour','list_churn',
-				'agg_merchant_conversations',
-				'messages_per_conversation',
-				'agg_event_prt',
-				'list_appointment_status',
-				'list_appointment_resources',
-				'list_state_changed_by_merchant',
-				'list_participating_accounts',
-				'list_type',
-				'customer_availability',
-				'list_feedbacks',
-				'list_location',
-				'list_merchant_profiles',
-				'list_origin',
-				'list_resources',
-				'list_services',
-				'agg_msg_cnt',
-				'agg_app_rsr',
-				'agg_app_serv',
-				'agg_app_edits',
-				'fact_appointments',
+				# growth cube
+				'list_date_02',
+				'list_sfdc_accounts',
 				'list_city',
-				'main_table_step1',
-				'list_merchant_created_date',
 				'list_industry',
-				'list_account_key_accounts_parent',
-				'list_account_key_accounts',
-				'list_event_did_not_appear',
-				'list_appointment_state',
-				'list_feedback_given',
-				'list_appointment_created_by_merchant',
-				'list_gender',
+				'list_subscription_channel',
 				'list_subscription_status',
+				'list_subscription_start_date',
+				'list_subscription_end_date',
+				'fact_growth_general',
+				'list_owner',
+
+				# key account 
+				'list_created_by_merchant',
+				'list_state',
+				'given_feedbacks',
 				'list_date',
+				'list_hour',
 				'list_key_accounts_account',
 				'list_widget_in_date',
-				'event_did_not_appear',
-				'list_state',
-				'list_subscription_start_date',
-				'list_sfdc_accounts',
-				'list_date_02',
-				'list_owner',
-				'list_subscription_end_date',
-				'list_subscription_channel',
-				'list_subscription_mrr',
-				'list_last_churn_case_per_account',
-				'list_last_success_case_per_account',
-				'given_feedbacks',
-				'list_created_by_merchant',
-				'fact_key_accounts_appointments',
-				'shifts_prod',
-				'shifts_dwh',
-				'fact_growth_general'
+				'fact_key_accounts_appointments'
+
 ]
 
 	tbl_pentaho_rename = {}
