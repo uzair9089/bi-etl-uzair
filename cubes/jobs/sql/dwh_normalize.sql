@@ -170,6 +170,9 @@ ap_sr.merchant_profile_id ,
 a.created_at::date ,
 a.state;
 
+
+drop view dmart.fact_feedbacks;
+
 drop table if exists star.fact_feedbacks;
 create table star.fact_feedbacks as
 select a.*, b.given, c.ignored, d.positive
@@ -185,6 +188,7 @@ on a.merchant_profile_id = d.merchant_profile_id and
 a.date = d.date
 ;
 
+create view dmart.fact_feedbacks as select * from star.fact_feedbacks;
 
 -- fact appointments -- this can be replaced by the app_series table
 
@@ -265,10 +269,11 @@ group by created_at, merchant_profile_id,id;
 
 
 
+
 drop table if exists quality_sma;
-create table quality_sma as
+create temp table quality_sma as
 select sum(quality_sma)  as quality_sma , merchant_profile_id, created_at from quality_sma_temp
-group by merchant_profile_id, created_at, id;
+group by merchant_profile_id, created_at;
 
 
 
@@ -332,10 +337,12 @@ where c.test=false and a.deleted_at is not null
 group by a.created_at,a.merchant_profile_id;
 
 
+drop view dmart.fact_appointments;
 
 
-drop table if exists star.fact_appointments;
-create temp table star.fact_appointments as
+
+drop table if exists fact_appointments;
+create  temp table fact_appointments as
 select a.merchant_profile_id,
 a.created_at,
 d.total_bookings,
@@ -370,4 +377,18 @@ on l.created_at = a.created_at and l.merchant_profile_id = a.merchant_profile_id
 
 
 
+
+
+drop table if exists star.fact_appointments;
+create table star.fact_appointments as
+(select * from (select *,row_number() over (partition by merchant_profile_id,created_at order by created_at desc) 
+as rnk from fact_appointments) as t where rnk=1) 
+;
+
+create view dmart.fact_appointments as select * from star.fact_appointments;
+
+--select * from star.fact_appointments order by merchant_profile_id desc limit 1000
+
+
+--select count(distinct merchant_profile_id::text||created_at::text) from star.fact_appointments;
 
