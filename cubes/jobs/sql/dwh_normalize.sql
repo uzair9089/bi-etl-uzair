@@ -387,6 +387,9 @@ as rnk from fact_appointments) as t where rnk=1)
 
 create view dmart.fact_appointments as select * from star.fact_appointments;
 
+GRANT SELECT ON TABLE dmart.fact_feedbacks TO dmart_user;
+GRANT SELECT ON TABLE dmart.fact_appointments TO dmart_user;
+
 --select * from star.fact_appointments order by merchant_profile_id desc limit 1000
 
 
