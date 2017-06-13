@@ -15,8 +15,8 @@ import os
 class param:		
 
 	schema = ""
-	root = '/Users/sanjivupadhyaya/Desktop/mars1/etl/absence/data'
-	#root = '/opt/etl/absence/data'
+	#root = '/Users/sanjivupadhyaya/Desktop/repo/etl/absence/data'
+	root = '/opt/etl/absence/data'
 	counter = 0 
 	newpath = ""
 	connection = ""
@@ -30,7 +30,7 @@ class param:
 
 	tbl_absence= ['company', 'invoices','users']
 
-	history_objects = ['gethehellouta']
+	history_objects = ['nothing for the history yet']
 
 	temp_objects = []
 
@@ -39,19 +39,17 @@ class param:
 		   ,'users': "https://app.absence.io/api/v2/bi/users"
 			}
 
-
-
-	filters ={'company': "{\n\t\"limit\": 1000,\n\t\"filter\": {\n  \t\"modified\": {\n\t\"$gte\": \"" + str(start_date) + "\",\n\t\"$lt\": \"" + str(end_date) + "\"\n   }\n }\n}"
+	filters ={
+			  'company': "{\n\t\n\t\"limit\":500,"+"\n\t\"skip\":"
 			  ,'invoices': "{\n\t\"limit\": 1000\n\n}"
 			  ,'users':"{\n\t\n\t\"limit\":500,"+"\n\t\"skip\":"}
 	
 
 	filters_new ={'company': "{\n\t\"limit\": 1000,\n\t\"filter\": {\n  \t\"modified\": {\n\t\"$gte\": \"" + str(start_date) + "\",\n\t\"$lt\": \"" + str(end_date) + "\"\n   }\n }\n}"
 		  ,'invoices': "{\n\t\"limit\": 1000\n\n}"
-		  #,'users':"{\n\t\"limit\": 1000}"}
 		  ,'users': "{\n\t\"limit\": 1000,\n\t\"filter\": {\n  \t\"modified\": {\n\t\"$gte\": \"" + str(start_date) + "\",\n\t\"$lt\": \"" + str(end_date) + "\"\n   }\n }\n}"}
 
-	# move the token to the environment variable somehow
+
 	headers = {
 	    'x-vacationtoken': os.environ['x_vacationtoken'],
 	    'content-type': "application/json",
@@ -69,13 +67,10 @@ class param:
 						
 	}
 
-	# complete list of collections to be extracted from the mongodDB -->> In future we will receive data from absence.io as well.
 	tbl_bi = tbl_absence
 
 	# files ready to be parsed: checked by the import_data module.
 	exported_file = dict((el,0) for el in tbl_bi)
-	
-	#conn_cs = os.environ['conn_cs']e
 
 	conn_bi = os.environ['conn_bi']
 
@@ -83,7 +78,6 @@ class param:
 	@classmethod
 	def dbconn(self,host):
 		if(host == "absence"):
-			#param.connection = self.conn_cs
 			param.schema = "absence"
 			param.newpath = param.root +'/' +param.start_date +'/'
 

@@ -47,19 +47,15 @@ class Importer(Thread):
                 do.parser(self.collection_name)
                 print "finished parsing data for: " + self.collection_name
 
-
-        #print param.temp_objects
-        #print self.collection_name
-
-        #print ("self.collection_name in param.temp_objects:")
         if self.collection_name == 'users.json':
             do = up()
             do.parser(self.collection_name)
             print("finished parsing data for: "+ self.collection_name)
 
+
         if self.collection_name[:-5] in param.temp_objects:
             if param.newpath + self.collection_name:
-                do = up()
+                do = cp() # don't forget to changes this in the history load
                 do.parser(self.collection_name)
                 print "finished parsing data for: " + self.collection_name
         else:

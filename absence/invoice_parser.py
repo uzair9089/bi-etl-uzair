@@ -34,12 +34,13 @@ class InvoiceParser:
         if 'data' in keys_in_record:
 
           for data_lines in x["data"]:
-            invoice_id =  company = invoice_batch = items = _id = 'N/A' 
-            billing_interval = payment_type = pricing_type = price_gross = invoice_counter = price_net = invoice_status = vat = 0
+            invoice_id =  company = invoice_batch = items = _id  = stripeCustomerId = 'N/A' 
+            billing_interval = payment_type = pricing_type = price_gross = invoice_counter = price_net = invoice_status = vat = ident = 0
             invoice_month = bill_date = '9999-01-01'
             
             if 'invoiceId' in data_lines.keys():
               invoice_id = str(data_lines["invoiceId"]).replace("'","")
+
               #print invoice_id
 
             if 'company' in data_lines.keys():
@@ -91,7 +92,7 @@ class InvoiceParser:
               invoice_status = str(data_lines["invoiceStatus"]).replace("'","")
               #print invoice_status
 
-            curs.execute("insert into absence.invoices(invoice_id, company, invoice_batch, invoice_month, bill_date, items, _id, billing_interval, payment_type, pricing_type, price_gross, invoice_counter, price_net, invoice_status, vat) values ('{0}','{1}','{2}','{3}','{4}','{5}','{6}',{7},{8},{9},{10},{11},{12},{13},{14})"
+            curs.execute("insert into absence.invoices(invoice_id,  company, invoice_batch, invoice_month, bill_date, items, _id, billing_interval, payment_type, pricing_type, price_gross, invoice_counter, price_net, invoice_status, vat) values ('{0}','{1}','{2}','{3}','{4}','{5}','{6}',{7},{8},{9},{10},{11},{12},{13},{14})"
             .format(invoice_id, company, invoice_batch, invoice_month, bill_date, items, _id, billing_interval, payment_type, pricing_type, price_gross, invoice_counter, price_net, invoice_status, vat))
             conn.commit()
 

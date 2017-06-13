@@ -13,6 +13,8 @@ class CompanyParser:
 
 	def parser(self, collection_name):
 
+		print "parsing for the "+ collection_name
+
 		try:
 
 			conn_string = param.conn_bi
@@ -29,8 +31,8 @@ class CompanyParser:
 				if 'data' in keys_in_record:
 
 					for data_lines in x["data"]:
-						id =  modified = created = name = email = region = country = first_bill_date = company_size = suspended =  test_expired = pricing_type = billing_interval = payment_type = is_billed = is_test = 'N/A' 
-						price_per_user = free_users = team_count = user_billable_count = yearly_revenue = activity_index = days_active = price_flat = user_count = user_active_count = user_deleted_count =  0
+						id =  modified = created = name = stripeCustomerId = email = region = country = first_bill_date = company_size = suspended =  test_expired = pricing_type = billing_interval = payment_type = is_billed = is_test = 'N/A' 
+						price_per_user = ident = free_users = team_count = user_billable_count = yearly_revenue = activity_index = days_active = price_flat = user_count = user_active_count = user_deleted_count =  0
 						
 						id = str(data_lines["id"]).replace("'","")
 					 	#print id
@@ -38,6 +40,12 @@ class CompanyParser:
 					 	if 'modified' in data_lines.keys():
 							modified = data_lines["modified"]
 							#print modified
+
+						if 'ident' in data_lines.keys():
+							ident = str(data_lines["ident"]).replace("'","")
+
+						if 'stripeCustomerId' in data_lines.keys():
+							stripeCustomerId = str(data_lines["stripeCustomerId"]).replace("'","")
 
 						if 'created' in data_lines.keys():
 							created = data_lines["created"]
@@ -156,8 +164,8 @@ class CompanyParser:
 							payment_type = str(data_lines["paymentType"]).replace("'","")
 							#print payment_type
 
-						curs.execute("insert into absence.company(id,  modified, created, name, email, region, country, first_bill_date, company_size, suspended, team_count, user_billable_count, yearly_revenue, activity_index, days_active, price_flat,  test_expired, pricing_type, billing_interval, payment_type, is_billed,user_count, user_active_count, user_deleted_count, price_per_user , is_test, free_users) values ('{0}','{1}','{2}','{3}','{4}','{5}','{6}','{7}','{8}','{9}',{10},{11},{12},{13},{14},{15},'{16}','{17}','{18}','{19}','{20}',{21},{22},{23},{24},'{25}',{26})"
-						.format(id,  modified, created, name, email, region, country, first_bill_date, company_size, suspended, team_count, user_billable_count, yearly_revenue, activity_index, days_active, price_flat,  test_expired, pricing_type, billing_interval, payment_type,is_billed,user_count, user_active_count, user_deleted_count, price_per_user, is_test, free_users))
+						curs.execute("insert into absence.company(id,  modified, created, name, email, region, country, first_bill_date, company_size, suspended, team_count, user_billable_count, yearly_revenue, activity_index, days_active, price_flat,  test_expired, pricing_type, billing_interval, payment_type, is_billed,user_count, user_active_count, user_deleted_count, price_per_user , is_test, free_users , ident, stripeCustomerId) values ('{0}','{1}','{2}','{3}','{4}','{5}','{6}','{7}','{8}','{9}',{10},{11},{12},{13},{14},{15},'{16}','{17}','{18}','{19}','{20}',{21},{22},{23},{24},'{25}',{26},{27},'{28}')"
+						.format(id,  modified, created, name, email, region, country, first_bill_date, company_size, suspended, team_count, user_billable_count, yearly_revenue, activity_index, days_active, price_flat,  test_expired, pricing_type, billing_interval, payment_type,is_billed,user_count, user_active_count, user_deleted_count, price_per_user, is_test, free_users, ident, stripeCustomerId))
 						conn.commit()
 						#print ("here after commit")
 
@@ -165,7 +173,7 @@ class CompanyParser:
 			print("finished parsing data for: "+collection_name)
 
 			print ("delta load starts ")
-			curs.execute(delta_query[collection_name[:-5]])
+			curs.execute(delta_query['company'])
 			conn.commit()
 
 		except Exception as e:
