@@ -123,7 +123,7 @@ SELECT
 	rtrim(to_char(day, 'Month')),
 	date_part('year', day),
 	'F' || to_char(day, 'YYYY-MM'),
-	'', --omitting (trivial 'Holiday'/'Non-Holiday, but how to get this ??)
+	'', --omitting (trivial 'Holiday'/'Non-Holiday', but how to get this ??)
 	CASE
 	    WHEN date_part('isodow', day) IN (6, 7) THEN 'Weekend'
 	    ELSE 'Weekday'
@@ -617,37 +617,29 @@ CREATE TEMP TABLE temp_email AS (
 
 
 
+DROP TABLE IF EXISTS temp_chrge_items;
+DROP TABLE IF EXISTS temp_rfnd_items;
+DROP TABLE IF EXISTS temp_charge_amount;
+CREATE TEMP TABLE temp_chrge_items AS (SELECT charge_id, sum(unit_price*quantity) as price FROM prod.charge_items GROUP BY charge_id);
+CREATE TEMP TABLE temp_rfnd_items AS (SELECT charge_id, sum(amount) as refunded_amount FROM prod.refunds GROUP BY charge_id);
+CREATE TEMP TABLE temp_charge_amount AS (SELECT temp_chrge_items.charge_id, (price - refunded_amount) as amount FROM temp_chrge_items LEFT JOIN temp_rfnd_items ON temp_rfnd_items.charge_id = temp_chrge_items.charge_id group by temp_chrge_items.charge_id, amount);
+
 DROP TABLE IF EXISTS temp_stripe_charges;
 CREATE TEMP TABLE temp_stripe_charges AS (
 	SELECT list_date_02.created_at_id as date_id,
 	charges.merchant_id as merchant_uuid,
 	merchant_profiles.id as merchant_profile_id,
-	count(distinct charges.stripe_charge_id) as online_payments,
-	sum(charges.amount)/100::numeric as amount
+	count(distinct charges.id) as online_payments,
+	sum(temp_charge_amount.amount)/100::numeric as amount
 	FROM prod.charges
 	INNER JOIN pentaho.list_date_02
 	ON list_date_02.date = date_trunc('day', charges.created)::date
 	INNER JOIN prod.merchant_profiles
 	ON merchant_profiles.uuid = charges.merchant_id
+    INNER JOIN temp_charge_amount
+    ON temp_charge_amount.charge_id = charges.id
 	WHERE charges.status = 'succeeded'
-	AND charges.stripe_charge_id NOTNULL
-	GROUP BY date_id, merchant_uuid, merchant_profile_id
-);
-
-DROP TABLE IF EXISTS temp_gastrofix_charges;
-CREATE TEMP TABLE temp_gastrofix_charges AS (
-	SELECT list_date_02.created_at_id as date_id,
-	charges.merchant_id as merchant_uuid,
-	merchant_profiles.id as merchant_profile_id,
-	count(distinct charges.gastrofix_charge_id) as gastrofix_payments,
-	sum(charges.amount)/100::numeric as amount
-	FROM prod.charges
-	INNER JOIN pentaho.list_date_02
-	ON list_date_02.date = date_trunc('day', charges.created)::date
-	INNER JOIN prod.merchant_profiles
-	ON merchant_profiles.uuid = charges.merchant_id
-	WHERE charges.status = 'succeeded'
-	AND charges.gastrofix_charge_id NOTNULL
+	AND charges.gateway = 'stripe'
 	GROUP BY date_id, merchant_uuid, merchant_profile_id
 );
 
@@ -658,6 +650,7 @@ CREATE TEMP TABLE temp_fact_growth01_basis AS (
 	from pentaho.list_sfdc_accounts a
 	cross join pentaho.list_date_02 b
 );
+
 
 /**
 Use the above created list and temp tables to create fact table and indices
@@ -687,8 +680,6 @@ COALESCE(temp_newsletters.newsletters, 0) as newsletters,
 COALESCE(temp_newsletters.recipients, 0) as newsletter_recipients,
 COALESCE(temp_stripe_charges.online_payments, 0) as booking_widget_payments,
 COALESCE(temp_stripe_charges.amount, 0) as booking_widget_payment_amount,
-COALESCE(temp_gastrofix_charges.gastrofix_payments, 0) as gastrofix_payments,
-COALESCE(temp_gastrofix_charges.amount, 0) as gastrofix_payment_amount,
 COALESCE(temp_email.emails, 0) as emails_sent,
 COALESCE(temp_sms.sms, 0) as sms_sent
 FROM temp_fact_growth01_basis
@@ -725,9 +716,6 @@ AND temp_newsletters.date_id = temp_fact_growth01_basis.date_id
 LEFT JOIN temp_stripe_charges
 ON temp_stripe_charges.merchant_profile_id = temp_fact_growth01_basis.merchant_profile_id 
 AND temp_stripe_charges.date_id = temp_fact_growth01_basis.date_id
-LEFT JOIN temp_gastrofix_charges
-ON temp_gastrofix_charges.merchant_profile_id = temp_fact_growth01_basis.merchant_profile_id 
-AND temp_gastrofix_charges.date_id = temp_fact_growth01_basis.date_id
 LEFT JOIN temp_email
 ON temp_email.merchant_profile_id = temp_fact_growth01_basis.merchant_profile_id 
 AND temp_email.date_id = temp_fact_growth01_basis.date_id
@@ -778,8 +766,6 @@ AND newsletters = 0
 AND newsletter_recipients = 0
 AND booking_widget_payments = 0
 AND booking_widget_payment_amount = 0
-AND gastrofix_payments = 0
-AND gastrofix_payment_amount = 0
 AND emails_sent = 0
 AND sms_sent = 0;
 
