@@ -30,7 +30,7 @@ class param:
 
 	tbl_absence= ['company', 'invoices','users']
 
-	history_objects = ['nothing for the history yet']
+	history_objects = ['users']
 
 	temp_objects = []
 

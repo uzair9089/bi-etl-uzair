@@ -24,7 +24,7 @@ class InvoiceParser:
         curs.execute
         conn.commit()
 
-      file = open(param.newpath+collection_name,'r')
+      file = open(param.newpath + collection_name,'r')
 
       for line in file:
         x = json.loads(line,strict=False) 

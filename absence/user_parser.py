@@ -34,8 +34,8 @@ class UserParser:
         if 'data' in keys_in_record:
 
           for data_lines in x["data"]:
-            id =  company = email = status = language = first_login = first_name  = last_name = ics_link = location_id = 'N/A' 
-            created = modified = activation_due_date = '9999-01-01'
+            id =  company = email = status = language = first_login = first_name  = last_name = ics_link = location_id = roleId = activationDueDate = deletedDate ='N/A' 
+            created = modified =  '9999-01-01'
             
             if '_id' in data_lines.keys():
               id = str(data_lines["_id"]).replace("'","")
@@ -43,6 +43,15 @@ class UserParser:
 
             if 'company' in data_lines.keys():
               company = data_lines["company"]
+
+            if 'deletedDate' in data_lines.keys():
+              deletedDate = data_lines["deletedDate"]
+
+            if 'activationDueDate' in data_lines.keys():
+              activationDueDate = data_lines["activationDueDate"]
+
+            if 'roleId' in data_lines.keys():
+              roleId = data_lines["roleId"].replace("'","")
               #print company
 
             if 'email' in data_lines.keys():
@@ -80,8 +89,8 @@ class UserParser:
               modified =  str(data_lines["modified"])
 
 
-            curs.execute("insert into absence.users(id, company, email, status, language, first_login, first_name, last_name, ics_link, location_id, created, modified, activation_due_date) values ('{0}','{1}','{2}','{3}','{4}','{5}','{6}','{7}','{8}','{9}','{10}','{11}','{12}')"
-            .format(id, company, email, status, language, first_login, first_name, last_name, ics_link, location_id, created, modified, activation_due_date))
+            curs.execute("insert into absence.users(id, company, email, status, language, first_login, first_name, last_name, ics_link, location_id, created, modified, activation_due_date, roleId,  deletedDate) values ('{0}','{1}','{2}','{3}','{4}','{5}','{6}','{7}','{8}','{9}','{10}','{11}','{12}','{13}','{14}')"
+            .format(id, company, email, status, language, first_login, first_name, last_name, ics_link, location_id, created, modified, activationDueDate, roleId, deletedDate))
 
             conn.commit()
 

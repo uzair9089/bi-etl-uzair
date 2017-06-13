@@ -55,7 +55,8 @@ class Importer(Thread):
 
         if self.collection_name[:-5] in param.temp_objects:
             if param.newpath + self.collection_name:
-                do = cp() # don't forget to changes this in the history load
+                print(param.exported_file)
+                do = up() # don't forget to changes this in the history load
                 do.parser(self.collection_name)
                 print "finished parsing data for: " + self.collection_name
         else:
