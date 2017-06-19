@@ -70,17 +70,18 @@ class param:
 
 	exported_file = {}
 
-	#tbl_core= ['shifts','shift_plan_templates']
-	tbl_core = ['appointment_services', 'appointment_resources', 'events', 'feedbacks', 
-				'merchant_customers', 'shift_plan_templates', 'newsletters', 'resources', 'services', 
-				'merchant_profiles', 'event_participants', 'appointment_series', 'shifts',
-				'pdf_forms', 'customer_custom_attributes', 'appointment_occurrences',
-				#'notification_channels', -- removed on 13th of may 'merchant_customer_tags', customers
-				'newsletter_blacklists',
-				'service_categories', 'closing_times', 'merchant_customer_custom_attributes', 'uberall_accounts']
+	tbl_core= []
+	#tbl_core = ['appointment_services', 'appointment_resources', 'events', 'feedbacks', 
+	#			'merchant_customers', 'shift_plan_templates', 'newsletters', 'resources', 'services', 
+	#			'merchant_profiles', 'event_participants', 'appointment_series', 'shifts',
+	#			'pdf_forms', 'customer_custom_attributes', 'appointment_occurrences',
+	#			'notification_channels', -- removed on 13th of may 'merchant_customer_tags', customers
+	#			'newsletter_blacklists',
+	#			'service_categories', 'closing_times', 'merchant_customer_custom_attributes', 'uberall_accounts']
 	
-	tbl_core_truncate = ['employees', 'merchant_permissions', 'merchant_key_accounts', 'merchant_accounts', 'merchant_roles']
-
+	#tbl_core_truncate = ['employees', 'merchant_permissions', 'merchant_key_accounts', 'merchant_accounts', 'merchant_roles']
+	tbl_core_truncate = []
+	
 	tbl_core_rename = {}
 
 	tbl_star = ['customer_custom_attributes', 'employees', 'event_participants', 'events']
