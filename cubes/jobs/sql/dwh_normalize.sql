@@ -35,7 +35,7 @@ a.created_at::date,
 a.created_by_merchant,
 a.origin,
 a.state,
-a.additional_information_archive->'subject'::text as subject,
+substring(a.additional_information_archive->'subject'::text,65535) as subject,
 a.merchant_customer_id
 from prod.appointment_series a
 inner join prod.merchant_profiles b on
@@ -51,7 +51,7 @@ a.created_at::date,
 a.created_by_merchant,
 a.origin,
 a.state,
-a.additional_information_archive->'subject'::text ,
+subject ,
 a.merchant_customer_id;
 
 
