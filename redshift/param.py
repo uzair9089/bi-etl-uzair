@@ -81,10 +81,11 @@ class param:
 	
 	#tbl_core_truncate = ['employees', 'merchant_permissions', 'merchant_key_accounts', 'merchant_accounts', 'merchant_roles']
 	tbl_core_truncate = []
-	
+
 	tbl_core_rename = {}
 
-	tbl_star = ['customer_custom_attributes', 'employees', 'event_participants', 'events']
+	tbl_star = ['customer_custom_attributes', 'employees', 'feedbacks']
+	#'event_participants', 'events']
 
 	tbl_star_rename = {}
 
