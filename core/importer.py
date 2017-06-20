@@ -47,8 +47,12 @@ class Importer(Thread):
             if (os.stat(param.newpath +self.file_name).st_size > 4):
                 file = open(param.newpath +self.file_name)
 
-                curs.copy_expert(sql = """ COPY %s FROM STDIN WITH CSV HEADER DELIMITER AS ',' """ % (param.schema +'.' +self.file_name[:-4]), file = file)
-                conn.commit()
+                if self.file_name == 'newsletters_deprecated.csv':
+                    curs.copy_expert(sql = """ COPY %s FROM STDIN WITH CSV HEADER DELIMITER AS ',' ENCODING 'latin1' """ % (param.schema +'.' +self.file_name[:-4]), file = file)
+                    conn.commit()
+                else:
+                    curs.copy_expert(sql = """ COPY %s FROM STDIN WITH CSV HEADER DELIMITER AS ',' """ % (param.schema +'.' +self.file_name[:-4]), file = file)
+                    conn.commit()
 
                 print("import for " +self.file_name[:-4] +" completed !!!")
                 print("delta load starts for:" +self.file_name[:-4])
