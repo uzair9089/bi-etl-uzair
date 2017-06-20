@@ -50,8 +50,8 @@ if host != 'intercom' :
     else:
         filter_row = " where updated_at >='" + str(param.start_date) + "' and updated_at<'" + str(param.end_date) + "'"
 else:
-    #filter_row = " where updated_at::date >= current_date::date -1 and updated_at::date < current_date::date "
-    filter_row = " "
+    filter_row = " where updated_at::date >= current_date::date -1 and updated_at::date < current_date::date "
+    #filter_row = " "
 filter_occurrences = " where updated_at >='" + str(param.start_date) + "' and updated_at<'" + str(param.end_date) + "'"
 
 # populate the source, truncating behaviour and table renaming schemes from the param file
