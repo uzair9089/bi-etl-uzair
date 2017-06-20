@@ -71,11 +71,11 @@ class Importer(Thread):
                 if param.reset_time == param.reset_value:
                     curs.execute(etl_delta_load.delta_query_reset[self.file_name])
                     conn.commit()
-                    print("delta load for: " +self.file_name +" completed ***RESET***")
+                    #print("delta load for: " +self.file_name +" completed ***RESET***")
                 else:
                     curs.execute(etl_delta_load.delta_query[self.file_name])
                     conn.commit()
-                    print("delta load for: " +self.file_name +" completed ***")
+                    #print("delta load for: " +self.file_name +" completed ***")
 
                 #print("import for " +self.file_name +" completed !!!")
                 #print("delta load starts for:" +self.file_name)
