@@ -48,8 +48,9 @@ class Importer(Thread):
                 file = open(param.newpath +self.file_name)
 
                 if self.file_name == 'newsletters_deprecated.csv':
-                    curs.copy_expert(sql = """ COPY %s FROM STDIN WITH CSV HEADER DELIMITER AS ',', ENCODING 'ISO_8859_5' """ % (param.schema +'.' +self.file_name[:-4]), file = file)
+                    curs.copy_expert(sql = """ COPY %s FROM STDIN (FORMAT 'CSV', DELIMITER ',', HEADER, ENCODING 'ISO_8859_5') """ % (param.schema +'.' +self.file_name[:-4]), file = file)
                     conn.commit()
+                    #"COPY nwsl.newsletters_deprecated FROM STDIN (FORMAT 'csv', DELIMITER ',', HEADER, ENCODING 'WIN1251')"
                 else:
                     curs.copy_expert(sql = """ COPY %s FROM STDIN WITH CSV HEADER DELIMITER AS ',' """ % (param.schema +'.' +self.file_name[:-4]), file = file)
                     conn.commit()
