@@ -48,7 +48,7 @@ class Importer(Thread):
                 file = open(param.newpath +self.file_name)
 
                 print self.file_name
-                if self.file_name == 'newsletters_deprecated.csv':
+                if self.file_name == 'newsletters_deprecated.csv': #put these kind of thing into a separate list if required in the future
                     print "not entered"
                     curs.copy_expert(sql = """ COPY %s FROM STDIN (FORMAT 'csv', DELIMITER ',', HEADER, ENCODING 'ISO_8859_5') """ % (param.schema +'.' +self.file_name[:-4]), file = file)
                     conn.commit()
@@ -86,8 +86,6 @@ class Importer(Thread):
             conn.close()
 
 
-
-          
 # import_data function is called every minute by the runner program until ETL for all the tables are completed  
 def import_data():
     for key, values in param.exported_file.iteritems():
