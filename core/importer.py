@@ -52,7 +52,6 @@ class Importer(Thread):
                     print "not entered"
                     curs.copy_expert(sql = """ COPY %s FROM STDIN (FORMAT 'csv', DELIMITER ',', HEADER, ENCODING 'ISO_8859_5') """ % (param.schema +'.' +self.file_name[:-4]), file = file)
                     conn.commit()
-                    #"COPY nwsl.newsletters_deprecated FROM STDIN (FORMAT 'csv', DELIMITER ',', HEADER, ENCODING 'WIN1251')"
                 else:
                     print ("entered")
                     curs.copy_expert(sql = """ COPY %s FROM STDIN WITH CSV HEADER DELIMITER AS ',' """ % (param.schema +'.' +self.file_name[:-4]), file = file)

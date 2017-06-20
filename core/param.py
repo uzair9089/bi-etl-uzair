@@ -75,8 +75,7 @@ class param:
 
 	tbl_nwsl = ['newsletters','newsletters_deprecated'] #remove the deprecated after the api moves to v2.
 
-	tbl_nwsl_truncate = ['newsletter_customers_deprecated']
-	#, 'newsletters_deprecated']
+	tbl_nwsl_truncate = ['newsletter_customers_deprecated', 'newsletters_deprecated']
 
 	#tbl_nwsl_truncate = []
 
