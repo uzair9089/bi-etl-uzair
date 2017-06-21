@@ -96,6 +96,7 @@ if (host in param.sources):
     for i in param.tbl_source:
 
         if i in param.truncate_tbl:
+            print "select * from {0}.".format(param.schema)+ i + filter_refresh, param.tbl_source_rename[i]
             runner = Exporter("select * from {0}.".format(param.schema)+ i + filter_refresh, param.tbl_source_rename[i])
             runner.start()
 
