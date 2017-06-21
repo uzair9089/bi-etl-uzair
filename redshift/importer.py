@@ -63,8 +63,12 @@ class Importer(Thread):
                 if self.full_path == '/'+i.key:
                     print '/'+i.key
                     curs.execute (""" COPY %s.%s FROM 's3://shore-bi-etl/%s' iam_role 'arn:aws:iam::601812874785:role/BIs3Access' fillrecord CSV IGNOREHEADER 1 """ % (param.schema, self.file_name,i.key))
+                    conn.commit()
+                if self.file_name in param.truncate_tbl:    
                     curs.execute(etl_delta_load.delta_query[self.file_name])
                     conn.commit()
+                else:
+                    pass
 
         except Exception as e:
             print("Unable to access database, import error %s %s" % (str(e), self.file_name))
