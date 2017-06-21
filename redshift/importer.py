@@ -38,14 +38,10 @@ class Importer(Thread):
 
 
             if(self.file_name in param.truncate_tbl):
-
                 curs.execute(etl_delta_load.truncate_queries[self.file_name])
-
                 conn.commit()
-
-            if param.reset_time == param.reset_value and self.file_name not in param.truncate_tbl:
-                curs.execute(etl_delta_load.delete_queries[self.file_name])
-                conn.commit()
+            else:
+                pass
             
             # take this from the environment variable directly using the param file
             os.environ['S3_USE_SIGV4'] = 'True'
@@ -60,13 +56,16 @@ class Importer(Thread):
             identifier = self.file_name
 
             for i in bucket:
+                                
+                if self.file_name in param.truncate_tbl:    
+                    curs.execute(etl_delta_load.truncate_queries[self.file_name])
+                    conn.commit()
+
                 if self.full_path == '/'+i.key:
                     print '/'+i.key
                     curs.execute (""" COPY %s.%s FROM 's3://shore-bi-etl/%s' iam_role 'arn:aws:iam::601812874785:role/BIs3Access' fillrecord CSV IGNOREHEADER 1 """ % (param.schema, self.file_name,i.key))
                     conn.commit()
-                if self.file_name in param.truncate_tbl:    
-                    curs.execute(etl_delta_load.delta_query[self.file_name])
-                    conn.commit()
+
                 else:
                     pass
 

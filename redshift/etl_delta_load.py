@@ -15,6 +15,7 @@ truncate_queries = {
 					,'fact_feedbacks': "truncate table star.fact_feedbacks;"
 					,'appointments': "truncate table star.appointments;"
 					,'appointment_series': "truncate table star.appointment_series;"
+					,'merchant_permissions': "truncate table star.merchant_permissions;"
 
 					# growth cube
 					,'list_date_02': "truncate table pentaho.list_date_02"
@@ -41,101 +42,4 @@ truncate_queries = {
 				}
 
 
-
-
-delta_query = { 
-			# star
-			'fact_appointments': "truncate table stage.s_fact_appointments; insert into stage.s_fact_appointments select * from star.fact_appointments;"
-			,'fact_feedbacks': "truncate table stage.s_fact_feedbacks; insert into stage.s_fact_feedbacks select * from star.fact_feedbacks;"
-			,'appointments': "truncate table stage.s_appointments; insert into stage.s_appointments select * from star.appointments;"
-			,'appointment_series': "truncate table stage.s_appointment_series; insert into stage.s_appointment_series select * from star.appointment_series;"
-
-			# growth cube
-			,'list_date_02': "select 1;"
-			,'list_sfdc_accounts': "select 1;"
-			,'list_city': "select 1;"
-			,'list_industry': "select 1;"
-			,'list_subscription_channel': "select 1;"
-			,'list_subscription_status': "select 1;"
-			,'list_subscription_start_date': "select 1;"
-			,'list_subscription_end_date': "select 1;"
-			,'fact_growth_general': "select 1;"
-			,'list_owner': "select 1;"
-
-			# key account 
-			,'list_created_by_merchant': "select 1;"
-			,'list_state': "select 1;"
-			,'given_feedbacks': "select 1;"
-			,'list_date': "select 1;"
-			,'list_hour': "select 1;"
-			,'list_key_accounts_account': "select 1;"
-			,'list_widget_in_date': "select 1;"
-			,'fact_key_accounts_appointments': "select 1;"
-
-		}
-
-
-delete_queries = {
-
-				# star
-				'fact_appointments': "truncate table stage.s_fact_appointments; insert into stage.s_fact_appointments select * from star.fact_appointments;"
-				,'fact_feedbacks': "truncate table stage.s_fact_feedbacks; insert into stage.s_fact_feedbacks select * from star.fact_feedbacks;"
-				,'appointments': "truncate table stage.s_appointments; insert into stage.s_appointments select * from star.appointments;"
-				,'appointment_series': "truncate table stage.s_appointment_series; insert into stage.s_appointment_series select * from star.appointment_series;"
-
-				# growth cube
-				,'list_date_02': "select 1;"
-				,'list_sfdc_accounts': "select 1;"
-				,'list_city': "select 1;"
-				,'list_industry': "select 1;"
-				,'list_subscription_channel': "select 1;"
-				,'list_subscription_status': "select 1;"
-				,'list_subscription_start_date': "select 1;"
-				,'list_subscription_end_date': "select 1;"
-				,'fact_growth_general': "select 1;"
-				,'list_owner': "select 1;"
-
-				# key account 
-				,'list_created_by_merchant': "select 1;"
-				,'list_state': "select 1;"
-				,'given_feedbacks': "select 1;"
-				,'list_date': "select 1;"
-				,'list_hour': "select 1;"
-				,'list_key_accounts_account': "select 1;"
-				,'list_widget_in_date': "select 1;"
-				,'fact_key_accounts_appointments': "select 1;"
-
-			}
-
-
-delta_query_reset = { 
-				# star
-				'fact_appointments': "truncate table stage.s_fact_appointments; insert into stage.s_fact_appointments select * from star.fact_appointments;"
-				,'fact_feedbacks': "truncate table stage.s_fact_feedbacks; insert into stage.s_fact_feedbacks select * from star.fact_feedbacks;"
-				,'appointments': "truncate table stage.s_appointments; insert into stage.s_appointments select * from star.appointments;"
-				,'appointment_series': "truncate table stage.s_appointment_series; insert into stage.s_appointment_series select * from star.appointment_series;"
-				
-				# growth cube
-				,'list_date_02': "select 1;"
-				,'list_sfdc_accounts': "select 1;"
-				,'list_city': "select 1;"
-				,'list_industry': "select 1;"
-				,'list_subscription_channel': "select 1;"
-				,'list_subscription_status': "select 1;"
-				,'list_subscription_start_date': "select 1;"
-				,'list_subscription_end_date': "select 1;"
-				,'fact_growth_general': "select 1;"
-				,'list_owner': "select 1;"
-
-				# key account 
-				,'list_created_by_merchant': "select 1;"
-				,'list_state': "select 1;"
-				,'given_feedbacks': "select 1;"
-				,'list_date': "select 1;"
-				,'list_hour': "select 1;"
-				,'list_key_accounts_account': "select 1;"
-				,'list_widget_in_date': "select 1;"
-				,'fact_key_accounts_appointments': "select 1;"
-
-}
 
