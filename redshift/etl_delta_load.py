@@ -11,7 +11,7 @@ from param import param
 # dictionary for storing truncate queries for tables without the date attributes. This hash is called immediately after csv dumps and before importing into dwh
 truncate_queries = {
 					# star
-					,'fact_appointments': "truncate table star.fact_appointments;"
+					'fact_appointments': "truncate table star.fact_appointments;"
 					,'fact_feedbacks': "truncate table star.fact_feedbacks;"
 					,'appointments': "truncate table star.appointments;"
 					,'appointment_series': "truncate table star.appointment_series;"
@@ -45,7 +45,7 @@ truncate_queries = {
 
 delta_query = { 
 			# star
-			,'fact_appointments': "truncate table stage.s_fact_appointments; insert into stage.s_fact_appointments select * from star.fact_appointments;"
+			'fact_appointments': "truncate table stage.s_fact_appointments; insert into stage.s_fact_appointments select * from star.fact_appointments;"
 			,'fact_feedbacks': "truncate table stage.s_fact_feedbacks; insert into stage.s_fact_feedbacks select * from star.fact_feedbacks;"
 			,'appointments': "truncate table stage.s_appointments; insert into stage.s_appointments select * from star.appointments;"
 			,'appointment_series': "truncate table stage.s_appointment_series; insert into stage.s_appointment_series select * from star.appointment_series;"
@@ -78,7 +78,7 @@ delta_query = {
 delete_queries = {
 
 				# star
-				,'fact_appointments': "truncate table stage.s_fact_appointments; insert into stage.s_fact_appointments select * from star.fact_appointments;"
+				'fact_appointments': "truncate table stage.s_fact_appointments; insert into stage.s_fact_appointments select * from star.fact_appointments;"
 				,'fact_feedbacks': "truncate table stage.s_fact_feedbacks; insert into stage.s_fact_feedbacks select * from star.fact_feedbacks;"
 				,'appointments': "truncate table stage.s_appointments; insert into stage.s_appointments select * from star.appointments;"
 				,'appointment_series': "truncate table stage.s_appointment_series; insert into stage.s_appointment_series select * from star.appointment_series;"
@@ -110,7 +110,7 @@ delete_queries = {
 
 delta_query_reset = { 
 				# star
-				,'fact_appointments': "truncate table stage.s_fact_appointments; insert into stage.s_fact_appointments select * from star.fact_appointments;"
+				'fact_appointments': "truncate table stage.s_fact_appointments; insert into stage.s_fact_appointments select * from star.fact_appointments;"
 				,'fact_feedbacks': "truncate table stage.s_fact_feedbacks; insert into stage.s_fact_feedbacks select * from star.fact_feedbacks;"
 				,'appointments': "truncate table stage.s_appointments; insert into stage.s_appointments select * from star.appointments;"
 				,'appointment_series': "truncate table stage.s_appointment_series; insert into stage.s_appointment_series select * from star.appointment_series;"
