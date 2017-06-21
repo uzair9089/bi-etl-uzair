@@ -101,8 +101,8 @@ a.merchant_customer_id;
 
 
 -- create an appointment seires table
-drop table if exists star.appointment_series;
-create table star.appointment_series as
+drop table if exists star.mobile_appointments;
+create table star.mobile_appointments as
 select a.*,b.service_count, b.service_id_array,
 c.resource_count, c.resource_id_array from app_series_mobile a
 left join app_services b on
