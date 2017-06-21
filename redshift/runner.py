@@ -48,8 +48,10 @@ if sys.argv[1] in param.sources:
 
 if host == 'star':
     filter_row = " where updated_at::date >= current_date::date -1 and updated_at::date < current_date::date "
+    filter_refresh = " "
 else:
     filter_row = " where updated_at::date >= current_date::date -1 and updated_at::date < current_date::date "
+    filter_refresh = " "
 
 
 # populate the source, truncating behaviour and table renaming schemes from the param file
@@ -93,11 +95,11 @@ if (host in param.sources):
 
     for i in param.tbl_source:
 
-        if i == 'appointment_occurrences': # use another key in hash for these kind of special cases
-            runner = Exporter("select * from {0}.".format(param.schema)+ i + " where appointment_series_id in (select id from appointment_series "+filter_occurrences+")", i)
+        if i in param.truncate_tbl:
+            runner = Exporter("select * from {0}.".format(param.schema)+ i + filter_refresh, param.tbl_source_rename[i])
             runner.start()
 
-        elif i in param.tbl_source_rename:
+        if i in param.tbl_source_rename:
             runner = Exporter("select * from {0}.".format(param.schema) + i + filter_row, param.tbl_source_rename[i])
             runner.start()
 

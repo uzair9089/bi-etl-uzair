@@ -30,7 +30,7 @@ class param:
 	REGION_HOST = 's3.eu-central-1.amazonaws.com'
 
 
-	# should be always 1 - 2 hours
+	# should be always 24 hours
 	start_date = datetime.datetime.now() - datetime.timedelta(hours = 25)
 	start_date = start_date.strftime('%Y-%m-%d %H:00:00')
 
