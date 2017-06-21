@@ -84,7 +84,7 @@ class param:
 
 	tbl_core_rename = {}
 
-	tbl_star = ['customer_custom_attributes', 'employees', 'feedbacks']
+	tbl_star = ['customer_custom_attributes', 'employees', 'feedbacks', 'event_participants', 'events']
 	#'event_participants', 'events']
 
 	tbl_star_rename = {}
