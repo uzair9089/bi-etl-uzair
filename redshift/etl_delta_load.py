@@ -16,6 +16,7 @@ truncate_queries = {
 					,'appointments': "truncate table star.appointments;"
 					,'appointment_series': "truncate table star.appointment_series;"
 					,'merchant_permissions': "truncate table star.merchant_permissions;"
+					,'mobile_appointments': "truncate table star.mobile_appointments;"
 
 					# growth cube
 					,'list_date_02': "truncate table pentaho.list_date_02"

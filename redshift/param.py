@@ -87,8 +87,7 @@ class param:
 
 	tbl_star_truncate = [
 						# tables
-						'fact_appointments', 'mobile_appointments', 'fact_feedbacks', 
-						#'appointments', 
+						'fact_appointments', 'mobile_appointments', 'fact_feedbacks', 'appointments', 
 						# views
 						'merchant_permissions']
 
