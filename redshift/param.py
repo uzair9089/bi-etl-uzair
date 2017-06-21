@@ -81,7 +81,7 @@ class param:
 
 	tbl_star_rename = {}
 
-	tbl_star_truncate = []
+	tbl_star_truncate = ['fact_appointments', 'mobile_appointments', 'fact_feedbacks', 'appointments']
 
 	tbl_pentaho = []
 
