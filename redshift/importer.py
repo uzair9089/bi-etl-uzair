@@ -62,6 +62,7 @@ class Importer(Thread):
                 #print '/'+i.key
                 if self.full_path == '/'+i.key:
                     #print 'entering the copy'
+                    print '/'+i.key
                     curs.execute (""" COPY %s.%s FROM 's3://shore-bi-etl/%s' iam_role 'arn:aws:iam::601812874785:role/BIs3Access' CSV IGNOREHEADER 1 """ % (param.schema, self.file_name,i.key))
                     curs.execute(etl_delta_load.delta_query[self.file_name])
                     conn.commit()
