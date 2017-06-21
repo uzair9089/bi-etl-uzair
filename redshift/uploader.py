@@ -30,7 +30,6 @@ class Uploader(Thread):
 
 		try:
 
-			#print self.file_name
 
 			os.environ['S3_USE_SIGV4'] = 'True'
 			BUCKET_NAME = param.BUCKET_NAME 
@@ -56,14 +55,8 @@ class Uploader(Thread):
 
 			k.set_contents_from_filename(self.file_name)
 
-			# call the import function here 
-
-			#print 'Importing into the redhisft begins here'
-			# To do Import into the redhshift from this block of the code
-
-			#print self.table_name + " and " + param.full_path 
 			runner = Importer(self.table_name, param.full_path+self.table_name+'.csv')
-			#param.counter = param.counter - 1
+
 			runner.start()
 
 		except:
@@ -73,11 +66,9 @@ class Uploader(Thread):
 def upload_data_to_s3():
 	for key, values in param.exported_file.iteritems():
 		if(param.exported_file[key] == 1):
-			#print (param.root + param.schema + '/' +  param.start_date  +  '/' + key + '.csv' , key) 
-			runner = Uploader( param.root + param.schema + '/' +  param.start_date  +  '/' + key + '.csv' , key) # put the variable in the param file for the s3 bucket details 
+			runner = Uploader( param.root + param.schema + '/' +  param.start_date  +  '/' + key + '.csv' , key) 
 			param.exported_file[key] = 0
 			param.redshift_counter = param.redshift_counter - 1
-			#print param.redshift_counter
 			runner.start()
 
 

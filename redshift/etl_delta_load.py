@@ -1,7 +1,7 @@
 
 """
 Author: Sanjiv Upadhyaya
-Date: 2016-10-03
+Date: 2016-10-03, what the fuck codes? need to refactor all the comments and unnecessary stuff 
 Function 1: remove the records existing in the stage database so that it is in sync with the applicatin prod database.
 Function 2: load data into staging in incremental way i.e, load data every 3 hours from the ETL
 """
