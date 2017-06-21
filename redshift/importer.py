@@ -57,9 +57,9 @@ class Importer(Thread):
 
             for i in bucket:
                                 
-                if self.file_name in param.truncate_tbl:    
-                    curs.execute(etl_delta_load.truncate_queries[self.file_name])
-                    conn.commit()
+                # if self.file_name in param.truncate_tbl:    
+                #     curs.execute(etl_delta_load.truncate_queries[self.file_name])
+                #     conn.commit()
 
                 if self.full_path == '/'+i.key:
                     print '/'+i.key
