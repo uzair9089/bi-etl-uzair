@@ -47,6 +47,7 @@ class Importer(Thread):
                 curs.execute(etl_delta_load.delete_queries[self.file_name])
                 conn.commit()
             
+            # take this from the environment variable directly using the param file
             os.environ['S3_USE_SIGV4'] = 'True'
             BUCKET_NAME = param.BUCKET_NAME 
             AWS_ACCESS_KEY_ID = param.AWS_ACCESS_KEY_ID 
@@ -59,30 +60,11 @@ class Importer(Thread):
             identifier = self.file_name
 
             for i in bucket:
-                #print '/'+i.key
                 if self.full_path == '/'+i.key:
-                    #print 'entering the copy'
                     print '/'+i.key
                     curs.execute (""" COPY %s.%s FROM 's3://shore-bi-etl/%s' iam_role 'arn:aws:iam::601812874785:role/BIs3Access' fillrecord CSV IGNOREHEADER 1 """ % (param.schema, self.file_name,i.key))
                     curs.execute(etl_delta_load.delta_query[self.file_name])
                     conn.commit()
-            #print("delta load for: " +self.file_name +" completed ***")
-
-                #print("import for " +self.file_name +" completed !!!")
-                #print("delta load starts for:" +self.file_name)
-
-                    # if param.reset_time == param.reset_value:
-                    #     curs.execute(etl_delta_load.delta_query_reset[self.file_name])
-                    #     conn.commit()
-                    #     #print("delta load for: " +self.file_name +" completed ***RESET***")
-                    # else:
-                    #     curs.execute(etl_delta_load.delta_query[self.file_name])
-                    #     conn.commit()
-                    #print("delta load for: " +self.file_name +" completed ***")
-
-                #print("import for " +self.file_name +" completed !!!")
-                #print("delta load starts for:" +self.file_name)
-
 
         except Exception as e:
             print("Unable to access database, import error %s %s" % (str(e), self.file_name))

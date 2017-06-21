@@ -46,23 +46,11 @@ if sys.argv[1] in param.sources:
     else:
         print("Running ETL for " +str(param.start_date) +" - " +str(param.end_date))
 
-# filter_row/ filter_row_segment is used to filter the data based on the ETL start_date and end_date
-if host != 'intercom' :
-    if param.reset_time == param.reset_value:
-        filter_row = " where updated_at >='" + str(param.reset_start_date) + "' and updated_at<'" + str(param.reset_end_date) + "'"
-    else:
-        filter_row = " where updated_at >='" + str(param.start_date) + "' and updated_at<'" + str(param.end_date) + "'"
-#if host == 'star' or host == 'pentaho':
-#    filter_row = ""    
-#else:
-#    filter_row = " where updated_at::date >= current_date::date -1 and updated_at::date < current_date::date "
-
 if host == 'star':
     filter_row = " where updated_at::date >= current_date::date -1 and updated_at::date < current_date::date "
 else:
     filter_row = " where updated_at::date >= current_date::date -1 and updated_at::date < current_date::date "
 
-filter_occurrences = " where updated_at >='" + str(param.start_date) + "' and updated_at<'" + str(param.end_date) + "'"
 
 # populate the source, truncating behaviour and table renaming schemes from the param file
 def fetch_table(source_name):
@@ -110,11 +98,11 @@ if (host in param.sources):
             runner.start()
 
         elif i in param.tbl_source_rename:
-            runner = Exporter("select * from {0}.".format(param.schema) + i + filter_row, param.tbl_source_rename[i]) #need to tackle the renamed tables
+            runner = Exporter("select * from {0}.".format(param.schema) + i + filter_row, param.tbl_source_rename[i])
             runner.start()
 
         else:
-            runner = Exporter("select * from {0}.".format(param.schema) + i + filter_row, i) #need to tackle the renamed tables
+            runner = Exporter("select * from {0}.".format(param.schema) + i + filter_row, i) 
             runner.start()
 
     for j in param.tbl_source_truncate:
@@ -132,9 +120,6 @@ if (host in param.sources):
 while param.redshift_counter != 0:
 	uploader.upload_data_to_s3()
 
-
-#while param.counter != 0:
-#    importer.import_data()
 
 
 

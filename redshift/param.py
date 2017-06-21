@@ -23,6 +23,7 @@ class param:
 	#root = '/Users/sanjivupadhyaya/Desktop/prac/'
 	counter = redshift_counter = 0 
 
+	# move the following to the environment variable when production server is ready
 	BUCKET_NAME = 'shore-bi-etl'
 	AWS_ACCESS_KEY_ID =  "AKIAIVBSMDRFXBB4YM6Q"
 	AWS_SECRET_ACCESS_KEY= "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"
@@ -30,7 +31,7 @@ class param:
 
 
 	# should be always 1 - 2 hours
-	start_date = datetime.datetime.now() - datetime.timedelta(hours = 2)
+	start_date = datetime.datetime.now() - datetime.timedelta(hours = 25)
 	start_date = start_date.strftime('%Y-%m-%d %H:00:00')
 
 	end_date = datetime.datetime.now() - datetime.timedelta(hours = 1)
@@ -71,25 +72,14 @@ class param:
 	exported_file = {}
 
 	tbl_core= []
-	#tbl_core = ['appointment_services', 'appointment_resources', 'events', 'feedbacks', 
-	#			'merchant_customers', 'shift_plan_templates', 'newsletters', 'resources', 'services', 
-	#			'merchant_profiles', 'event_participants', 'appointment_series', 'shifts',
-	#			'pdf_forms', 'customer_custom_attributes', 'appointment_occurrences',
-	#			'notification_channels', -- removed on 13th of may 'merchant_customer_tags', customers
-	#			'newsletter_blacklists',
-	#			'service_categories', 'closing_times', 'merchant_customer_custom_attributes', 'uberall_accounts']
-	
-	#tbl_core_truncate = ['employees', 'merchant_permissions', 'merchant_key_accounts', 'merchant_accounts', 'merchant_roles']
+
 	tbl_core_truncate = []
 
 	tbl_core_rename = {}
 
 	tbl_star = ['customer_custom_attributes', 'employees', 'feedbacks', 'event_participants', 'events']
-	#'event_participants', 'events']
 
 	tbl_star_rename = {}
-
-	#tbl_star_truncate = ['fact_feedbacks', 'fact_appointments', 'appointments', 'mobile_appointments']
 
 	tbl_star_truncate = []
 
@@ -122,46 +112,37 @@ class param:
 				'fact_key_accounts_appointments']
 
 
-	tbl_nwsl = ['newsletters']
+	tbl_nwsl = []
 
-	tbl_nwsl_truncate = ['newsletter_customers']
+	tbl_nwsl_truncate = []
 
-	tbl_nwsl_rename = {'newsletters': 'newsletters_nwsl'}
+	tbl_nwsl_rename = {}
 
-	tbl_msg = ['conversations', 'group_senders', 'merchant_senders', 'messages', 'participants']
+	tbl_msg = []
 
-	tbl_msg_truncate = ['conversation_senders']
+	tbl_msg_truncate = []
 
 	tbl_msg_rename = {}
 
-	tbl_comm = ['sms', 'publications', 'emails']
+	tbl_comm = []
 
-	tbl_comm_truncate = ['merchants']
+	tbl_comm_truncate = []
 
 	tbl_comm_rename = {}
 
 	tbl_pymt = []
 
-	tbl_pymt_truncate = ['merchants', 'disputes', 'bank_accounts','stripe_events', 'charges'] #  'request_logs' is deprecated
+	tbl_pymt_truncate = []
 
-	tbl_pymt_rename = {'merchants': 'merchants_pymt'}
+	tbl_pymt_rename = {}
 
-	tbl_intercom = ['companies', 'segments', 'contacts', 'users',
-					 'conversations', 'conversation_parts']
+	tbl_intercom = []
 
-	tbl_intercom_truncate = ['tags', 'admins']
-
-	# if tables has been renamed while importing into our BI-DWH, then renamed_table has to be kept bzw., intercom			
-	tbl_intercom_rename =  {'companies': 'companies_intercom', 'segments': 'segments_intercom', 'contacts': 'contacts_intercom','users': 'users_intercom', 
-						'conversations':'conversations_intercom','conversation_parts': 'conversation_parts_intercom','tags': 'tags_intercom', 'admins': 'admins_intercom'}
-
-
-	# complete list of tables to be extracted 
-	#tbl_bi = tbl_core + tbl_core_truncate + tbl_msg + tbl_msg_truncate + tbl_comm + tbl_comm_truncate + tbl_intercom + tbl_intercom_truncate + tbl_nwsl + tbl_nwsl_truncate + tbl_pymt + tbl_pymt_truncate
+	tbl_intercom_truncate = []
+	
+	tbl_intercom_rename =  {}
 
 	truncate_tbl = tbl_core_truncate + tbl_msg_truncate + tbl_comm_truncate + tbl_intercom_truncate + tbl_nwsl_truncate + tbl_pymt_truncate
-	# files ready to be extracted: checked by the import_data module.
-
 
 	table_hash = {'core':[{'tbl_source':tbl_core},{'tbl_source_truncate':tbl_core_truncate},{'tbl_source_rename':tbl_core_rename}], 
 				  'nwsl':[{'tbl_source':tbl_nwsl},{'tbl_source_truncate':tbl_nwsl_truncate},{'tbl_source_rename':tbl_nwsl_rename}], 
