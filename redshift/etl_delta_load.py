@@ -59,4 +59,32 @@ delta_query = {
 				,'shifts': "drop table if exists shifts_id; create temp table shifts_id as select distinct id from star.shifts where updated_at>='" +str(param.start_date) +"' and  updated_at<'" +str(param.end_date) +"';delete from stage.s_shifts where id in (select id from shifts_id); insert into stage.s_shifts select * from (select *,row_number() over (partition by id order by updated_at desc) as rnk from star.shifts where updated_at>='" +str(param.start_date) +"' and  updated_at<'" +str(param.end_date) +"') as t where rnk=1;"
 
 
+				,'fact_appointments': ""
+				,'mobile_appointments': ""
+				,'fact_feedbacks': ""
+				,'appointments': ""
+				,'merchant_permissions': ""
+
+
+				,'list_date_02': ""
+				,'list_sfdc_accounts': ""
+				,'list_city': ""
+				,'list_industry': ""
+				,'list_subscription_channel': ""
+				,'list_subscription_status': ""
+				,'list_subscription_start_date': ""
+				,'list_subscription_end_date': ""
+				,'fact_growth_general': ""
+				,'list_owner': ""
+
+				# key account 
+				,'list_created_by_merchant': ""
+				,'list_state': ""
+				,'given_feedbacks': ""
+				,'list_date': ""
+				,'list_hour': ""
+				,'list_key_accounts_account': ""
+				,'list_widget_in_date': ""
+				,'fact_key_accounts_appointments': ""
+
 				}
