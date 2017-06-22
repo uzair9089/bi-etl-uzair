@@ -55,6 +55,7 @@ subject ,
 a.merchant_customer_id;
 
 
+drop view dmart.appointments;;
 --create an appointment table
 drop table if exists star.appointments;
 create table star.appointments as
@@ -64,6 +65,9 @@ a.id = b.appointment_id
 left join app_resources c on
 c.appointment_id = a.id;
 
+
+create view dmart.appointments as select * from star.appointments;
+	
 --for the appointment_series_mobile
 drop table if exists app_series_mobile;
 create temp table app_series_mobile as
@@ -99,7 +103,7 @@ a.state,
 a.additional_information_archive->'subject'::text,
 a.merchant_customer_id;
 
-
+drop view dmart.mobile_appointments;
 -- create an appointment seires table
 drop table if exists star.mobile_appointments;
 create table star.mobile_appointments as
@@ -110,7 +114,7 @@ a.id = b.appointment_id
 left join app_resources c on
 c.appointment_id = a.id;
 
-
+create view dmart.mobile_appointments as select * from star.mobile_appointments;
 
 -- fact feedback creation
 
