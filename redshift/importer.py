@@ -66,6 +66,10 @@ class Importer(Thread):
                     curs.execute (""" COPY %s.%s FROM 's3://shore-bi-etl/%s' iam_role 'arn:aws:iam::601812874785:role/BIs3Access' fillrecord CSV IGNOREHEADER 1 """ % (param.schema, self.file_name,i.key))
                     conn.commit()
 
+                if self.file_name in etl_delta_load.delta_query:
+                    curs.execute(etl_delta_load.delta_query[self.file_name])
+                    conn.commit()
+                    
                 else:
                     pass
 
