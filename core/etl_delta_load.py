@@ -14,6 +14,7 @@ truncate_queries = {
 					'newsletter_customers_deprecated': "truncate table nwsl.newsletter_customers_deprecated;"
 					,'newsletters_deprecated': "truncate table nwsl.newsletters_deprecated;"
 					,'newsletters_nwsl': "truncate table nwsl.newsletters_nwsl;"
+					,'customers_nwsl': "truncate table nwsl.customers_nwsl;"
 
 					# core
 					,'employees': "truncate table core.employees;"
@@ -50,7 +51,7 @@ delta_query = {
 			,'newsletter_customers_deprecated': "truncate table stage.s_newsletter_customers_deprecated; insert into stage.s_newsletter_customers_deprecated select * from nwsl.newsletter_customers_deprecated;"
 			,'newsletters_deprecated' : "truncate table stage.s_newsletters_deprecated; insert into stage.s_newsletters_deprecated select * from nwsl.newsletters_deprecated;"
 			#,'newsletters_deprecated': "drop table if exists newsletters_deprecated_id; create temp table newsletters_deprecated_id as select distinct id from nwsl.newsletters_deprecated where updated_at>='" +str(param.start_date) +"' and  updated_at<'" +str(param.end_date) +"';delete from stage.s_newsletters_deprecated where id in (select id from newsletters_deprecated_id); insert into stage.s_newsletters_deprecated select * from (select *,row_number() over (partition by id order by updated_at desc) as rnk from nwsl.newsletters_deprecated where updated_at>='" +str(param.start_date) +"' and  updated_at<'" +str(param.end_date) +"') as t where rnk=1;"
-
+			,'customers_nwsl': "truncate table stage.s_customers_nwsl; insert into stage.s_customers_nwsl select * from nwsl.customers_nwsl;"
 			# messages
 			,'conversations': "drop table if exists conversations_id; create temp table conversations_id as select distinct id from msg.conversations where updated_at>='" +str(param.start_date) +"' and  updated_at<'" +str(param.end_date) +"';delete from stage.s_conversations where id in (select id from conversations_id); insert into stage.s_conversations select * from (select *,row_number() over (partition by id order by updated_at desc) as rnk from msg.conversations where updated_at>='" +str(param.start_date) +"' and  updated_at<'" +str(param.end_date) +"') as t where rnk=1;"
 			,'group_senders': "drop table if exists group_senders_id; create temp table group_senders_id as select distinct id from msg.group_senders where updated_at>='" +str(param.start_date) +"' and  updated_at<'" +str(param.end_date) +"';delete from stage.s_group_senders where id in (select id from group_senders_id); insert into stage.s_group_senders select * from (select *,row_number() over (partition by id order by updated_at desc) as rnk from msg.group_senders where updated_at>='" +str(param.start_date) +"' and  updated_at<'" +str(param.end_date) +"') as t where rnk=1;"
@@ -192,7 +193,7 @@ delta_query_reset = {
 				,'newsletter_customers_deprecated': "truncate table stage.s_newsletter_customers_deprecated; insert into stage.s_newsletter_customers_deprecated select * from nwsl.newsletter_customers_deprecated;"
 				#,'newsletters_deprecated': "drop table if exists newsletters_deprecated_id; create temp table newsletters_deprecated_id as select distinct id from nwsl.newsletters_deprecated where updated_at>='" +str(param.start_date) +"' and  updated_at<'" +str(param.end_date) +"';delete from stage.s_newsletters_deprecated where id in (select id from newsletters_deprecated_id); insert into stage.s_newsletters_deprecated select * from (select *,row_number() over (partition by id order by updated_at desc) as rnk from nwsl.newsletters_deprecated where updated_at>='" +str(param.start_date) +"' and  updated_at<'" +str(param.end_date) +"') as t where rnk=1;"
 				,'newsletters_deprecated' : "truncate table stage.s_newsletters_deprecated; insert into stage.s_newsletters_deprecated select * from nwsl.newsletters_deprecated;"
-
+				,'customers_nwsl': "truncate table stage.s_customers_nwsl; insert into stage.s_customers_nwsl select * from nwsl.customers_nwsl;"
 				# messages
 				,'conversations': "drop table if exists conversations_id; create temp table conversations_id as select distinct id from msg.conversations where updated_at>='" +str(param.reset_start_date) +"' and  updated_at<'" +str(param.reset_end_date) +"';delete from stage.s_conversations where id in (select id from conversations_id); insert into stage.s_conversations select * from (select *,row_number() over (partition by id order by updated_at desc) as rnk from msg.conversations where updated_at>='" +str(param.reset_start_date) +"' and  updated_at<'" +str(param.reset_end_date) +"') as t where rnk=1;"
 				,'group_senders': "drop table if exists group_senders_id; create temp table group_senders_id as select distinct id from msg.group_senders where updated_at>='" +str(param.reset_start_date) +"' and  updated_at<'" +str(param.reset_end_date) +"';delete from stage.s_group_senders where id in (select id from group_senders_id); insert into stage.s_group_senders select * from (select *,row_number() over (partition by id order by updated_at desc) as rnk from msg.group_senders where updated_at>='" +str(param.reset_start_date) +"' and  updated_at<'" +str(param.reset_end_date) +"') as t where rnk=1;"

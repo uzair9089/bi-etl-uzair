@@ -75,11 +75,11 @@ class param:
 
 	tbl_nwsl = [] #remove the deprecated after the api moves to v2.
 
-	tbl_nwsl_truncate = ['newsletter_customers_deprecated', 'newsletters_deprecated','newsletters']
+	tbl_nwsl_truncate = ['newsletter_customers_deprecated', 'newsletters_deprecated','newsletters', 'customers']
 
 	#tbl_nwsl_truncate = []
 
-	tbl_nwsl_rename = {'newsletters': 'newsletters_nwsl'}
+	tbl_nwsl_rename = {'newsletters': 'newsletters_nwsl' , 'customers': 'customers_nwsl'}
 
 	tbl_msg = ['conversations', 'group_senders', 'merchant_senders', 'messages', 'participants']
 
