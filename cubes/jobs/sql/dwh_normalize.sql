@@ -65,8 +65,11 @@ a.id = b.appointment_id
 left join app_resources c on
 c.appointment_id = a.id;
 
+update star.appointments set subject = substring(subject, 1, 65535);
 
 create view dmart.appointments as select * from star.appointments;
+
+
 	
 --for the appointment_series_mobile
 drop table if exists app_series_mobile;
