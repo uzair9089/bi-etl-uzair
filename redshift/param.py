@@ -24,10 +24,16 @@ class param:
 	counter = redshift_counter = 0 
 
 	# move the following to the environment variable when production server is ready
-	BUCKET_NAME = 'shore-bi-etl'
-	AWS_ACCESS_KEY_ID =  "AKIAIVBSMDRFXBB4YM6Q"
-	AWS_SECRET_ACCESS_KEY= "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"
-	REGION_HOST = 's3.eu-central-1.amazonaws.com'
+	# BUCKET_NAME = 'shore-bi-etl'
+	# AWS_ACCESS_KEY_ID =  "AKIAIVBSMDRFXBB4YM6Q"
+	# AWS_SECRET_ACCESS_KEY= "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"
+	# REGION_HOST = 's3.eu-central-1.amazonaws.com'
+
+
+	BUCKET_NAME = os.environ['s3_bucket']
+	AWS_ACCESS_KEY_ID = os.environ['aws_access_key_id']
+	AWS_SECRET_ACCESS_KEY= os.environ['aws_secret_access_key']
+	REGION_HOST = os.environ['region_host']
 
 
 	# should be always 24 hours
@@ -59,6 +65,7 @@ class param:
 				,'bi': os.environ['conn_bi'] 
 				,'star': os.environ['conn_bi']
 				,'pentaho': os.environ['conn_bi']
+				,'redshift': os.environ['conn_redshift']
 			}
 
 	sources = ['core', 'nwsl', 'msg', 'comm', 'pymt', 'intercom', 'star' ,'pentaho']

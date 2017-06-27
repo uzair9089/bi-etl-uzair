@@ -31,8 +31,8 @@ class Importer(Thread):
 
         try:
 
-            conn_string = "dbname='segment' port='5439' user='dwhadmin' password='1e14SYTzJoC2H12' host='shore-dwh.ciwq6khdxggb.eu-central-1.redshift.amazonaws.com'"
-            #conn_string = param.conn_hash['bi']
+            #conn_string = "dbname='segment' port='5439' user='dwhadmin' password='1e14SYTzJoC2H12' host='shore-dwh.ciwq6khdxggb.eu-central-1.redshift.amazonaws.com'"
+            conn_string = param.conn_hash['redshift']
             conn = psycopg2.connect(conn_string)
             curs = conn.cursor()
 
