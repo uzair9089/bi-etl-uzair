@@ -31,7 +31,6 @@ class Importer(Thread):
 
         try:
 
-            #conn_string = "dbname='segment' port='5439' user='dwhadmin' password='1e14SYTzJoC2H12' host='shore-dwh.ciwq6khdxggb.eu-central-1.redshift.amazonaws.com'"
             conn_string = param.conn_hash['redshift']
             conn = psycopg2.connect(conn_string)
             curs = conn.cursor()
@@ -43,7 +42,6 @@ class Importer(Thread):
             else:
                 pass
             
-            # take this from the environment variable directly using the param file
             os.environ['S3_USE_SIGV4'] = 'True'
             BUCKET_NAME = param.BUCKET_NAME 
             AWS_ACCESS_KEY_ID = param.AWS_ACCESS_KEY_ID 
@@ -56,15 +54,10 @@ class Importer(Thread):
             identifier = self.file_name
 
             for i in bucket:
-                                
-                # if self.file_name in param.truncate_tbl:    
-                #     curs.execute(etl_delta_load.truncate_queries[self.file_name])
-                #     conn.commit()
 
                 if self.full_path == '/'+i.key:
                     print '/'+i.key
                     curs.execute (""" COPY %s.%s FROM 's3://shore-bi-etl/%s' iam_role 'arn:aws:iam::601812874785:role/BIs3Access' fillrecord CSV IGNOREHEADER 1 """ % (param.schema, self.file_name,i.key))
-                    #curs.execute(etl_delta_load.delta_query[self.file_name])
                     conn.commit()
                 else:
                     pass

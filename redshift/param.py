@@ -21,14 +21,7 @@ class param:
 
 	root = '/opt/etl/core/data/'
 	#root = '/Users/sanjivupadhyaya/Desktop/prac/'
-	counter = redshift_counter = 0 
-
-	# move the following to the environment variable when production server is ready
-	# BUCKET_NAME = 'shore-bi-etl'
-	# AWS_ACCESS_KEY_ID =  "AKIAIVBSMDRFXBB4YM6Q"
-	# AWS_SECRET_ACCESS_KEY= "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"
-	# REGION_HOST = 's3.eu-central-1.amazonaws.com'
-
+	counter = redshift_counter = 0
 
 	BUCKET_NAME = os.environ['s3_bucket']
 	AWS_ACCESS_KEY_ID = os.environ['aws_access_key_id']
