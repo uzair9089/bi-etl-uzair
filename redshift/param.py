@@ -163,7 +163,7 @@ class param:
 
 
 
-	# allocation of db connection when runner program is executed. 
+	# allocation of db connection when runner program is executed.
 	@classmethod
 	def dbconn(self,host):
 		if host in param.sources:
