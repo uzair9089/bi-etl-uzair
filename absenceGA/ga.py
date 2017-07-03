@@ -17,7 +17,7 @@ import os
 
 
 
-credentials = ServiceAccountCredentials.from_json_keyfile_name('/Users/sanjivupadhyaya/Desktop/repo/etl/absenceGA/crons/shorebin.json', ['https://www.googleapis.com/auth/analytics.readonly'])
+credentials = ServiceAccountCredentials.from_json_keyfile_name('/opt/etl/absenceGA/crons/shorebin.json', ['https://www.googleapis.com/auth/analytics.readonly'])
 
 #credentials = ServiceAccountCredentials.from_json_keyfile_name('/opt/etl/absenceGA/crons/absencebin.json', ['https://www.googleapis.com/auth/analytics.readonly'])
 http_auth = credentials.authorize(Http())
