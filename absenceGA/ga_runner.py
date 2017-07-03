@@ -15,11 +15,6 @@ import ga
 try:
   conn = psycopg2.connect(param.conn_string)
   cursor = conn.cursor()
-  
-  #id_frm_accounts = pd.read_sql("select distinct dgoogleanalyticsid__c from stage.s_account where billingcountry='DE'",conn)
-  
-  #for i in id_frm_accounts['dgoogleanalyticsid__c'].dropna():
-    #param.merchant_list.append(int(i))
 
   tpl_merchant_list = tuple(param.merchant_list)
 
