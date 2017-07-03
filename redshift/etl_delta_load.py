@@ -19,29 +19,38 @@ truncate_queries = {
 					,'mobile_appointments': "truncate table star.mobile_appointments;"
 
 					# growth cube
-					,'list_date_02': "truncate table pentaho.list_date_02"
-					,'list_sfdc_accounts': "truncate table pentaho.list_sfdc_accounts"
-					,'list_city': "truncate table pentaho.list_city"
-					,'list_industry': "truncate table pentaho.list_industry"
-					,'list_subscription_channel': "truncate table pentaho.list_subscription_channel"
-					,'list_subscription_status': "truncate table pentaho.list_subscription_status"
-					,'list_subscription_start_date': "truncate table pentaho.list_subscription_start_date"
-					,'list_subscription_end_date': "truncate table pentaho.list_subscription_end_date"
-					,'fact_growth_general': "truncate table pentaho.fact_growth_general"
-					,'list_owner': "truncate table pentaho.list_owner"
+					,'list_date_02': "truncate table pentaho.list_date_02;"
+					,'list_sfdc_accounts': "truncate table pentaho.list_sfdc_accounts;"
+					,'list_city': "truncate table pentaho.list_city;"
+					,'list_industry': "truncate table pentaho.list_industry;"
+					,'list_subscription_channel': "truncate table pentaho.list_subscription_channel;"
+					,'list_subscription_status': "truncate table pentaho.list_subscription_status;"
+					,'list_subscription_start_date': "truncate table pentaho.list_subscription_start_date;"
+					,'list_subscription_end_date': "truncate table pentaho.list_subscription_end_date;"
+					,'fact_growth_general': "truncate table pentaho.fact_growth_general;"
+					,'list_owner': "truncate table pentaho.list_owner;"
 
 					# key account 
-					,'list_created_by_merchant': "truncate table pentaho.list_created_by_merchant"
-					,'list_state': "truncate table pentaho.list_state"
-					,'given_feedbacks': "truncate table pentaho.given_feedbacks"
-					,'list_date': "truncate table pentaho.list_date"
-					,'list_hour': "truncate table pentaho.list_hour"
-					,'list_key_accounts_account': "truncate table pentaho.list_key_accounts_account"
-					,'list_widget_in_date': "truncate table pentaho.list_widget_in_date"
-					,'fact_key_accounts_appointments': "truncate table pentaho.fact_key_accounts_appointments"
+					,'list_created_by_merchant': "truncate table pentaho.list_created_by_merchant;"
+					,'list_state': "truncate table pentaho.list_state;"
+					,'given_feedbacks': "truncate table pentaho.given_feedbacks;"
+					,'list_date': "truncate table pentaho.list_date;"
+					,'list_hour': "truncate table pentaho.list_hour;"
+					,'list_key_accounts_account': "truncate table pentaho.list_key_accounts_account;"
+					,'list_widget_in_date': "truncate table pentaho.list_widget_in_date;"
+					,'fact_key_accounts_appointments': "truncate table pentaho.fact_key_accounts_appointments;"
+
+					# from dmart and dmart finance schemas
+					,'ranking_coach_week_report_call': "truncate table star.ranking_coach_week_report_call;"
+					, 'ranking_coach_week_report_web': "truncate table star.ranking_coach_week_report_web;"
+					, 'salesforce_accounts': "truncate table star.salesforce_accounts;"
+					, 'absence_mrr_development': "truncate table star.absence_mrr_development;"
+					, 'adjustments_recurly': "truncate table star.adjustments_recurly;"
+					, 'invoices_recurly': "truncate table star.invoices_recurly;"
 
 				}
 
+# this query is not executed because the redshift is very slow to handle this kind of query as a result it is not used at the time being
 delta_query = {
 				'customer_custom_attributes': "drop table if exists customer_custom_attributes_id; create temp table customer_custom_attributes_id as select distinct id from star.customer_custom_attributes where updated_at>='" +str(param.start_date) +"' and  updated_at<'" +str(param.end_date) +"';delete from stage.s_customer_custom_attributes where id in (select id from customer_custom_attributes_id); insert into stage.s_customer_custom_attributes select * from (select *,row_number() over (partition by id order by updated_at desc) as rnk from star.customer_custom_attributes where updated_at>='" +str(param.start_date) +"' and  updated_at<'" +str(param.end_date) +"') as t where rnk=1;"
 				,'employees': "drop table if exists employees_id; create temp table employees_id as select distinct id from star.employees where updated_at>='" +str(param.start_date) +"' and  updated_at<'" +str(param.end_date) +"';delete from stage.s_employees where id in (select id from employees_id); insert into stage.s_employees select * from (select *,row_number() over (partition by id order by updated_at desc) as rnk from star.employees where updated_at>='" +str(param.start_date) +"' and  updated_at<'" +str(param.end_date) +"') as t where rnk=1;"
@@ -86,5 +95,14 @@ delta_query = {
 				,'list_key_accounts_account': "select 1;"
 				,'list_widget_in_date': "select 1;"
 				,'fact_key_accounts_appointments': "select 1;"
+
+
+
+				,'ranking_coach_week_report_call': "select 1;"
+				, 'ranking_coach_week_report_web': "select 1;"
+				, 'salesforce_accounts': "select 1;"
+				,'absence_mrr_development': "select 1;"
+				, 'adjustments_recurly': "select 1;"
+				, 'invoices_recurly': "select 1;"
 
 				}
