@@ -3,6 +3,8 @@ Author: Sanjiv Upadhyaya
 Date: 2016-10-03
 Function: connect to the BI server and import csv files into respective tables.
 """
+
+from absences_parser import AbsencesParser as ap
 from company_parser import CompanyParser as cp
 from invoice_parser import InvoiceParser as ip
 from user_parser import UserParser as up
@@ -53,10 +55,19 @@ class Importer(Thread):
             print("finished parsing data for: "+ self.collection_name)
 
 
+        if self.collection_name == 'absences.json':
+            print param.newpath + self.collection_name
+            if param.newpath + self.collection_name:
+                print param.newpath + self.collection_name
+                do = ap()
+                do.parser(self.collection_name)
+                print "finished parsing data for: " + self.collection_name
+
+
         if self.collection_name[:-5] in param.temp_objects:
             if param.newpath + self.collection_name:
                 print(param.exported_file)
-                do = cp() # don't forget to changes this in the history load
+                do = ap() # don't forget to changes this in the history load
                 do.parser(self.collection_name)
                 print "finished parsing data for: " + self.collection_name
         else:

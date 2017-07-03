@@ -59,13 +59,18 @@ class Exporter(Thread):
 
             else:
                 response = requests.request("POST", param.url[self.collection_name], data=param.filters_new[self.collection_name], headers=param.headers).json()
+                
                 with open(param.newpath+self.collection_name+'.json', 'w') as outfile:
                     json.dump(response, outfile)
 
                 param.exported_file[self.collection_name] = 1
                 print("extraction completed for: "+ self.collection_name )
 
+
+
+
     	except Exception as e:
+            print e
 
             curs.execute("""INSERT INTO etl_status (start_date, end_date, schema_name, table_name, file_path, error_phase, error_message, status) VALUES(%s, %s, %s, %s, %s, %s, %s, %s)""",[param.start_date, param.end_date, param.schema, self.collection_name, param.root+self.collection_name+str(".json"), 'import', str(e),'fail'])
             conn.commit()

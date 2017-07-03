@@ -15,8 +15,8 @@ import os
 class param:		
 
 	schema = ""
-	#root = '/Users/sanjivupadhyaya/Desktop/repo/etl/absence/data'
-	root = '/opt/etl/absence/data'
+	root = '/Users/sanjivupadhyaya/Desktop/repo/etl/absence/data/'
+	#root = '/opt/etl/absence/data'
 	counter = 0 
 	newpath = ""
 	connection = ""
@@ -28,27 +28,33 @@ class param:
 	loop_counter = 0
 	skip_counter = 0
 
-	tbl_absence= ['company', 'invoices','users']
+	#tbl_absence= ['company', 'invoices','users', 'absences']
 
-	history_objects = ['Mention History Table from Above if required']
+	tbl_absence= ['absences']
+
+	history_objects = ['absences']
 
 	temp_objects = []
 
 	url = {'company': "https://app.absence.io/api/v2/bi/companies"
 		   ,'invoices': "https://app.absence.io/api/v2/bi/invoices"
 		   ,'users': "https://app.absence.io/api/v2/bi/users"
+		   ,'absences': "https://app.absence.io/api/v2/bi/absences"
 			}
 
 	filters ={
 			  'company': "{\n\t\n\t\"limit\":500,"+"\n\t\"skip\":"
 			  ,'invoices': "{\n\t\"limit\": 1000\n\n}"
-			  ,'users':"{\n\t\n\t\"limit\":500,"+"\n\t\"skip\":"}
+			  ,'users':"{\n\t\n\t\"limit\":500,"+"\n\t\"skip\":"
+			  ,'absences': "{\n\t\n\t\"limit\":500,"+"\n\t\"skip\":" 
+			  }
 	
 
 	filters_new ={'company': "{\n\t\"limit\": 1000,\n\t\"filter\": {\n  \t\"modified\": {\n\t\"$gte\": \"" + str(start_date) + "\",\n\t\"$lt\": \"" + str(end_date) + "\"\n   }\n }\n}"
 		  ,'invoices': "{\n\t\"limit\": 1000\n\n}"
-		  ,'users': "{\n\t\"limit\": 1000,\n\t\"filter\": {\n  \t\"modified\": {\n\t\"$gte\": \"" + str(start_date) + "\",\n\t\"$lt\": \"" + str(end_date) + "\"\n   }\n }\n}"}
-
+		  ,'users': "{\n\t\"limit\": 1000,\n\t\"filter\": {\n  \t\"modified\": {\n\t\"$gte\": \"" + str(start_date) + "\",\n\t\"$lt\": \"" + str(end_date) + "\"\n   }\n }\n}"
+	   	  ,'absences': "{\n\t\"limit\": 1000,\n\t\"filter\": {\n  \t\"modified\": {\n\t\"$gte\": \"" + str(start_date) + "\",\n\t\"$lt\": \"" + str(end_date) + "\"\n   }\n \t\t\t},\n \"sortBy\": {\"company\": 1}\n}"
+		  }
 
 	headers = {
 	    'x-vacationtoken': os.environ['x_vacationtoken'],
@@ -58,23 +64,20 @@ class param:
 	    }
 
 
-	# dictionary for storing truncate queries for tables without the date attributes.
 	truncate_queries = {
-						# example schema--> change it to appropriate table name in future when required
 						'invoices': "truncate table absence.invoices;"
 						,'users': "truncate table absence.users;"
 						,'example2': "truncate table cs.eample2;"
+						,'absences': "select 1;"
 						
 	}
 
 	tbl_bi = tbl_absence
 
-	# files ready to be parsed: checked by the import_data module.
 	exported_file = dict((el,0) for el in tbl_bi)
 
 	conn_bi = os.environ['conn_bi']
 
-	# allocation of db connection when runner program is executed. 
 	@classmethod
 	def dbconn(self,host):
 		if(host == "absence"):
