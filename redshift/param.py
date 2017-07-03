@@ -89,7 +89,7 @@ class param:
 
 	tbl_star_truncate = [
 						# tables
-						'fact_appointments', 'mobile_appointments', 'fact_feedbacks', 'appointments', 'appointment_series',
+						'fact_appointments', 'mobile_appointments', 'fact_feedbacks', 'appointments', 
 						# views
 						'merchant_permissions', 'ranking_coach_week_report_call', 'ranking_coach_week_report_web', 'salesforce_accounts'
 						,'absence_mrr_development', 'adjustments_recurly', 'invoices_recurly'

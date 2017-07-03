@@ -14,7 +14,6 @@ truncate_queries = {
 					'fact_appointments': "truncate table star.fact_appointments;"
 					,'fact_feedbacks': "truncate table star.fact_feedbacks;"
 					,'appointments': "truncate table star.appointments;"
-					,'appointment_series': "truncate table star.appointment_series;"
 					,'merchant_permissions': "truncate table star.merchant_permissions;"
 					,'mobile_appointments': "truncate table star.mobile_appointments;"
 
