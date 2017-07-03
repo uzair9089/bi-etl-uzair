@@ -48,7 +48,6 @@ if sys.argv[1] in param.sources:
 
 if host == 'star':
     filter_row = " where updated_at::date >= current_date::date -1 and updated_at::date < current_date::date "
-    #" where updated_at::date >='" + str(param.start_date) + "' and updated_at::date <'" +str(param.end_date) +"'" 
     filter_refresh = " "
 else:
     filter_row = " where updated_at::date >= current_date::date -1 and updated_at::date < current_date::date "
