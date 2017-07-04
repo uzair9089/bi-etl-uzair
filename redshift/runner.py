@@ -87,7 +87,6 @@ def fetch_table(source_name):
     param.truncate_tbl = copy.copy(truncate_table)
 
 
-# if host in param.list_of_available_sources
 if (host in param.sources):
     fetch_table(host)
     param.counter = len(param.tbl_source) + len(param.tbl_source_truncate)
