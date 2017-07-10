@@ -4,7 +4,7 @@ import os
 
 class param:
 
-	start_date = datetime.datetime.now() - datetime.timedelta(days = 1)
+	start_date = datetime.datetime.now() - datetime.timedelta(days = 200)
 	start_date = start_date.strftime('%Y-%m-%d')
 
 	end_date = datetime.datetime.now() - datetime.timedelta(days = 0)
