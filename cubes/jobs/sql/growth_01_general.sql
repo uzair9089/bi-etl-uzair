@@ -551,20 +551,17 @@ CREATE TEMP TABLE temp_shifts AS (
 DROP TABLE IF EXISTS temp_newsletters;
 CREATE TEMP TABLE temp_newsletters AS (
 	SELECT list_date_02.created_at_id as date_id,
-	newsletters_nwsl.merchant_uuid,
+	newsletters_nwsl.merchant_id,
 	merchant_profiles.id as merchant_profile_id,
 	count(distinct newsletters_nwsl.id) as newsletters,
-	count(distinct newsletter_customers.customer_uuid) as recipients
+	sum(newsletters_nwsl.recipients_count) as recipients
 	FROM prod.newsletters_nwsl
-	LEFT JOIN prod.newsletter_customers
-	ON newsletter_customers.newsletter_id = newsletters_nwsl.id
 	INNER JOIN prod.merchant_profiles
-	ON merchant_profiles.uuid = newsletters_nwsl.merchant_uuid
+	ON merchant_profiles.uuid = newsletters_nwsl.merchant_id
 	INNER JOIN pentaho.list_date_02
-	ON list_date_02.date = date_trunc('day', newsletters_nwsl.sent_at)::date
-	Where newsletters_nwsl.sent_at NOTNULL
-	AND newsletters_nwsl.state = 'sent'
-	GROUP BY date_id, merchant_uuid, merchant_profile_id
+	ON list_date_02.date = date_trunc('day', newsletters_nwsl.released_at)::date
+	Where newsletters_nwsl.released_at NOTNULL
+	GROUP BY date_id, merchant_id, merchant_profile_id
 );
 
 DROP TABLE IF EXISTS temp_messages;
@@ -801,4 +798,3 @@ UPDATE pentaho.fact_growth_general
 SET owner_id = lo.owner_id
 FROM pentaho.list_owner lo 
 WHERE fact_growth_general.account_owner = lo.account_owner;
-
