@@ -4,11 +4,10 @@ import os
 
 class param:
 
-	# 1 and 0
-	start_date = datetime.datetime.now() - datetime.timedelta(days = 40)
+	start_date = datetime.datetime.now() - datetime.timedelta(days = 1)
 	start_date = start_date.strftime('%Y-%m-%d')
 
-	end_date = datetime.datetime.now() - datetime.timedelta(days = 10)
+	end_date = datetime.datetime.now() - datetime.timedelta(days = 0)
 	end_date = end_date.strftime('%Y-%m-%d')
 
 	# The list holds the complete list of the ga_merchant_id

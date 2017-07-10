@@ -28,8 +28,7 @@ def get_api_traffic_query(service, ga_merchant_id):
     start_date=param.start_date,
     end_date=param.end_date,
     metrics='ga:users, ga:sessions, ga:visits, ga:newUsers',
-    dimensions='ga:yearMonth'
-    #, ga:source, ga:pagePath, ga:hostname, ga:sessionCount, ga:deviceCategory'
+    dimensions='ga:yearMonth, ga:source, ga:pagePath, ga:hostname, ga:sessionCount, ga:deviceCategory'
     )
 
 def get_api_demographics(service, ga_merchant_id):
