@@ -8,7 +8,7 @@ class param:
 	start_date = datetime.datetime.now() - datetime.timedelta(days = 190)
 	start_date = start_date.strftime('%Y-%m-%d')
 
-	end_date = datetime.datetime.now() - datetime.timedelta(days = 180)
+	end_date = datetime.datetime.now() - datetime.timedelta(days = 189)
 	end_date = end_date.strftime('%Y-%m-%d')
 
 	# The list holds the complete list of the ga_merchant_id
