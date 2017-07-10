@@ -27,7 +27,7 @@ def get_api_traffic_query(service, ga_merchant_id):
     ids = 'ga:' +str(ga_merchant_id),
     start_date=param.start_date,
     end_date=param.end_date,
-    metrics='ga:users'
+    metrics='ga:users',
     #, ga:sessions, ga:visits, ga:newUsers',
     dimensions='ga:yearMonth'
     #, ga:source, ga:pagePath, ga:hostname, ga:sessionCount, ga:deviceCategory'
