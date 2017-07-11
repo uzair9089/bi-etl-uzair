@@ -16,7 +16,7 @@ class param:
 
 	schema = ""
 	#root = '/Users/sanjivupadhyaya/Desktop/repo/etl/absence/data/'
-	root = '/opt/etl/absence/data'
+	root = '/opt/etl/absence/data/'
 	counter = 0 
 	newpath = ""
 	connection = ""
@@ -55,7 +55,7 @@ class param:
 		  ,'invoices': "{\n\t\"limit\": 1000\n\n}"
 		  ,'users': "{\n\t\"limit\": 1000,\n\t\"filter\": {\n  \t\"modified\": {\n\t\"$gte\": \"" + str(start_date) + "\",\n\t\"$lt\": \"" + str(end_date) + "\"\n   }\n }\n}"
 	   	  ,'absences': "{\n\t\"limit\": 1000,\n\t\"filter\": {\n  \t\"modified\": {\n\t\"$gte\": \"" + str(start_date) + "\",\n\t\"$lt\": \"" + str(end_date) + "\"\n   }\n \t\t\t},\n \"sortBy\": {\"company\": 1}\n}"
-	   	  ,'reasons': "{\n\t\"limit\": 1000,\n\t\"filter\": {\n  \t\"modified\": {\n\t\"$gte\": \"" + str(start_date) + "\",\n\t\"$lt\": \"" + str(end_date) + "\"\n   }\n \t\t\t}"
+	   	  ,'reasons': "{\n\t\"limit\": 1000 }"
 		  }
 
 	headers = {
