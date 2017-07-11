@@ -14,11 +14,7 @@ delta_query = {
 ,'invoices': "truncate table stage.s_invoices; insert into stage.s_invoices select * from absence.invoices;"
 ,'users': "drop table if exists users_id; create temp table users_id as select distinct id from absence.users where modified>='" +str(param.start_date) +"' and  modified<'" +str(param.end_date) +"';delete from stage.s_users_absence where id in (select id from users_id); insert into stage.s_users_absence select * from (select *,row_number() over (partition by id order by modified desc) as rnk from absence.users where modified>='" +str(param.start_date) +"' and  modified<'" +str(param.end_date) +"') as t where rnk=1;"
 ,'absences': "drop table if exists absences_id; create temp table absences_id as select distinct id from absence.absences where modified>='" +str(param.start_date) +"' and  modified<'" +str(param.end_date) +"';delete from stage.s_absences_absence where id in (select id from absences_id); insert into stage.s_absences_absence select * from (select *,row_number() over (partition by id order by modified desc) as rnk from absence.absences where modified>='" +str(param.start_date) +"' and  modified<'" +str(param.end_date) +"') as t where rnk=1;"
-
+,'reasons': "drop table if exists reasons_id; create temp table reasons_id as select distinct id from absence.reasons where modified>='" +str(param.start_date) +"' and  modified<'" +str(param.end_date) +"';delete from stage.s_reasons_absence where id in (select id from reasons_id); insert into stage.s_reasons_absence select * from (select *,row_number() over (partition by id order by modified desc) as rnk from absence.reasons where modified>='" +str(param.start_date) +"' and  modified<'" +str(param.end_date) +"') as t where rnk=1;"
 }
-
-
-
-
 
 
