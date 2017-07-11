@@ -28,73 +28,61 @@ class ReasonsParser:
 				keys_in_record = x.keys() 
 				print keys_in_record
 
-				# if 'data' in keys_in_record:
+				if 'data' in keys_in_record:
 
-				# 	for data_lines in x["data"]:
-				# 		id =  modified = start_date = end_date = company = created = reason_id = assigned_to_id = approver_id = status = deny_reason = 'N/A' 
-				# 		days_count  =  0
+					for data_lines in x["data"]:
+						id =  modified = name = country = company = created = 'N/A' 
+						defaultVacationDays  =  0
 						
-				# 		if '_id' in data_lines.keys():
-				# 			id = str(data_lines["_id"]).replace("'","")
-				# 	 		print id
+						if '_id' in data_lines.keys():
+							id = str(data_lines["_id"]).replace("'","")
+					 		print id
 
-				# 	 	if 'modified' in data_lines.keys():
-				# 			modified = data_lines["modified"]
-				# 			print modified
+					 	if 'modified' in data_lines.keys():
+							modified = data_lines["modified"]
+							print modified
 
-				# 		if 'start' in data_lines.keys():
-				# 			start_date = data_lines["start"]
-				# 			print start_date
+						if 'name' in data_lines.keys():
+							name = data_lines["name"]
+							print name
 
-				# 		if 'end' in data_lines.keys():
-				# 			end_date = str(data_lines["end"]).replace("'","")
-				# 			print end_date
+						if 'country' in data_lines.keys():
+							country = str(data_lines["country"]).replace("'","")
+							print country
 
-				# 		if 'company' in data_lines.keys():
-				# 			company = str(data_lines["company"]).replace("'","")
-				# 			print company
+						if 'company' in data_lines.keys():
+							company = str(data_lines["company"]).replace("'","")
+							print company
 
-				# 		if 'created' in data_lines.keys():
-				# 			created = data_lines["created"]
-				# 			print created
+						if 'created' in data_lines.keys():
+							created = data_lines["created"]
+							print created
 
-				# 		if 'reasonId' in data_lines.keys():	
-				# 			reason_id = str(data_lines["reasonId"]).replace("'","")
-				# 			print reason_id
+						if 'defaultVacationDays' in data_lines.keys():	
+							defaultVacationDays = str(data_lines["defaultVacationDays"]).replace("'","")
+							print reason_id
 
-				# 		if 'assignedToId' in data_lines.keys():
-				# 			assigned_to_id = str(data_lines["assignedToId"]).replace("'","")
-				# 			print assigned_to_id
-
-				# 		if 'approverId' in data_lines.keys():
-				# 			approver_id = str(data_lines["approverId"]).replace("'","")
-				# 			print approver_id
-
-				# 		if 'daysCount' in data_lines.keys():
-				# 			days_count = str(data_lines["daysCount"]).replace("'","")
-				# 			print days_count
-
-						# curs.execute("insert into absence.absences(id,  modified, start_date, end_date, company, created, reason_id, assigned_to_id, approver_id, days_count) values ('{0}','{1}','{2}','{3}','{4}','{5}','{6}','{7}','{8}',{9})"
-						# .format(id,  modified, start_date, end_date, company, created, reason_id, assigned_to_id, approver_id, days_count))
-						# conn.commit()
+						curs.execute("insert into absence.reasons(id, modified, name, country, company, created, defaultVacationDays) values ('{0}','{1}','{2}','{3}','{4}','{5}',{6})"
+						.format(id, modified, name, country, company, created, defaultVacationDays))
+						conn.commit()
 
 
 			print("finished parsing data for: "+collection_name)
 
 			print ("delta load starts ")
-		#	curs.execute(delta_query['absences'])
-		#	conn.commit()
+			curs.execute(delta_query['absences'])
+			conn.commit()
 
 		except Exception as e:
 			param.counter-1
 			print ("exception")
 			print e
-			# conn.rollback()
-			# curs.execute("insert into etl_status(start_date, end_date, schema_name, table_name, file_path, error_phase, error_message, status) values ('{0}','{1}','{2}','{3}','{4}','{5}','{6}','{7}')"
-			# .format(param.start_date, param.end_date, param.schema, collection_name, param.root+collection_name, 'parsing', str(e).replace("'",""), 'fail'))
-			# conn.commit()
-			# conn.close()
-			# curs.close()
+			conn.rollback()
+			curs.execute("insert into etl_status(start_date, end_date, schema_name, table_name, file_path, error_phase, error_message, status) values ('{0}','{1}','{2}','{3}','{4}','{5}','{6}','{7}')"
+			.format(param.start_date, param.end_date, param.schema, collection_name, param.root+collection_name, 'parsing', str(e).replace("'",""), 'fail'))
+			conn.commit()
+			conn.close()
+			curs.close()
 
 		finally:
 			conn.close()
