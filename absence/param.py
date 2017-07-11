@@ -28,7 +28,7 @@ class param:
 	loop_counter = 0
 	skip_counter = 0
 
-	tbl_absence= ['company', 'invoices','users', 'absences']
+	tbl_absence= ['company', 'invoices','users', 'absences', 'reasons']
 
 	history_objects = ['Nothing at the time being']
 
@@ -38,6 +38,7 @@ class param:
 		   ,'invoices': "https://app.absence.io/api/v2/bi/invoices"
 		   ,'users': "https://app.absence.io/api/v2/bi/users"
 		   ,'absences': "https://app.absence.io/api/v2/bi/absences"
+		   ,'reasons': "https://app.absence.io/api/v2/bi/reasons"
 			}
 
 	filters ={
@@ -45,6 +46,7 @@ class param:
 			  ,'invoices': "{\n\t\"limit\": 1000\n\n}"
 			  ,'users':"{\n\t\n\t\"limit\":500,"+"\n\t\"skip\":"
 			  ,'absences': "{\n\t\n\t\"limit\":500,"+"\n\t\"skip\":" 
+			  ,'reasons': "{\n\t\n\t\"limit\":500,"+"\n\t\"skip\":" 
 			  }
 	
 
@@ -52,6 +54,7 @@ class param:
 		  ,'invoices': "{\n\t\"limit\": 1000\n\n}"
 		  ,'users': "{\n\t\"limit\": 1000,\n\t\"filter\": {\n  \t\"modified\": {\n\t\"$gte\": \"" + str(start_date) + "\",\n\t\"$lt\": \"" + str(end_date) + "\"\n   }\n }\n}"
 	   	  ,'absences': "{\n\t\"limit\": 1000,\n\t\"filter\": {\n  \t\"modified\": {\n\t\"$gte\": \"" + str(start_date) + "\",\n\t\"$lt\": \"" + str(end_date) + "\"\n   }\n \t\t\t},\n \"sortBy\": {\"company\": 1}\n}"
+	   	  ,'reasons': "{\n\t\"limit\": 1000,\n\t\"filter\": {\n  \t\"modified\": {\n\t\"$gte\": \"" + str(start_date) + "\",\n\t\"$lt\": \"" + str(end_date) + "\"\n   }\n \t\t\t},\n \"sortBy\": {\"company\": 1}\n}"
 		  }
 
 	headers = {
@@ -67,6 +70,7 @@ class param:
 						,'users': "truncate table absence.users;"
 						,'example2': "truncate table cs.eample2;"
 						,'absences': "select 1;"
+						,'reasons': "select 1;"
 						
 	}
 

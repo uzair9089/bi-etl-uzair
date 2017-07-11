@@ -6,6 +6,7 @@ Function: connect to the BI server and import csv files into respective tables.
 
 from absences_parser import AbsencesParser as ap
 from company_parser import CompanyParser as cp
+from reasons_parser import ReasonsParser as rp
 from invoice_parser import InvoiceParser as ip
 from user_parser import UserParser as up
 from sqlalchemy import create_engine
@@ -62,6 +63,15 @@ class Importer(Thread):
                 do = ap()
                 do.parser(self.collection_name)
                 print "finished parsing data for: " + self.collection_name
+
+        if self.collection_name == 'reasons.json':
+            print param.newpath + self.collection_name
+            if param.newpath + self.collection_name:
+                print param.newpath + self.collection_name
+                do = rp()
+                do.parser(self.collection_name)
+                print "finished parsing data for: " + self.collection_name
+
 
 
         if self.collection_name[:-5] in param.temp_objects:
