@@ -31,7 +31,8 @@ class ReasonsParser:
 				if 'data' in keys_in_record:
 
 					for data_lines in x["data"]:
-						id =  modified = name = country = company = created = 'N/A' 
+						id = name = country = company = created = 'N/A' 
+						modified = '1900-01-01'
 						defaultVacationDays  =  0
 						
 						if '_id' in data_lines.keys():
