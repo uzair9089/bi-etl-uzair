@@ -33,10 +33,7 @@ c. Log into the server of the etl and do the following process
 
 IMPORTANT:
 
-1. Ensure that the table exists in both the salesforce schema and then in the stage.
-2. View can be created later (create view prod.blah as select * from stage.s_blah)
-3. Look into rest of the tables in schema and add the appropriate rnk column when required.
-4. No need to create partition tables for the new tables. ( Partition not used in salesforce)
+1. Ensure that the table exists in both the star schema 
 
 
 
