@@ -1,0 +1,8 @@
+
+
+Pre-requisite to change settings in the server:
+
+1. Each and every folder has a cron and a log section. Cron is called by the cronjob in the server. Logs are used to store log and then send email to the receipents.
+2. password for all the microservices and other sources are kept inside /opt/credential/pass.sh.
+3. Change the pass.sh file if the credentials are added / changed.
+

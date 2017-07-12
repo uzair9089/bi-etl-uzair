@@ -1,0 +1,55 @@
+WHEN NEW OBJECT HAS TO BE ADDED IN THE ABSENCE DATA ( For example reasons)
+
+a.param.py
+	1. Go to param.py file and add 'reasons' in tbl_absence list
+	2. Add the 'reasons' in filter and then in filter_new lists
+	3. Add in truncate queries list for the reasons
+	4. If history data has to be loaded, provide the name of the object ( in our case 'reasons') in the history_object list in param.py
+
+
+b.No need to change anything in the runner.py
+c.No need to change anything in the exporter.py
+
+d.importer.py
+	1. Add the following piece of code
+
+	 if self.collection_name == 'reasons.json':
+	            print param.newpath + self.collection_name
+	            if param.newpath + self.collection_name:
+	                print param.newpath + self.collection_name
+	                do = rp()
+	                do.parser(self.collection_name)
+	                print "finished parsing data for: " + self.collection_name
+
+
+
+e. Create a parser and name it reasons_parser.py -->> create a parser here by taking an example from previous parsers available
+
+f. Once the fields to be extracted from the 'reasons' object are known do the following steps.
+	1. create table in the absence schema named 'reasons' with columns which are parsed from the parser
+	2. create a staging table of the 'reasons' table. (create table stage.s_reasons_absence as select * from absence.reasons; alter table stage.s_reasons_absence add column rnk integer;)
+	3. create view prod.reasons_absence as select * from stage.s_reasons_absence
+
+g. Make an entry into the etl_delta_load.py file for the 'reasons' object by looking at other object examples already existing there.
+
+h. parser.py
+	1. change the table name to absence.reasons in the curs.execute statement.
+
+i. After all these changes are made, the changed code needs to be pushed to the server. Follow the instructions;
+	1. git status
+	2. git diff
+	3. git add .
+	4. git commit -m"test"
+	5. git push
+
+ij Log into the server of the etl and do the following process
+	1. Issue the command "sudo su"
+	2. Issue the command "source /opt/credential/pass.sh"
+	3. go the the folder of the absence and run "python runner.py absence"
+
+
+
+
+
+
+

@@ -1,0 +1,52 @@
+WHEN NEW OBJECT HAS TO BE ADDED IN THE Core DATA ( For example events)
+a.param.py
+    1. Go to param.py file and add 'events' in tbl_core list
+    2. Add the 'events' in the tbl_truncate if it is a refresh load
+    3. Add the 'events' in tbl_core_rename if the table has to be renamed to something else
+    4. If new microservice is to be added then do the following in the param file
+    	a. add 'microservice' in the sources list.
+    	b. create a schema in the postgres.
+    	c. create all the table required by taking a backup from the follow up and restoring it into the schema.
+    	d. create a new tbl_microservice, tbl_microservice_truncate and tbl_microservice_rename list in param.py and populate them as seen in the previous exisiting schemas/sources.
+    	e. add entry to the tbl_hash and conn_hash list so the source is allocated.
+    	f. add entry into the tbl_turncate 
+    	g. add the entry for each and every table in the new microservice into the etl_delta_load.py file (work accordingly to the examples already found there)
+
+b.No need to change anything in the runner.py
+c.No need to change anything in the exporter.py
+d.No need to change anything in the importer.py
+
+
+b. After all these changes are made, the changed code needs to be pushed to the server. Follow the instructions;
+    1. git status
+    2. git diff
+    3. git add .
+    4. git commit -m"test"
+    5. git push
+c. Log into the server of the etl and do the following process
+    1. Issue the command "sudo su"
+    2. Issue the command "source /opt/credential/pass.sh"
+    3. go the the folder of the absence and run "python runner.py absence"
+
+
+
+IMPORTANT:
+
+1. Ensure that the table exists in both the microservice schema and then in the stage.
+2. View can be created later (create view prod.blah as select * from stage.s_blah)
+3. Look into rest of the tables in schema and add the appropriate rnk column when required.
+4. No need to create partition tables for the new tables. ( Partition becomes useless when rabbitmq is used again)
+
+
+WHEN COLUMN IS ALTERED IN THE SOURCE TABLE
+5. If a new column has to be added in any one of the core tables just alter the table in the respective schema with the new column.
+6. Add the same column in the stage as well.
+-->> drop the view of the respective staging table (e.g, drop view prod.bla bla)
+7. drop the column rnk from the staging tables
+8. recreate the column rnk in the staging 
+9. recreate the view (e.g, create view prod.bla as select * from stage.s_bla)
+10. re-run will run automatically to fix the error the next day.
+
+
+
+

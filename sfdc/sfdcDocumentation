@@ -1,0 +1,50 @@
+WHEN NEW OBJECT HAS TO BE ADDED IN THE SFDC DATA ( For example events)
+a.queries.py
+    1. Go to queries.py file and add the soql query for 'events' by following one of the example already present in the file.
+
+b.sfdc_param.py
+    1. add the name of the table which is to be imported from the salesforce into tbl_bi
+
+c.sfdc_runner.py
+    1. add the following line of codes before the if condition or after the if condition
+        runner34 = Exporter(queries.events +param.rows, col=queries.case_website.split(','))
+        runner34.start()
+
+d.No need to change anything in the sfdc_exporter.py and sfdc_importer.py
+
+e. etl_delta_load
+    1. Add the new table into the entry with appropriate queries to be run (follow the already existing template and just copy pase with renaming the table name)
+
+
+b. After all these changes are made, the changed code needs to be pushed to the server. Follow the instructions;
+    1. git status
+    2. git diff
+    3. git add .
+    4. git commit -m"test"
+    5. git push
+
+c. Log into the server of the etl and do the following process
+    1. Issue the command "sudo su"
+    2. Issue the command "source /opt/credential/pass.sh"
+    3. go the the folder of the absence and run "python runner.py absence"
+
+
+
+IMPORTANT:
+
+1. Ensure that the table exists in both the salesforce schema and then in the stage.
+2. View can be created later (create view prod.blah as select * from stage.s_blah)
+3. Look into rest of the tables in schema and add the appropriate rnk column when required.
+4. No need to create partition tables for the new tables. ( Partition not used in salesforce)
+
+
+
+WHEN COLUMN IS ALTERED IN THE SOURCE TABLE
+5. If a new column has to be added in any one of the sfdc tables just alter the table in the respective schema with the new column.
+6. Add the same column in the stage as well.
+-->> drop the view of the respective staging table (e.g, drop view prod.bla bla)
+7. drop the column rnk from the staging tables
+8. recreate the column rnk in the staging 
+9. recreate the view (e.g, create view prod.bla as select * from stage.s_bla)
+10. re-run will run automatically to fix the error the next day.
+
