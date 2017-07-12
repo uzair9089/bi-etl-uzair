@@ -61,7 +61,6 @@ runner4.start()
 runner5 = Exporter(queries.onb2__dunningdetail__c +param.rows,'onb2__dunningdetail__c', col = queries.onb2__dunningdetail__c.split(','))
 runner5.start()
 
-
 runner8 = Exporter(queries.contract +param.rows,'contract', col = queries.contract.split(','))
 runner8.start()
 
@@ -138,16 +137,6 @@ while param.counter != 0:
 
 
 		param.exported_table.append('Stop Iteration !')
-
-
-
-
-
-
-
-
-
-
 
 
 

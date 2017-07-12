@@ -36,10 +36,10 @@ class Importer(Thread):
             conn = psycopg2.connect(conn_string)
             curs = conn.cursor()
 
+            #AG: checking the size of the file. Needs to be more than 4KB because empty files are of size 4KB
             if (os.stat(param.newpath +self.file_name).st_size > 4):
                 file = open(param.newpath +self.file_name)
 
-                #curs.execute("drop index if exists stage.idx_"+self.file_name[:-4])
                 curs.copy_expert(sql = """ COPY %s FROM STDIN WITH CSV HEADER DELIMITER AS ',' """ % ("sfdc." +str(self.file_name[:-4])), file = file)
                 conn.commit()
 
@@ -49,8 +49,6 @@ class Importer(Thread):
                 curs.execute(etl_delta_load.delta_query[self.file_name[:-4]])
                 conn.commit()
 
-
-                
                 print("Delta load for: " +self.file_name[:-4] +" completed")
 
             else:
