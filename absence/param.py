@@ -28,10 +28,10 @@ class param:
 	loop_counter = 0
 	skip_counter = 10
 
-	#tbl_absence= ['company', 'invoices','users', 'absences', 'reasons']
-	tbl_absence= ['reasons']
+	tbl_absence= ['company', 'invoices','users', 'absences', 'reasons']
+	#tbl_absence= ['reasons']
 
-	history_objects = ['reasons']
+	history_objects = ['Nothing here']
 
 	temp_objects = []
 
