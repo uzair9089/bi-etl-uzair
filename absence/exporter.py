@@ -29,34 +29,30 @@ class Exporter(Thread):
             conn = psycopg2.connect(conn_string)
             curs = conn.cursor()
 
-            print(param.counter)
-
+            # run only in case of history load
             if self.collection_name in param.history_objects: 
                 response = requests.request("POST", param.url[self.collection_name], data=param.filters[self.collection_name]+str(param.skip_counter)+",\"sortBy\": {\"company\": 1}"+"}", headers=param.headers).json()
-                print param.filters[self.collection_name]+str(param.skip_counter)+"\n}"
                 with open(param.newpath+self.collection_name+'.json', 'w') as outfile:
                     json.dump(response, outfile)
 
+                # set the exported_file to 1 so imported can start after csv is dumped
                 param.exported_file[self.collection_name] = 1
-
                 param.row_count = int(response['totalCount'])
                 param.loop_counter = (param.row_count/param.row_limit) + 2
-
                 param.counter = param.counter + param.loop_counter-1
 
 
                 for i in range(1, param.loop_counter):
                     param.skip_counter =  i * param.row_limit
                     response = requests.request("POST", param.url[self.collection_name], data=param.filters[self.collection_name]+str(param.skip_counter)+",\"sortBy\": {\"company\": 1}"+"}", headers=param.headers).json()
-                    print param.filters[self.collection_name]+str(param.skip_counter)+"\n}"
                     with open(param.newpath+self.collection_name + "_" +str(i)+'.json', 'w') as outfile:
                         json.dump(response, outfile)
 
                         param.temp_objects.append(self.collection_name+"_"+str(i))
-
+                        # set the exported_file to 1 so imported can start after csv is dumped
                         param.exported_file[self.collection_name+"_"+str(i)] = 1
 
-
+            # run for the daily load
             else:
                 response = requests.request("POST", param.url[self.collection_name], data=param.filters_new[self.collection_name], headers=param.headers).json()
                 
@@ -68,10 +64,8 @@ class Exporter(Thread):
 
 
 
-
+        # catch the exception and put it into the etl_status if any
     	except Exception as e:
-            print e
-
             curs.execute("""INSERT INTO etl_status (start_date, end_date, schema_name, table_name, file_path, error_phase, error_message, status) VALUES(%s, %s, %s, %s, %s, %s, %s, %s)""",[param.start_date, param.end_date, param.schema, self.collection_name, param.root+self.collection_name+str(".json"), 'import', str(e),'fail'])
             conn.commit()
             conn.close()

@@ -39,7 +39,7 @@ psycopg2.extensions.register_type(DEC2FLOAT)
 if not os.path.exists(param.newpath):
     os.makedirs(param.newpath)
 
-# #printing useful information in the std output
+# printing useful information in the std output
 if sys.argv[1] in param.sources:
     if param.reset_time == param.reset_value:
         print("Resetting data from " +str(param.reset_start_date) +" - " +str(param.reset_end_date))
@@ -95,7 +95,6 @@ if (host in param.sources):
     for i in param.tbl_source:
 
         if i in param.truncate_tbl:
-            print "select * from {0}.".format(param.schema)+ i + filter_refresh, param.tbl_source_rename[i]
             runner = Exporter("select * from {0}.".format(param.schema)+ i + filter_refresh, param.tbl_source_rename[i])
             runner.start()
 

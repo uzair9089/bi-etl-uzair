@@ -29,8 +29,6 @@ class Uploader(Thread):
 	def run(self):
 
 		try:
-
-
 			os.environ['S3_USE_SIGV4'] = 'True'
 			BUCKET_NAME = param.BUCKET_NAME 
 			AWS_ACCESS_KEY_ID = param.AWS_ACCESS_KEY_ID 
@@ -47,7 +45,6 @@ class Uploader(Thread):
 
 			if bucket.lookup(self.file_name):
 				file_exists_or_not.delete()
-				print 'file does not exists so needed to add'
 
 			k = Key(bucket)
 

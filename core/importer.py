@@ -47,13 +47,11 @@ class Importer(Thread):
             if (os.stat(param.newpath +self.file_name).st_size > 4):
                 file = open(param.newpath +self.file_name)
 
-                #print self.file_name
+
                 if self.file_name == 'newsletters_deprecated.csv': #put these kind of thing into a separate list if required in the future
-                    #print "not entered"
                     curs.copy_expert(sql = """ COPY %s FROM STDIN (FORMAT 'csv', DELIMITER ',', HEADER, ENCODING 'ISO_8859_5') """ % (param.schema +'.' +self.file_name[:-4]), file = file)
                     conn.commit()
                 else:
-                    #print ("entered")
                     curs.copy_expert(sql = """ COPY %s FROM STDIN WITH CSV HEADER DELIMITER AS ',' """ % (param.schema +'.' +self.file_name[:-4]), file = file)
                     conn.commit()
 

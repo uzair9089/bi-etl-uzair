@@ -20,14 +20,12 @@ class param:
 	newpath = ""
 
 	root = '/opt/etl/core/data/'
-	#root = '/Users/sanjivupadhyaya/Desktop/prac/'
 	counter = redshift_counter = 0
 
 	BUCKET_NAME = os.environ['s3_bucket']
 	AWS_ACCESS_KEY_ID = os.environ['aws_access_key_id']
 	AWS_SECRET_ACCESS_KEY= os.environ['aws_secret_access_key']
 	REGION_HOST = os.environ['region_host']
-
 
 	# should be always 24 hours
 	start_date = datetime.datetime.now() - datetime.timedelta(hours = 25)

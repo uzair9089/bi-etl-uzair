@@ -12,7 +12,6 @@ class param:
 
 	# The list holds the complete list of the ga_merchant_id
 	merchant_list =  [85236967]
-	#, 141301709, 141313101, 141306904, 151106256,  127274158]
 
 	exclude_list = []
 

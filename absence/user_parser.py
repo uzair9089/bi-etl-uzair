@@ -19,27 +19,28 @@ class UserParser:
       conn = psycopg2.connect(conn_string)
       curs = conn.cursor()
 
+      # truncate the table if present in the param file
       if collection_name in param.truncate_queries:
         curs.execute(param.truncate_queries[collection_name])
         curs.execute
         conn.commit()
 
+      # open the exported file
       file = open(param.newpath+collection_name,'r')
 
       for line in file:
         x = json.loads(line,strict=False) 
         keys_in_record = x.keys() 
-        #print keys_in_record
 
         if 'data' in keys_in_record:
 
+          # declare the variables to be imported from the absence object
           for data_lines in x["data"]:
             id =  company = email = status = language = first_login = first_name  = last_name = ics_link = location_id = roleId = activationDueDate = deletedDate ='N/A' 
             created = modified =  '9999-01-01'
             
             if '_id' in data_lines.keys():
               id = str(data_lines["_id"]).replace("'","")
-              #print id
 
             if 'company' in data_lines.keys():
               company = data_lines["company"]
@@ -52,35 +53,27 @@ class UserParser:
 
             if 'roleId' in data_lines.keys():
               roleId = data_lines["roleId"].replace("'","")
-              #print company
 
             if 'email' in data_lines.keys():
               email = data_lines["email"].replace("'","")
-              #print status
 
             if 'status' in data_lines.keys(): 
               status = str(data_lines["status"]).replace("'","")
-              #print invoice_month
 
             if 'language' in data_lines.keys():
               language = str(data_lines["language"]).replace("'","")
-              #print language
 
             if 'firstLogin' in data_lines.keys():
               first_login = str(data_lines["firstLogin"]).replace("'","")
-              #print first_login
 
             if 'lastName' in data_lines.keys():
               last_name = str(data_lines["lastName"]).replace("'","")
-              #print last_name
 
             if 'icsLink' in data_lines.keys():
               ics_link = data_lines["icsLink"]
-              #print ics_link
 
             if 'locationId' in data_lines.keys():
               location_id = str(data_lines["locationId"]).replace("'","")
-              #print location_id
 
             if 'created' in data_lines.keys():
               created = str(data_lines["created"])
@@ -100,10 +93,9 @@ class UserParser:
 
       curs.execute(delta_query['users'])
       conn.commit()
-
+    # log the error into the etl_status if any occurs
     except Exception as e:
       param.counter-1
-      print ("exception")
       conn.rollback()
       curs.execute("insert into etl_status(start_date, end_date, schema_name, table_name, file_path, error_phase, error_message, status) values ('{0}','{1}','{2}','{3}','{4}','{5}','{6}','{7}')"
       .format(param.start_date, param.end_date, param.schema, collection_name, param.root+collection_name, 'parsing', str(e).replace("'",""), 'fail'))

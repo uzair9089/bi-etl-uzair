@@ -37,13 +37,11 @@ try:
             cursor.execute("""INSERT INTO ga.traffic_absence (year_month, source, page_path, host, session_count, device_category, user_count, sessions, visit_count, newuser_count, start_date) 
                 VALUES(%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)""", [row[0], row[1], row[2], row[3], row[4], row[5], row[6], row[7], row[8], row[9],param.start_date])
 
-             #cursor.execute("""INSERT INTO ga.traffic_absence (year_month, user_count, sessions, visit_count, newuser_count, start_date) 
-             #   VALUES(%s, %s, %s, %s, %s, %s)""", [row[0], row[1], row[2], row[3], row[4], param.start_date])
           except Exception as e:
               print("Unable to access database, import error %s ", str(e) )      
       else:
         pass
-      #print('No Rows Found for :'+str(merchant))
+        
 except Exception as e:
   print("Error in GA data import %s", str(e))
 

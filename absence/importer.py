@@ -36,6 +36,7 @@ class Importer(Thread):
 
     def run(self):
 
+        # improt the company object
         if self.collection_name == 'company.json':
             print param.newpath + self.collection_name
             if param.newpath + self.collection_name:
@@ -43,19 +44,18 @@ class Importer(Thread):
                 do = cp()
                 do.parser(self.collection_name)
                 print "finished parsing data for: " + self.collection_name
-
+        # import the invoice object
         if self.collection_name == 'invoices.json':
             if param.newpath + self.collection_name:
                 do = ip()
                 do.parser(self.collection_name)
                 print "finished parsing data for: " + self.collection_name
-
+        # import the users object
         if self.collection_name == 'users.json':
             do = up()
             do.parser(self.collection_name)
             print("finished parsing data for: "+ self.collection_name)
-
-
+        # import the absences object
         if self.collection_name == 'absences.json':
             print param.newpath + self.collection_name
             if param.newpath + self.collection_name:
@@ -63,7 +63,7 @@ class Importer(Thread):
                 do = ap()
                 do.parser(self.collection_name)
                 print "finished parsing data for: " + self.collection_name
-
+        # imp the reason object 
         if self.collection_name == 'reasons.json':
             print param.newpath + self.collection_name
             if param.newpath + self.collection_name:
@@ -71,19 +71,16 @@ class Importer(Thread):
                 do = rp()
                 do.parser(self.collection_name)
                 print "finished parsing data for: " + self.collection_name
-
-
-
+        # history load
         if self.collection_name[:-5] in param.temp_objects:
             if param.newpath + self.collection_name:
                 print(param.exported_file)
-                do = rp() # don't forget to changes this in the history load
+                do = rp()
                 do.parser(self.collection_name)
                 print "finished parsing data for: " + self.collection_name
         else:
             print "no matching file found"
 
-# import_data function is called every minute by the runner program until ETL for all the tables are completed  
 def import_data():
     for key, values in param.exported_file.iteritems():
         if(param.exported_file[key] == 1):
