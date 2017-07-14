@@ -38,9 +38,7 @@ class Importer(Thread):
 
         # improt the company object
         if self.collection_name == 'company.json':
-            print param.newpath + self.collection_name
             if param.newpath + self.collection_name:
-                print param.newpath + self.collection_name
                 do = cp()
                 do.parser(self.collection_name)
                 print "finished parsing data for: " + self.collection_name
@@ -57,7 +55,6 @@ class Importer(Thread):
             print("finished parsing data for: "+ self.collection_name)
         # import the absences object
         if self.collection_name == 'absences.json':
-            print param.newpath + self.collection_name
             if param.newpath + self.collection_name:
                 print param.newpath + self.collection_name
                 do = ap()
@@ -65,16 +62,13 @@ class Importer(Thread):
                 print "finished parsing data for: " + self.collection_name
         # imp the reason object 
         if self.collection_name == 'reasons.json':
-            print param.newpath + self.collection_name
             if param.newpath + self.collection_name:
-                print param.newpath + self.collection_name
                 do = rp()
                 do.parser(self.collection_name)
                 print "finished parsing data for: " + self.collection_name
         # history load
         if self.collection_name[:-5] in param.temp_objects:
             if param.newpath + self.collection_name:
-                print(param.exported_file)
                 do = rp()
                 do.parser(self.collection_name)
                 print "finished parsing data for: " + self.collection_name
