@@ -82,7 +82,7 @@ class param:
 	# 			,'merchant_roles', 'resources', 'services', 'shifts', 'pages' ]
 
 
-	tbl_star = ['pages']
+	tbl_star = ['pages_intercom']
 
 	tbl_star_rename = {}
 
