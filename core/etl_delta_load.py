@@ -101,6 +101,7 @@ delta_query = {
 			,'conversations_intercom':"truncate table stage.s_conversations_intercom; insert into stage.s_conversations_intercom select * from intercom.conversations_intercom;"
 			,'conversation_parts_intercom':"truncate table stage.s_conversation_parts_intercom; insert into stage.s_conversation_parts_intercom select * from intercom.conversation_parts_intercom;"
 			,'admins_intercom':"truncate table stage.s_admins_intercom; insert into stage.s_admins_intercom select * from intercom.admins_intercom;"
+			,'pages_intercom': "drop table if exists pages_intercom_id; create temp table pages_intercom_id as select distinct user_id from intercom.pages_intercom where updated_at>= current_date -1  and  updated_at< current_date;delete from stage.s_pages_intercom where user_id in (select user_id from pages_intercom_id); insert into stage.s_pages_intercom select * from (select *,row_number() over (partition by user_id order by updated_at desc) as rnk from intercom.pages_intercom where updated_at>= current_date - 1 and  updated_at< current_date) as t where rnk=1;"
 
 			# payment
 			,'disputes': "truncate table stage.s_disputes; insert into stage.s_disputes select * from pymt.disputes;"

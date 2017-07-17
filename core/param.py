@@ -98,13 +98,13 @@ class param:
 
 	tbl_pymt_rename = {'merchants': 'merchants_pymt'}
 
-	tbl_intercom = ['companies', 'segments', 'contacts', 'users',
+	tbl_intercom = ['companies', 'segments', 'contacts', 'users', 'pages',
 					 'conversations', 'conversation_parts']
 
 	tbl_intercom_truncate = ['tags', 'admins']
 
 	# if tables has been renamed while importing into our BI-DWH, then renamed_table has to be kept bzw., intercom			
-	tbl_intercom_rename =  {'companies': 'companies_intercom', 'segments': 'segments_intercom', 'contacts': 'contacts_intercom','users': 'users_intercom', 
+	tbl_intercom_rename =  {'companies': 'companies_intercom', 'segments': 'segments_intercom', 'contacts': 'contacts_intercom','users': 'users_intercom', 'pages': 'pages_intercom',
 						'conversations':'conversations_intercom','conversation_parts': 'conversation_parts_intercom','tags': 'tags_intercom', 'admins': 'admins_intercom'}
 
 
