@@ -119,7 +119,7 @@ elif (host == "pymt"):
 	runner_merchant.start()
 
 elif (host == "intercom"):
-	param.counter = 8 
+	param.counter = 9
 	for i in param.tbl_intercom:
 	    print('extraction of ' +i +' started')
 	    runner = Exporter("select * from " +param.schema +"." +i +filter_row_segment, i +"_intercom")
