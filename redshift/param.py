@@ -75,11 +75,14 @@ class param:
 
 	tbl_core_rename = {}
 
-	tbl_star = [
-				# views
-				'customer_custom_attributes', 'employees', 'feedbacks', 'event_participants', 'events', 'merchant_customer_custom_attributes'
-				, 'merchant_customer_tags', 'merchant_customers', 'merchant_key_account_feature_toggles', 'merchant_key_accounts'  
-				,'merchant_roles', 'resources', 'services', 'shifts', 'pages' ]
+	# tbl_star = [
+	# 			# views
+	# 			'customer_custom_attributes', 'employees', 'feedbacks', 'event_participants', 'events', 'merchant_customer_custom_attributes'
+	# 			, 'merchant_customer_tags', 'merchant_customers', 'merchant_key_account_feature_toggles', 'merchant_key_accounts'  
+	# 			,'merchant_roles', 'resources', 'services', 'shifts', 'pages' ]
+
+
+	tbl_star = ['pages']
 
 	tbl_star_rename = {}
 
