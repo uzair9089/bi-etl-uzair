@@ -46,6 +46,7 @@ truncate_queries = {
 					, 'absence_mrr_development': "truncate table star.absence_mrr_development;"
 					, 'adjustments_recurly': "truncate table star.adjustments_recurly;"
 					, 'invoices_recurly': "truncate table star.invoices_recurly;"
+					, 'shore_mrr_development_daily': "truncate table star.shore_mrr_development_daily;"
 
 				}
 
