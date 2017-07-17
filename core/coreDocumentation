@@ -26,7 +26,7 @@ b. After all these changes are made, the changed code needs to be pushed to the 
 c. Log into the server of the etl and do the following process
     1. Issue the command "sudo su"
     2. Issue the command "source /opt/credential/pass.sh"
-    3. go the the folder of the absence and run "python runner.py absence"
+    3. go the the folder of the absence and run "python runner.py core" || change "core" to keyword from param.sources list
 
 
 
