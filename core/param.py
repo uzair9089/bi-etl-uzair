@@ -59,12 +59,10 @@ class param:
 
 	exported_file = {}
 
-	#tbl_core= ['shifts','shift_plan_templates']
 	tbl_core = ['appointment_services', 'appointment_resources', 'events', 'feedbacks', 
 				'merchant_customers', 'shift_plan_templates', 'newsletters', 'resources', 'services', 
 				'merchant_profiles', 'event_participants', 'appointment_series', 'shifts',
 				'pdf_forms', 'customer_custom_attributes', 'appointment_occurrences',
-				#'notification_channels', -- removed on 13th of may 'merchant_customer_tags', customers
 				'newsletter_blacklists',
 				'service_categories', 'closing_times', 'merchant_customer_custom_attributes', 'uberall_accounts']
 	
@@ -75,8 +73,6 @@ class param:
 	tbl_nwsl = [] #remove the deprecated after the api moves to v2.
 
 	tbl_nwsl_truncate = ['newsletter_customers_deprecated', 'newsletters_deprecated','newsletters', 'customers']
-
-	#tbl_nwsl_truncate = []
 
 	tbl_nwsl_rename = {'newsletters': 'newsletters_nwsl' , 'customers': 'customers_nwsl'}
 
@@ -108,11 +104,7 @@ class param:
 						'conversations':'conversations_intercom','conversation_parts': 'conversation_parts_intercom','tags': 'tags_intercom', 'admins': 'admins_intercom'}
 
 
-	# complete list of tables to be extracted 
-	#tbl_bi = tbl_core + tbl_core_truncate + tbl_msg + tbl_msg_truncate + tbl_comm + tbl_comm_truncate + tbl_intercom + tbl_intercom_truncate + tbl_nwsl + tbl_nwsl_truncate + tbl_pymt + tbl_pymt_truncate
-
 	truncate_tbl = tbl_core_truncate + tbl_msg_truncate + tbl_comm_truncate + tbl_intercom_truncate + tbl_nwsl_truncate + tbl_pymt_truncate
-	# files ready to be extracted: checked by the import_data module.
 
 
 	table_hash = {'core':[{'tbl_source':tbl_core},{'tbl_source_truncate':tbl_core_truncate},{'tbl_source_rename':tbl_core_rename}], 

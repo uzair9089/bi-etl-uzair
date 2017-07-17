@@ -94,16 +94,16 @@ if (host in param.sources):
 
     for i in param.tbl_source:
 
-        if i == 'appointment_occurrences': # use another key in hash for these kind of special cases
+        if i == 'appointment_occurrences': 
             runner = Exporter("select * from "+ i + " where appointment_series_id in (select id from appointment_series "+filter_occurrences+")", i)
             runner.start()
 
         elif i in param.tbl_source_rename:
-            runner = Exporter("select * from " + i + filter_row, param.tbl_source_rename[i]) #need to tackle the renamed tables
+            runner = Exporter("select * from " + i + filter_row, param.tbl_source_rename[i]) 
             runner.start()
 
         else:
-            runner = Exporter("select * from " + i + filter_row, i) #need to tackle the renamed tables
+            runner = Exporter("select * from " + i + filter_row, i) 
             runner.start()
 
     for j in param.tbl_source_truncate:
