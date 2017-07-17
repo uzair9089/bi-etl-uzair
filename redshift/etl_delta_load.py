@@ -66,7 +66,7 @@ delta_query = {
 				,'resources': "drop table if exists resources_id; create temp table resources_id as select distinct id from star.resources where updated_at>='" +str(param.start_date) +"' and  updated_at<'" +str(param.end_date) +"';delete from stage.s_resources where id in (select id from resources_id); insert into stage.s_resources select * from (select *,row_number() over (partition by id order by updated_at desc) as rnk from star.resources where updated_at>='" +str(param.start_date) +"' and  updated_at<'" +str(param.end_date) +"') as t where rnk=1;"
 				,'services': "drop table if exists services_id; create temp table services_id as select distinct id from star.services where updated_at>='" +str(param.start_date) +"' and  updated_at<'" +str(param.end_date) +"';delete from stage.s_services where id in (select id from services_id); insert into stage.s_services select * from (select *,row_number() over (partition by id order by updated_at desc) as rnk from star.services where updated_at>='" +str(param.start_date) +"' and  updated_at<'" +str(param.end_date) +"') as t where rnk=1;"
 				,'shifts': "drop table if exists shifts_id; create temp table shifts_id as select distinct id from star.shifts where updated_at>='" +str(param.start_date) +"' and  updated_at<'" +str(param.end_date) +"';delete from stage.s_shifts where id in (select id from shifts_id); insert into stage.s_shifts select * from (select *,row_number() over (partition by id order by updated_at desc) as rnk from star.shifts where updated_at>='" +str(param.start_date) +"' and  updated_at<'" +str(param.end_date) +"') as t where rnk=1;"
-
+				,'pages': "select 1;"
 
 				,'fact_appointments': "select 1;"
 				,'mobile_appointments': "select 1;"
