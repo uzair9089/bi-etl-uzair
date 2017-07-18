@@ -36,7 +36,7 @@ class Importer(Thread):
 
     def run(self):
 
-        # improt the company object
+        # import the company object
         if self.collection_name == 'company.json':
             if param.newpath + self.collection_name:
                 do = cp()
@@ -56,11 +56,10 @@ class Importer(Thread):
         # import the absences object
         if self.collection_name == 'absences.json':
             if param.newpath + self.collection_name:
-                print param.newpath + self.collection_name
                 do = ap()
                 do.parser(self.collection_name)
                 print "finished parsing data for: " + self.collection_name
-        # imp the reason object 
+        # import the reason object 
         if self.collection_name == 'reasons.json':
             if param.newpath + self.collection_name:
                 do = rp()
@@ -82,7 +81,6 @@ def import_data():
             runner = Importer(key + '.json')
             param.exported_file[key] = 0
             param.counter = param.counter - 1
-            print param.counter
             runner.start()
             
 
