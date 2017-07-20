@@ -75,7 +75,7 @@ class param:
 
 	# if tables has been renamed while importing into our BI-DWH, then renamed_table has to be kept bzw., intercom			
 	tbl_intercom_rt =  ['companies_intercom', 'segments_intercom', 'contacts_intercom',
-					'users_intercom', 'conversations_intercom', 'conversation_parts_intercom' ]
+					'users_intercom', 'conversations_intercom', 'conversation_parts_intercom', 'pages_intercom' ]
 
 	# tables which are truncated and has no date attributes.
 	truncate_tbl = ['newsletter_customers', 'employees', 'merchant_permissions', 'merchant_key_accounts', 'conversation_senders', 'merchants', 'disputes', 
