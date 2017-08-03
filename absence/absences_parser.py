@@ -29,13 +29,13 @@ class AbsencesParser:
 				if 'data' in keys_in_record:
 					# declare the variables to be fetched from the absence object
 					for data_lines in x["data"]:
-						id =  modified = start_date = end_date = company = created = reason_id = assigned_to_id = approver_id = status = deny_reason = 'N/A' 
+						id = modified = start_date = end_date = company = created = reason_id = assigned_to_id = approver_id = status = deny_reason = 'N/A' 
 						days_count  =  0
 						
 						if '_id' in data_lines.keys():
 							id = str(data_lines["_id"]).replace("'","")
 
-					 	if 'modified' in data_lines.keys():
+						if 'modified' in data_lines.keys():
 							modified = data_lines["modified"]
 
 						if 'start' in data_lines.keys():

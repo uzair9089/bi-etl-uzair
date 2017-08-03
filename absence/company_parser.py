@@ -33,7 +33,7 @@ class CompanyParser:
 						
 						id = str(data_lines["id"]).replace("'","")
 
-					 	if 'modified' in data_lines.keys():
+						if 'modified' in data_lines.keys():
 							modified = data_lines["modified"]
 
 						if 'activeDateEnd' in data_lines.keys():

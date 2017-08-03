@@ -30,40 +30,46 @@ class ReasonsParser:
 				if 'data' in keys_in_record:
 
 					for data_lines in x["data"]:
-						id = name = country = company = created = 'N/A' 
+						id = name = company = allowanceTypeId = deleted = reducesDays = isPublic = 'N/A' 
 						modified = '1900-01-01'
-						defaultVacationDays  =  0
+						defaultVacationDays  =  0.0
 						
 						if '_id' in data_lines.keys():
 							id = str(data_lines["_id"]).replace("'","")
 
-					 	if 'modified' in data_lines.keys():
+						if 'modified' in data_lines.keys():
 							modified = data_lines["modified"]
 
 						if 'name' in data_lines.keys():
-							name = data_lines["name"]
+							name = data_lines["name"].replace("'","")
 
-						if 'country' in data_lines.keys():
-							country = str(data_lines["country"]).replace("'","")
+						if 'allowanceTypeId' in data_lines.keys():
+							allowanceTypeId = str(data_lines["allowanceTypeId"]).replace("'","")
 
 						if 'company' in data_lines.keys():
 							company = str(data_lines["company"]).replace("'","")
 
-						if 'created' in data_lines.keys():
-							created = data_lines["created"]
+						if 'deleted' in data_lines.keys():
+							deleted = data_lines["deleted"]
+
+						if 'reducesDays' in data_lines.keys():
+							reducesDays = data_lines["reducesDays"]
+
+						if 'isPublic' in data_lines.keys():
+							isPublic = data_lines["isPublic"]
 
 						if 'defaultVacationDays' in data_lines.keys():	
 							defaultVacationDays = str(data_lines["defaultVacationDays"]).replace("'","")
 
-						curs.execute("insert into absence.reasons(id, modified, name, country, company, created, defaultVacationDays) values ('{0}','{1}','{2}','{3}','{4}','{5}',{6})"
-						.format(id, modified, name, country, company, created, defaultVacationDays))
+						curs.execute("insert into absence.reasons(id, modified, name, allowanceTypeId, company, deleted, reducesDays, isPublic, defaultVacationDays) values ('{0}','{1}','{2}','{3}','{4}','{5}','{6}','{7}',{8})"
+						.format(id, modified, name, allowanceTypeId, company, deleted, reducesDays, isPublic, defaultVacationDays))
 						conn.commit()
 
 
 			print("finished parsing data for: "+collection_name)
 
 			print ("delta load starts ")
-			curs.execute(delta_query['absences'])
+			curs.execute(delta_query['reasons'])
 			conn.commit()
 
 		# log the exception into the etl_status if any error occurs

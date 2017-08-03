@@ -23,7 +23,7 @@ host = sys.argv[1]
 param.dbconn(host)
 
 if not os.path.exists(param.newpath):
-    os.makedirs(param.newpath)
+	os.makedirs(param.newpath)
 
 
 
@@ -37,9 +37,9 @@ else:
 if (host == "absence") :
 	param.counter = len(param.tbl_absence)
 	for i in param.tbl_absence:
-	    print('Extracting Json for ' + i +' started')
-	    runner = Exporter(i)
-	    runner.start()
+		print('Extracting Json for ' + i +' started')
+		runner = Exporter(i)
+		runner.start()
 
 else:
 	print("no other data source is defined yet")

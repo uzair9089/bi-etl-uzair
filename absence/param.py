@@ -31,7 +31,7 @@ class param:
 	tbl_absence= ['company', 'invoices','users', 'absences', 'reasons']
 
 	# history load if there are any
-	history_objects = ['Nothing here']
+	history_objects = ['Nothing']
 
 	# used while loading the history data
 	temp_objects = []
@@ -63,11 +63,11 @@ class param:
 
 	# headers are not to be changed after the implementation
 	headers = {
-	    'x-vacationtoken': os.environ['x_vacationtoken'],
-	    'content-type': "application/json",
-	    'cache-control': "no-cache",
-	    'postman-token': os.environ['postman_token']
-	    }
+		'x-vacationtoken': os.environ['x_vacationtoken'],
+		'content-type': "application/json",
+		'cache-control': "no-cache",
+		'postman-token': os.environ['postman_token']
+		}
 
 	# insert the queries to be used if the table have to be truncated incase of missing modified date
 	truncate_queries = {
