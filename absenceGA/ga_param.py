@@ -11,7 +11,7 @@ class param:
 	end_date = end_date.strftime('%Y-%m-%d')
 
 	# The list holds the complete list of the ga_merchant_id
-	merchant_list =  [85236967]
+	merchant_list =  [127274158]  #85236967, 127274158, 114271445
 
 	exclude_list = []
 
