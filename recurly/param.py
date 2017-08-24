@@ -15,7 +15,7 @@ import os
 class param:		
 
 	schema = ""
-	root = 'C:\\Users\\andre.geimer\\Documents\\Business Intelligence\\Development\\Recurly\\data'
+	root = '/opt/etl/recurly/data/'
 	counter = 0 
 	newpath = ""
 	connection = ""
