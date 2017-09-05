@@ -77,7 +77,7 @@ class param:
 
 	tbl_star = [
 				# views
-				'employees', 'feedbacks', 'merchant_customers', 'merchant_key_account_feature_toggles', 'merchant_key_accounts', 'pages_intercom' ]
+				#'employees', 'feedbacks', 'merchant_customers', 'merchant_key_account_feature_toggles', 'merchant_key_accounts', 'pages_intercom' ]
 
 
 
@@ -85,11 +85,7 @@ class param:
 
 	tbl_star_truncate = [
 						# tables
-						'fact_appointments', 'mobile_appointments', 'fact_feedbacks', 
-						# views
-						'merchant_permissions', 'ranking_coach_week_report_call', 'ranking_coach_week_report_web', 'salesforce_accounts'
-						,'absence_mrr_development', 'invoices_recurly', 'shore_mrr_development_daily'
-
+						'salesforce_accounts'
 						]
 
 	tbl_pentaho = []
