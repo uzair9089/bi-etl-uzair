@@ -24,23 +24,28 @@ class Exporter(Thread):
         self.file_name = file_name
         self.query = query
 
-
+    print("exporter initialized")
 
     def run(self):
     
         try:
+            print("running exporter, trying to connect")
             conn_string = param.connection
             conn = psycopg2.connect(conn_string)
             curs = conn.cursor()
 
+            print("running exporter, just connected")
+
             outputquery = "COPY ({0}) TO STDOUT WITH CSV HEADER".format(self.query)
 
+            print("got data, need to copy it to file")
 
             with open(param.newpath+self.file_name +".csv", 'w+') as f:
                 curs.copy_expert(outputquery, f)
 
             param.exported_file[self.file_name] = 1
 
+            print("done exporting")
 
         except Exception as e:
             print("Unable to access database, export error %s %s" % (str(e), self.file_name))
