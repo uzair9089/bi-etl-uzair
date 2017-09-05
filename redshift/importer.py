@@ -34,7 +34,7 @@ class Importer(Thread):
             conn_string = param.conn_hash['redshift']
             conn = psycopg2.connect(conn_string)
             curs = conn.cursor()
-
+            print("debugging importer 1")
 
             if(self.file_name in param.truncate_tbl):
                 curs.execute(etl_delta_load.truncate_queries[self.file_name])
@@ -42,6 +42,7 @@ class Importer(Thread):
             else:
                 pass
             
+            print("debugging importer 2")
             os.environ['S3_USE_SIGV4'] = 'True'
             BUCKET_NAME = param.BUCKET_NAME 
             AWS_ACCESS_KEY_ID = param.AWS_ACCESS_KEY_ID 
@@ -51,13 +52,17 @@ class Importer(Thread):
             AWS_SECRET_ACCESS_KEY, host = REGION_HOST)
             bucket = conn2.get_bucket(BUCKET_NAME)
 
+            print("debugging importer 3")
+
             identifier = self.file_name
 
             for i in bucket:
 
                 if self.full_path == '/'+i.key:
+                    print("debugging importer 4")
                     curs.execute (""" COPY %s.%s FROM 's3://shore-bi-etl/%s' iam_role 'arn:aws:iam::601812874785:role/BIs3Access' fillrecord CSV IGNOREHEADER 1 """ % (param.schema, self.file_name,i.key))
                     conn.commit()
+                    print("debugging importer 5")
                 else:
                     pass
 

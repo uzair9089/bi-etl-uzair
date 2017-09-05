@@ -37,7 +37,10 @@ class Uploader(Thread):
 			conn = boto.connect_s3(AWS_ACCESS_KEY_ID,
 			                AWS_SECRET_ACCESS_KEY, host = REGION_HOST)
 
+			print("debugging uploader 1")
 			bucket = conn.get_bucket(BUCKET_NAME)
+
+			print("debugging uploader 2")
 
 			identifier = self.file_name
 
@@ -52,10 +55,12 @@ class Uploader(Thread):
 
 			k.set_contents_from_filename(self.file_name)
 
+			print("debugging uploader 3")
 			runner = Importer(self.table_name, param.full_path+self.table_name+'.csv')
 
 			runner.start()
 
+			print("debugging uploader 4")
 		except:
 			print 'error while transferring data to the s3 bucket '+ self.file_name
 
