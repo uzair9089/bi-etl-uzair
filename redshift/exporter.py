@@ -45,7 +45,7 @@ class Exporter(Thread):
 
             param.exported_file[self.file_name] = 1
 
-            print("done exporting")
+            print("done exporting" + self.file_name)
 
         except Exception as e:
             print("Unable to access database, export error %s %s" % (str(e), self.file_name))
