@@ -77,7 +77,8 @@ class param:
 
 	tbl_star = [
 				# views
-				#'employees', 'feedbacks', 'merchant_customers', 'merchant_key_account_feature_toggles', 'merchant_key_accounts', 'pages_intercom' ]
+				#'employees', 'feedbacks', 'merchant_customers', 'merchant_key_account_feature_toggles', 'merchant_key_accounts', 'pages_intercom' 
+				]
 
 
 
