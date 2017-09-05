@@ -77,9 +77,7 @@ class param:
 
 	tbl_star = [
 				# views
-				'customer_custom_attributes', 'employees', 'feedbacks', 'event_participants', 'events', 'merchant_customer_custom_attributes'
-				, 'merchant_customer_tags', 'merchant_customers', 'merchant_key_account_feature_toggles', 'merchant_key_accounts'  
-				,'merchant_roles', 'resources', 'services', 'shifts', 'pages_intercom' ]
+				'employees', 'feedbacks', 'merchant_customers', 'merchant_key_account_feature_toggles', 'merchant_key_accounts', 'pages_intercom' ]
 
 
 
@@ -90,7 +88,7 @@ class param:
 						'fact_appointments', 'mobile_appointments', 'fact_feedbacks', 'appointments', 
 						# views
 						'merchant_permissions', 'ranking_coach_week_report_call', 'ranking_coach_week_report_web', 'salesforce_accounts'
-						,'absence_mrr_development', 'adjustments_recurly', 'invoices_recurly', 'shore_mrr_development_daily'
+						,'absence_mrr_development', 'invoices_recurly', 'shore_mrr_development_daily'
 
 						]
 
